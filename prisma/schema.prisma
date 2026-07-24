@@ -1,0 +1,136 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/infrastructure/database/postgres/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           BigInt     @id @default(autoincrement())
+  email        String     @unique
+  nickname     String
+  password     String
+  recovery_key String?
+  image        Image      @relation(fields: [imageId], references: [id])
+  is_admin     Boolean    @default(false)
+  packs        Pack[]
+  shaders      Shader[]
+  mods         Mod[]
+  comments     Comments[]
+  imageId      BigInt
+}
+
+model Pack {
+  id          BigInt  @id @default(autoincrement())
+  max_version Int
+  min_version Int
+  name        String
+  description String?
+  score       Float
+
+  shaders Shader[]
+  mods    Mod[]
+
+  autor    User   @relation(fields: [authorId], references: [id])
+  authorId BigInt
+
+  comments Comments[]
+  images   Image[]
+}
+
+model Shader {
+  id          BigInt  @id @default(autoincrement())
+  name        String
+  description String?
+  score       Float
+  packs       Pack[]
+  weight      Int
+  url         String
+
+  autor    User   @relation(fields: [authorId], references: [id])
+  authorId BigInt
+
+  comments  Comments[]
+  images    Image[]
+  conflicts Conflicts[]
+}
+
+model Mod {
+  id          BigInt  @id @default(autoincrement())
+  name        String
+  description String?
+  min_version Int
+  max_version Int
+  url         String
+  weight      Int
+  packs       Pack[]
+
+  autor    User   @relation(fields: [authorId], references: [id])
+  authorId BigInt
+
+  comments Comments[]
+  images   Image[]
+
+  conflictsFrom Conflicts[] @relation("ModConflicts")
+  conflictsTo   Conflicts[] @relation("ModConflictTarget")
+
+  requiredBy      ModDependency[] @relation("RequiredBy")
+  modDependencies ModDependency[] @relation("ModDependencies")
+}
+
+model Comments {
+  id   BigInt @id @default(autoincrement())
+  text String
+
+  autor    User   @relation(fields: [authorId], references: [id])
+  authorId BigInt
+
+  pack     Pack?   @relation(fields: [packId], references: [id])
+  packId   BigInt?
+  shader   Shader? @relation(fields: [shaderId], references: [id])
+  shaderId BigInt?
+  mod      Mod?    @relation(fields: [modId], references: [id])
+  modId    BigInt?
+}
+
+model Image {
+  id       BigInt  @id @default(autoincrement())
+  url      String
+  mod      Mod?    @relation(fields: [modId], references: [id])
+  modId    BigInt?
+  shader   Shader? @relation(fields: [shaderId], references: [id])
+  shaderId BigInt?
+  pack     Pack?   @relation(fields: [packId], references: [id])
+  packId   BigInt?
+  users    User[]
+}
+
+model Conflicts {
+  id BigInt @id @default(autoincrement())
+
+  shaderId BigInt?
+  shader   Shader? @relation(fields: [shaderId], references: [id])
+
+  modId BigInt?
+  mod   Mod?    @relation("ModConflicts", fields: [modId], references: [id])
+
+  conflictModId BigInt?
+  conflictMod   Mod?    @relation("ModConflictTarget", fields: [conflictModId], references: [id])
+}
+
+model ModDependency {
+  modId        BigInt
+  dependencyId BigInt
+
+  mod        Mod @relation("ModDependencies", fields: [modId], references: [id])
+  dependency Mod @relation("RequiredBy", fields: [dependencyId], references: [id])
+
+  @@id([modId, dependencyId])
+}
