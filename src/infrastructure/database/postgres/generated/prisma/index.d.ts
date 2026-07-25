@@ -2008,7 +2008,7 @@ export namespace Prisma {
     password: string
     recovery_key: string | null
     is_admin: boolean
-    imageId: bigint
+    imageId: bigint | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -2038,11 +2038,11 @@ export namespace Prisma {
     recovery_key?: boolean
     is_admin?: boolean
     imageId?: boolean
-    image?: boolean | ImageDefaultArgs<ExtArgs>
     packs?: boolean | User$packsArgs<ExtArgs>
     shaders?: boolean | User$shadersArgs<ExtArgs>
     mods?: boolean | User$modsArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
+    image?: boolean | User$imageArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2054,7 +2054,7 @@ export namespace Prisma {
     recovery_key?: boolean
     is_admin?: boolean
     imageId?: boolean
-    image?: boolean | ImageDefaultArgs<ExtArgs>
+    image?: boolean | User$imageArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2065,7 +2065,7 @@ export namespace Prisma {
     recovery_key?: boolean
     is_admin?: boolean
     imageId?: boolean
-    image?: boolean | ImageDefaultArgs<ExtArgs>
+    image?: boolean | User$imageArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2080,28 +2080,28 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "nickname" | "password" | "recovery_key" | "is_admin" | "imageId", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    image?: boolean | ImageDefaultArgs<ExtArgs>
     packs?: boolean | User$packsArgs<ExtArgs>
     shaders?: boolean | User$shadersArgs<ExtArgs>
     mods?: boolean | User$modsArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
+    image?: boolean | User$imageArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    image?: boolean | ImageDefaultArgs<ExtArgs>
+    image?: boolean | User$imageArgs<ExtArgs>
   }
   export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    image?: boolean | ImageDefaultArgs<ExtArgs>
+    image?: boolean | User$imageArgs<ExtArgs>
   }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      image: Prisma.$ImagePayload<ExtArgs>
       packs: Prisma.$PackPayload<ExtArgs>[]
       shaders: Prisma.$ShaderPayload<ExtArgs>[]
       mods: Prisma.$ModPayload<ExtArgs>[]
       comments: Prisma.$CommentsPayload<ExtArgs>[]
+      image: Prisma.$ImagePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -2110,7 +2110,7 @@ export namespace Prisma {
       password: string
       recovery_key: string | null
       is_admin: boolean
-      imageId: bigint
+      imageId: bigint | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2505,11 +2505,11 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    image<T extends ImageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ImageDefaultArgs<ExtArgs>>): Prisma__ImageClient<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     packs<T extends User$packsArgs<ExtArgs> = {}>(args?: Subset<T, User$packsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shaders<T extends User$shadersArgs<ExtArgs> = {}>(args?: Subset<T, User$shadersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShaderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mods<T extends User$modsArgs<ExtArgs> = {}>(args?: Subset<T, User$modsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends User$commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    image<T extends User$imageArgs<ExtArgs> = {}>(args?: Subset<T, User$imageArgs<ExtArgs>>): Prisma__ImageClient<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3040,6 +3040,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CommentsScalarFieldEnum | CommentsScalarFieldEnum[]
+  }
+
+  /**
+   * User.image
+   */
+  export type User$imageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Image
+     */
+    select?: ImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Image
+     */
+    omit?: ImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ImageInclude<ExtArgs> | null
+    where?: ImageWhereInput
   }
 
   /**
@@ -11784,12 +11803,12 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     recovery_key?: StringNullableFilter<"User"> | string | null
     is_admin?: BoolFilter<"User"> | boolean
-    imageId?: BigIntFilter<"User"> | bigint | number
-    image?: XOR<ImageScalarRelationFilter, ImageWhereInput>
+    imageId?: BigIntNullableFilter<"User"> | bigint | number | null
     packs?: PackListRelationFilter
     shaders?: ShaderListRelationFilter
     mods?: ModListRelationFilter
     comments?: CommentsListRelationFilter
+    image?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -11799,12 +11818,12 @@ export namespace Prisma {
     password?: SortOrder
     recovery_key?: SortOrderInput | SortOrder
     is_admin?: SortOrder
-    imageId?: SortOrder
-    image?: ImageOrderByWithRelationInput
+    imageId?: SortOrderInput | SortOrder
     packs?: PackOrderByRelationAggregateInput
     shaders?: ShaderOrderByRelationAggregateInput
     mods?: ModOrderByRelationAggregateInput
     comments?: CommentsOrderByRelationAggregateInput
+    image?: ImageOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -11817,12 +11836,12 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     recovery_key?: StringNullableFilter<"User"> | string | null
     is_admin?: BoolFilter<"User"> | boolean
-    imageId?: BigIntFilter<"User"> | bigint | number
-    image?: XOR<ImageScalarRelationFilter, ImageWhereInput>
+    imageId?: BigIntNullableFilter<"User"> | bigint | number | null
     packs?: PackListRelationFilter
     shaders?: ShaderListRelationFilter
     mods?: ModListRelationFilter
     comments?: CommentsListRelationFilter
+    image?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -11832,7 +11851,7 @@ export namespace Prisma {
     password?: SortOrder
     recovery_key?: SortOrderInput | SortOrder
     is_admin?: SortOrder
-    imageId?: SortOrder
+    imageId?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -11850,7 +11869,7 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     recovery_key?: StringNullableWithAggregatesFilter<"User"> | string | null
     is_admin?: BoolWithAggregatesFilter<"User"> | boolean
-    imageId?: BigIntWithAggregatesFilter<"User"> | bigint | number
+    imageId?: BigIntNullableWithAggregatesFilter<"User"> | bigint | number | null
   }
 
   export type PackWhereInput = {
@@ -12352,11 +12371,11 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
-    image: ImageCreateNestedOneWithoutUsersInput
     packs?: PackCreateNestedManyWithoutAutorInput
     shaders?: ShaderCreateNestedManyWithoutAutorInput
     mods?: ModCreateNestedManyWithoutAutorInput
     comments?: CommentsCreateNestedManyWithoutAutorInput
+    image?: ImageCreateNestedOneWithoutUsersInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -12366,7 +12385,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
-    imageId: bigint | number
+    imageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutAutorInput
     shaders?: ShaderUncheckedCreateNestedManyWithoutAutorInput
     mods?: ModUncheckedCreateNestedManyWithoutAutorInput
@@ -12380,11 +12399,11 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
-    image?: ImageUpdateOneRequiredWithoutUsersNestedInput
     packs?: PackUpdateManyWithoutAutorNestedInput
     shaders?: ShaderUpdateManyWithoutAutorNestedInput
     mods?: ModUpdateManyWithoutAutorNestedInput
     comments?: CommentsUpdateManyWithoutAutorNestedInput
+    image?: ImageUpdateOneWithoutUsersNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -12394,7 +12413,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
-    imageId?: BigIntFieldUpdateOperationsInput | bigint | number
+    imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutAutorNestedInput
     shaders?: ShaderUncheckedUpdateManyWithoutAutorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAutorNestedInput
@@ -12408,7 +12427,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
-    imageId: bigint | number
+    imageId?: bigint | number | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -12427,7 +12446,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
-    imageId?: BigIntFieldUpdateOperationsInput | bigint | number
+    imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type PackCreateInput = {
@@ -12946,9 +12965,15 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type ImageScalarRelationFilter = {
-    is?: ImageWhereInput
-    isNot?: ImageWhereInput
+  export type BigIntNullableFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
   }
 
   export type PackListRelationFilter = {
@@ -12973,6 +12998,11 @@ export namespace Prisma {
     every?: CommentsWhereInput
     some?: CommentsWhereInput
     none?: CommentsWhereInput
+  }
+
+  export type ImageNullableScalarRelationFilter = {
+    is?: ImageWhereInput | null
+    isNot?: ImageWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -13094,6 +13124,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type BigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedBigIntNullableFilter<$PrismaModel>
+    _min?: NestedBigIntNullableFilter<$PrismaModel>
+    _max?: NestedBigIntNullableFilter<$PrismaModel>
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -13324,17 +13370,6 @@ export namespace Prisma {
     authorId?: SortOrder
   }
 
-  export type BigIntNullableFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
-  }
-
   export type PackNullableScalarRelationFilter = {
     is?: PackWhereInput | null
     isNot?: PackWhereInput | null
@@ -13391,22 +13426,6 @@ export namespace Prisma {
     packId?: SortOrder
     shaderId?: SortOrder
     modId?: SortOrder
-  }
-
-  export type BigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedBigIntNullableFilter<$PrismaModel>
-    _min?: NestedBigIntNullableFilter<$PrismaModel>
-    _max?: NestedBigIntNullableFilter<$PrismaModel>
   }
 
   export type UserListRelationFilter = {
@@ -13527,12 +13546,6 @@ export namespace Prisma {
     dependencyId?: SortOrder
   }
 
-  export type ImageCreateNestedOneWithoutUsersInput = {
-    create?: XOR<ImageCreateWithoutUsersInput, ImageUncheckedCreateWithoutUsersInput>
-    connectOrCreate?: ImageCreateOrConnectWithoutUsersInput
-    connect?: ImageWhereUniqueInput
-  }
-
   export type PackCreateNestedManyWithoutAutorInput = {
     create?: XOR<PackCreateWithoutAutorInput, PackUncheckedCreateWithoutAutorInput> | PackCreateWithoutAutorInput[] | PackUncheckedCreateWithoutAutorInput[]
     connectOrCreate?: PackCreateOrConnectWithoutAutorInput | PackCreateOrConnectWithoutAutorInput[]
@@ -13559,6 +13572,12 @@ export namespace Prisma {
     connectOrCreate?: CommentsCreateOrConnectWithoutAutorInput | CommentsCreateOrConnectWithoutAutorInput[]
     createMany?: CommentsCreateManyAutorInputEnvelope
     connect?: CommentsWhereUniqueInput | CommentsWhereUniqueInput[]
+  }
+
+  export type ImageCreateNestedOneWithoutUsersInput = {
+    create?: XOR<ImageCreateWithoutUsersInput, ImageUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: ImageCreateOrConnectWithoutUsersInput
+    connect?: ImageWhereUniqueInput
   }
 
   export type PackUncheckedCreateNestedManyWithoutAutorInput = {
@@ -13607,14 +13626,6 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
-  }
-
-  export type ImageUpdateOneRequiredWithoutUsersNestedInput = {
-    create?: XOR<ImageCreateWithoutUsersInput, ImageUncheckedCreateWithoutUsersInput>
-    connectOrCreate?: ImageCreateOrConnectWithoutUsersInput
-    upsert?: ImageUpsertWithoutUsersInput
-    connect?: ImageWhereUniqueInput
-    update?: XOR<XOR<ImageUpdateToOneWithWhereWithoutUsersInput, ImageUpdateWithoutUsersInput>, ImageUncheckedUpdateWithoutUsersInput>
   }
 
   export type PackUpdateManyWithoutAutorNestedInput = {
@@ -13671,6 +13682,24 @@ export namespace Prisma {
     update?: CommentsUpdateWithWhereUniqueWithoutAutorInput | CommentsUpdateWithWhereUniqueWithoutAutorInput[]
     updateMany?: CommentsUpdateManyWithWhereWithoutAutorInput | CommentsUpdateManyWithWhereWithoutAutorInput[]
     deleteMany?: CommentsScalarWhereInput | CommentsScalarWhereInput[]
+  }
+
+  export type ImageUpdateOneWithoutUsersNestedInput = {
+    create?: XOR<ImageCreateWithoutUsersInput, ImageUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: ImageCreateOrConnectWithoutUsersInput
+    upsert?: ImageUpsertWithoutUsersInput
+    disconnect?: ImageWhereInput | boolean
+    delete?: ImageWhereInput | boolean
+    connect?: ImageWhereUniqueInput
+    update?: XOR<XOR<ImageUpdateToOneWithWhereWithoutUsersInput, ImageUpdateWithoutUsersInput>, ImageUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type NullableBigIntFieldUpdateOperationsInput = {
+    set?: bigint | number | null
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
   }
 
   export type PackUncheckedUpdateManyWithoutAutorNestedInput = {
@@ -14463,14 +14492,6 @@ export namespace Prisma {
     update?: XOR<XOR<ModUpdateToOneWithWhereWithoutCommentsInput, ModUpdateWithoutCommentsInput>, ModUncheckedUpdateWithoutCommentsInput>
   }
 
-  export type NullableBigIntFieldUpdateOperationsInput = {
-    set?: bigint | number | null
-    increment?: bigint | number
-    decrement?: bigint | number
-    multiply?: bigint | number
-    divide?: bigint | number
-  }
-
   export type ModCreateNestedOneWithoutImagesInput = {
     create?: XOR<ModCreateWithoutImagesInput, ModUncheckedCreateWithoutImagesInput>
     connectOrCreate?: ModCreateOrConnectWithoutImagesInput
@@ -14681,6 +14702,17 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedBigIntNullableFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
+  }
+
   export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
@@ -14772,6 +14804,33 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedBigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedBigIntNullableFilter<$PrismaModel>
+    _min?: NestedBigIntNullableFilter<$PrismaModel>
+    _max?: NestedBigIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -14802,65 +14861,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type NestedBigIntNullableFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
-  }
-
-  export type NestedBigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
-    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedBigIntNullableFilter<$PrismaModel>
-    _min?: NestedBigIntNullableFilter<$PrismaModel>
-    _max?: NestedBigIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type ImageCreateWithoutUsersInput = {
-    id?: bigint | number
-    url: string
-    mod?: ModCreateNestedOneWithoutImagesInput
-    shader?: ShaderCreateNestedOneWithoutImagesInput
-    pack?: PackCreateNestedOneWithoutImagesInput
-  }
-
-  export type ImageUncheckedCreateWithoutUsersInput = {
-    id?: bigint | number
-    url: string
-    modId?: bigint | number | null
-    shaderId?: bigint | number | null
-    packId?: bigint | number | null
-  }
-
-  export type ImageCreateOrConnectWithoutUsersInput = {
-    where: ImageWhereUniqueInput
-    create: XOR<ImageCreateWithoutUsersInput, ImageUncheckedCreateWithoutUsersInput>
   }
 
   export type PackCreateWithoutAutorInput = {
@@ -15005,31 +15005,25 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ImageUpsertWithoutUsersInput = {
-    update: XOR<ImageUpdateWithoutUsersInput, ImageUncheckedUpdateWithoutUsersInput>
+  export type ImageCreateWithoutUsersInput = {
+    id?: bigint | number
+    url: string
+    mod?: ModCreateNestedOneWithoutImagesInput
+    shader?: ShaderCreateNestedOneWithoutImagesInput
+    pack?: PackCreateNestedOneWithoutImagesInput
+  }
+
+  export type ImageUncheckedCreateWithoutUsersInput = {
+    id?: bigint | number
+    url: string
+    modId?: bigint | number | null
+    shaderId?: bigint | number | null
+    packId?: bigint | number | null
+  }
+
+  export type ImageCreateOrConnectWithoutUsersInput = {
+    where: ImageWhereUniqueInput
     create: XOR<ImageCreateWithoutUsersInput, ImageUncheckedCreateWithoutUsersInput>
-    where?: ImageWhereInput
-  }
-
-  export type ImageUpdateToOneWithWhereWithoutUsersInput = {
-    where?: ImageWhereInput
-    data: XOR<ImageUpdateWithoutUsersInput, ImageUncheckedUpdateWithoutUsersInput>
-  }
-
-  export type ImageUpdateWithoutUsersInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
-    mod?: ModUpdateOneWithoutImagesNestedInput
-    shader?: ShaderUpdateOneWithoutImagesNestedInput
-    pack?: PackUpdateOneWithoutImagesNestedInput
-  }
-
-  export type ImageUncheckedUpdateWithoutUsersInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
-    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type PackUpsertWithWhereUniqueWithoutAutorInput = {
@@ -15148,6 +15142,33 @@ export namespace Prisma {
     modId?: BigIntNullableFilter<"Comments"> | bigint | number | null
   }
 
+  export type ImageUpsertWithoutUsersInput = {
+    update: XOR<ImageUpdateWithoutUsersInput, ImageUncheckedUpdateWithoutUsersInput>
+    create: XOR<ImageCreateWithoutUsersInput, ImageUncheckedCreateWithoutUsersInput>
+    where?: ImageWhereInput
+  }
+
+  export type ImageUpdateToOneWithWhereWithoutUsersInput = {
+    where?: ImageWhereInput
+    data: XOR<ImageUpdateWithoutUsersInput, ImageUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type ImageUpdateWithoutUsersInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    url?: StringFieldUpdateOperationsInput | string
+    mod?: ModUpdateOneWithoutImagesNestedInput
+    shader?: ShaderUpdateOneWithoutImagesNestedInput
+    pack?: PackUpdateOneWithoutImagesNestedInput
+  }
+
+  export type ImageUncheckedUpdateWithoutUsersInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    url?: StringFieldUpdateOperationsInput | string
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
   export type ShaderCreateWithoutPacksInput = {
     id?: bigint | number
     name: string
@@ -15225,10 +15246,10 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
-    image: ImageCreateNestedOneWithoutUsersInput
     shaders?: ShaderCreateNestedManyWithoutAutorInput
     mods?: ModCreateNestedManyWithoutAutorInput
     comments?: CommentsCreateNestedManyWithoutAutorInput
+    image?: ImageCreateNestedOneWithoutUsersInput
   }
 
   export type UserUncheckedCreateWithoutPacksInput = {
@@ -15238,7 +15259,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
-    imageId: bigint | number
+    imageId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutAutorInput
     mods?: ModUncheckedCreateNestedManyWithoutAutorInput
     comments?: CommentsUncheckedCreateNestedManyWithoutAutorInput
@@ -15351,10 +15372,10 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
-    image?: ImageUpdateOneRequiredWithoutUsersNestedInput
     shaders?: ShaderUpdateManyWithoutAutorNestedInput
     mods?: ModUpdateManyWithoutAutorNestedInput
     comments?: CommentsUpdateManyWithoutAutorNestedInput
+    image?: ImageUpdateOneWithoutUsersNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPacksInput = {
@@ -15364,7 +15385,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
-    imageId?: BigIntFieldUpdateOperationsInput | bigint | number
+    imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutAutorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAutorNestedInput
     comments?: CommentsUncheckedUpdateManyWithoutAutorNestedInput
@@ -15451,10 +15472,10 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
-    image: ImageCreateNestedOneWithoutUsersInput
     packs?: PackCreateNestedManyWithoutAutorInput
     mods?: ModCreateNestedManyWithoutAutorInput
     comments?: CommentsCreateNestedManyWithoutAutorInput
+    image?: ImageCreateNestedOneWithoutUsersInput
   }
 
   export type UserUncheckedCreateWithoutShadersInput = {
@@ -15464,7 +15485,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
-    imageId: bigint | number
+    imageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutAutorInput
     mods?: ModUncheckedCreateNestedManyWithoutAutorInput
     comments?: CommentsUncheckedCreateNestedManyWithoutAutorInput
@@ -15583,10 +15604,10 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
-    image?: ImageUpdateOneRequiredWithoutUsersNestedInput
     packs?: PackUpdateManyWithoutAutorNestedInput
     mods?: ModUpdateManyWithoutAutorNestedInput
     comments?: CommentsUpdateManyWithoutAutorNestedInput
+    image?: ImageUpdateOneWithoutUsersNestedInput
   }
 
   export type UserUncheckedUpdateWithoutShadersInput = {
@@ -15596,7 +15617,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
-    imageId?: BigIntFieldUpdateOperationsInput | bigint | number
+    imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutAutorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAutorNestedInput
     comments?: CommentsUncheckedUpdateManyWithoutAutorNestedInput
@@ -15698,10 +15719,10 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
-    image: ImageCreateNestedOneWithoutUsersInput
     packs?: PackCreateNestedManyWithoutAutorInput
     shaders?: ShaderCreateNestedManyWithoutAutorInput
     comments?: CommentsCreateNestedManyWithoutAutorInput
+    image?: ImageCreateNestedOneWithoutUsersInput
   }
 
   export type UserUncheckedCreateWithoutModsInput = {
@@ -15711,7 +15732,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
-    imageId: bigint | number
+    imageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutAutorInput
     shaders?: ShaderUncheckedCreateNestedManyWithoutAutorInput
     comments?: CommentsUncheckedCreateNestedManyWithoutAutorInput
@@ -15888,10 +15909,10 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
-    image?: ImageUpdateOneRequiredWithoutUsersNestedInput
     packs?: PackUpdateManyWithoutAutorNestedInput
     shaders?: ShaderUpdateManyWithoutAutorNestedInput
     comments?: CommentsUpdateManyWithoutAutorNestedInput
+    image?: ImageUpdateOneWithoutUsersNestedInput
   }
 
   export type UserUncheckedUpdateWithoutModsInput = {
@@ -15901,7 +15922,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
-    imageId?: BigIntFieldUpdateOperationsInput | bigint | number
+    imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutAutorNestedInput
     shaders?: ShaderUncheckedUpdateManyWithoutAutorNestedInput
     comments?: CommentsUncheckedUpdateManyWithoutAutorNestedInput
@@ -16018,10 +16039,10 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
-    image: ImageCreateNestedOneWithoutUsersInput
     packs?: PackCreateNestedManyWithoutAutorInput
     shaders?: ShaderCreateNestedManyWithoutAutorInput
     mods?: ModCreateNestedManyWithoutAutorInput
+    image?: ImageCreateNestedOneWithoutUsersInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -16031,7 +16052,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
-    imageId: bigint | number
+    imageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutAutorInput
     shaders?: ShaderUncheckedCreateNestedManyWithoutAutorInput
     mods?: ModUncheckedCreateNestedManyWithoutAutorInput
@@ -16161,10 +16182,10 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
-    image?: ImageUpdateOneRequiredWithoutUsersNestedInput
     packs?: PackUpdateManyWithoutAutorNestedInput
     shaders?: ShaderUpdateManyWithoutAutorNestedInput
     mods?: ModUpdateManyWithoutAutorNestedInput
+    image?: ImageUpdateOneWithoutUsersNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -16174,7 +16195,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
-    imageId?: BigIntFieldUpdateOperationsInput | bigint | number
+    imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutAutorNestedInput
     shaders?: ShaderUncheckedUpdateManyWithoutAutorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAutorNestedInput
@@ -16581,7 +16602,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     recovery_key?: StringNullableFilter<"User"> | string | null
     is_admin?: BoolFilter<"User"> | boolean
-    imageId?: BigIntFilter<"User"> | bigint | number
+    imageId?: BigIntNullableFilter<"User"> | bigint | number | null
   }
 
   export type ShaderCreateWithoutConflictsInput = {

@@ -1,3 +1,4 @@
+import { emailRegex } from "@/utils/regexes";
 import { Image } from "./Image";
 import { Pack } from "./Pack";
 
@@ -7,10 +8,15 @@ export class User {
   private _password!: string;
   private _email!: string;
   private _isAdmin!: boolean;
-  private _image!: Image;
+  private _image?: Image | null;
   private _recoveryKey?: string | null;
 
   public packs: Pack[] = [];
+
+  fromCredentials(email: string, password: string) {
+    this.password = password;
+    this.email = email;
+  }
 
   toPersistence() {
     return {
@@ -23,13 +29,13 @@ export class User {
   }
 
   fromJson(data: any) {
-    this._id = data.id;
-    this._nickname = data.nickname;
-    this._password = data.password;
-    this._email = data.email;
+    this.id = data.id;
+    this.nickname = data.nickname;
+    this.password = data.password;
+    this.email = data.email;
 
-    this._isAdmin = data.is_admin ?? false;
-    this._recoveryKey = data.recovery_key;
+    this.isAdmin = data.is_admin ?? false;
+    this.recoveryKey = data.recovery_key;
     if (data.image) {
       this._image = new Image().fromJson(data.image);
     }
@@ -45,7 +51,7 @@ export class User {
   get image() {
     return this._image;
   }
-  set image(image: Image) {
+  set image(image: Image | null | undefined) {
     this._image = image;
   }
   get id(): bigint {
@@ -73,6 +79,9 @@ export class User {
     return this._email;
   }
   set email(email: string) {
+    if (!emailRegex.test(email)) {
+      throw new Error("Email format is invalid");
+    }
     this._email = email;
   }
 

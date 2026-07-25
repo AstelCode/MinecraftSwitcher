@@ -18,13 +18,13 @@ model User {
   nickname     String
   password     String
   recovery_key String?
-  image        Image      @relation(fields: [imageId], references: [id])
   is_admin     Boolean    @default(false)
   packs        Pack[]
   shaders      Shader[]
   mods         Mod[]
   comments     Comments[]
-  imageId      BigInt
+  image        Image?     @relation(fields: [imageId], references: [id])
+  imageId      BigInt?
 }
 
 model Pack {

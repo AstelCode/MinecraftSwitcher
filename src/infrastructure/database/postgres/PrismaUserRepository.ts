@@ -7,7 +7,7 @@ export class SupabaseAdminRepository implements UserRepository {
     const newUser = await prisma.user.create({
       data: {
         ...user.toPersistence(),
-        image: { create: user.image.toPersistence() },
+        image: { create: user.image?.toPersistence() },
       },
       include: { image: true },
     });
@@ -28,7 +28,7 @@ export class SupabaseAdminRepository implements UserRepository {
       data: {
         ...user.toPersistence(),
         image: {
-          update: user.image.toPersistence(),
+          update: user.image?.toPersistence(),
         },
       },
     });
