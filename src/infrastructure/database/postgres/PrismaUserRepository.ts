@@ -6,15 +6,29 @@ export class SupabaseAdminRepository implements UserRepository {
   async save(user: User): Promise<void> {
     const newUser = await prisma.user.create({
       data: {
-        ...user.toPersistence(),
-        image: { create: user.image?.toPersistence() },
+        nickname: user.nickname,
+        password: user.password.password,
+        email: user.email.email,
+        is_admin: user.isAdmin,
+        recovery_key: user.recoveryKey,
+
+        // ...user.toPersistence(),
+        // image: user.image?.id
+        //   ? {
+        //       connect: {
+        //         id: user.image.id,
+        //       },
+        //     }
+        //   : {
+        //       create: user.image?.toPersistence(),
+        //     },
       },
       include: { image: true },
     });
-    user.id = newUser.id;
-    if (user.image && newUser.image) {
-      user.image.id = newUser.image.id;
-    }
+    // user.id = newUser.id;
+    // if (user.image && newUser.image) {
+    //   user.image.id = newUser.image.id;
+    // }
   }
 
   async delete(id: bigint): Promise<void> {

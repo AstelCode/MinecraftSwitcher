@@ -1,8 +1,8 @@
 export interface TokenService {
-  generate(payload: { id: number; nickname: string }): Promise<string>;
+  generate(payload: { id: bigint; nickname: string }): Promise<string>;
 
   verify(token: string): Promise<{
-    id: number;
+    id: bigint;
     nickname: string;
   }>;
 }

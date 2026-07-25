@@ -8,27 +8,27 @@ export class PrimsaModRespository implements ModRepository {
   async save(mod: Mod): Promise<void> {
     const createdMod = await prisma.mod.create({
       data: {
-        ...mod.toPersistence(),
-        autor: {
-          connect: {
-            id: mod.author.id,
-          },
-        },
-        images: {
-          create: mod.images
-            ? mod.images.map((img) => img.toPersistence())
-            : [],
-        },
+        // ...mod.toPersistence(),
+        // autor: {
+        //   connect: {
+        //     id: mod.author.id,
+        //   },
+        // },
+        // images: {
+        //   create: mod.images
+        //     ? mod.images.map((img) => img.toPersistence())
+        //     : [],
+        // },
       },
-      include: {
-        images: true,
-      },
+      // include: {
+      //   images: true,
+      // },
     });
 
-    mod.id = createdMod.id;
-    if (mod.images && createdMod.images.length === mod.images.length) {
-      mod.images = createdMod.images.map((item) => new Image().fromJson(item));
-    }
+    // mod.id = createdMod.id;
+    // if (mod.images && createdMod.images.length === mod.images.length) {
+    //   mod.images = createdMod.images.map((item) => new Image().fromJson(item));
+    // }
   }
   async update(mod: Mod): Promise<void> {
     await prisma.mod.update({
@@ -118,21 +118,21 @@ export class PrimsaModRespository implements ModRepository {
     // Mapeo de las imágenes
     if (prismaData.images) {
       mod.images = prismaData.images.map((imgData: any) =>
-        new Image().fromJson(imgData),
+        new Image().fromJson(imgData)
       );
     }
 
     // Mapeo de Ids de Dependencias (opcional, dependiendo si los incluiste en el query)
     if (prismaData.modDependencies) {
       mod.dependencyIds = prismaData.modDependencies.map((dep: any) =>
-        Number(dep.dependencyId),
+        Number(dep.dependencyId)
       );
     }
 
     // Mapeo de Ids de Conflictos (opcional, dependiendo si los incluiste en el query)
     if (prismaData.conflictsFrom) {
       mod.conflictsIds = prismaData.conflictsFrom.map((conflict: any) =>
-        Number(conflict.conflictModId),
+        Number(conflict.conflictModId)
       );
     }
 
