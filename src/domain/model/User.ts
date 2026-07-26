@@ -1,3 +1,4 @@
+import { randomNickname } from "../utils/randomNickname";
 import { isValidText } from "../validators/validators";
 import { Email } from "../value-objects/Email";
 import { Password } from "../value-objects/Password";
@@ -30,12 +31,15 @@ export class User {
   packs: Pack[] = [];
   comments?: Comment[];
 
-  create(email: string, password: string, nickname: string) {
+  create(email: string, password: string) {
     this.email = new Email(email);
     this.password = new Password(password);
     this.password.validate();
-    this.nickname = nickname;
+    this.nickname = randomNickname();
     return this;
+  }
+  setHashedPassword(password: string) {
+    this.password.password = password;
   }
 
   setImage(image: Image) {
