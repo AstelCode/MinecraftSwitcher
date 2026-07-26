@@ -8,4 +8,5 @@ export interface ImageRepository {
   listByShader(shader_id: bigint): Promise<Image[]>;
   listByMod(mod_id: bigint): Promise<Image[]>;
   listByPack(pack_id: bigint): Promise<Image[]>;
+  listAll(): Promise<Image[]>;
 }

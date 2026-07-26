@@ -1,7 +1,15 @@
-import { Mod } from "./Mod";
-import { Pack } from "./Pack";
-import { Shader } from "./Shader";
+import { Mod, ModData } from "./Mod";
+import { Pack, PackData } from "./Pack";
+import { Shader, ShaderData } from "./Shader";
 import { isValidText } from "../validators/validators";
+
+export interface ImageData {
+  id: bigint;
+  url: string;
+  shader?: ShaderData | null;
+  mod?: ModData | null;
+  pack?: PackData | null;
+}
 
 export class Image {
   id!: bigint;
@@ -31,13 +39,32 @@ export class Image {
     return this;
   }
 
+  fromData(data: ImageData) {
+    this.id = data.id;
+    this.url = data.url;
+    if (data.shader) {
+      this.shader = new Shader().fromData(data.shader);
+    }
+    if (data.pack) {
+      this.pack = new Pack().fromData(data.pack);
+    }
+    if (data.mod) {
+      this.mod = new Mod().fromData(data.mod);
+    }
+    return this;
+  }
+
   toPersistence() {
-    if (isValidText(this.url)) throw new Error("url is empty");
+    if (!isValidText(this.url)) throw new Error("url is empty");
     return {
       url: this.url,
       packId: this.pack?.id,
       modId: this.mod?.id,
       shaderId: this.shader?.id,
     };
+  }
+  getPersistanceId() {
+    if (!this.id) throw new Error("image id no assigned");
+    return this.id;
   }
 }

@@ -134,6 +134,7 @@ exports.Prisma.PackScalarFieldEnum = {
   id: 'id',
   max_version: 'max_version',
   min_version: 'min_version',
+  versionType: 'versionType',
   name: 'name',
   description: 'description',
   score: 'score',
@@ -147,7 +148,8 @@ exports.Prisma.ShaderScalarFieldEnum = {
   score: 'score',
   weight: 'weight',
   url: 'url',
-  authorId: 'authorId'
+  authorId: 'authorId',
+  versionType: 'versionType'
 };
 
 exports.Prisma.ModScalarFieldEnum = {
@@ -158,10 +160,11 @@ exports.Prisma.ModScalarFieldEnum = {
   max_version: 'max_version',
   url: 'url',
   weight: 'weight',
-  authorId: 'authorId'
+  authorId: 'authorId',
+  versionType: 'versionType'
 };
 
-exports.Prisma.CommentsScalarFieldEnum = {
+exports.Prisma.CommentScalarFieldEnum = {
   id: 'id',
   text: 'text',
   authorId: 'authorId',
@@ -178,9 +181,9 @@ exports.Prisma.ImageScalarFieldEnum = {
   packId: 'packId'
 };
 
-exports.Prisma.ConflictsScalarFieldEnum = {
+exports.Prisma.ConflictScalarFieldEnum = {
   id: 'id',
-  shaderId: 'shaderId',
+  conflictshaderId: 'conflictshaderId',
   modId: 'modId',
   conflictModId: 'conflictModId'
 };
@@ -188,6 +191,11 @@ exports.Prisma.ConflictsScalarFieldEnum = {
 exports.Prisma.ModDependencyScalarFieldEnum = {
   modId: 'modId',
   dependencyId: 'dependencyId'
+};
+
+exports.Prisma.ShaderDependecyScalarFieldEnum = {
+  shaderId: 'shaderId',
+  modId: 'modId'
 };
 
 exports.Prisma.SortOrder = {
@@ -205,16 +213,53 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.UserOrderByRelevanceFieldEnum = {
+  email: 'email',
+  nickname: 'nickname',
+  password: 'password',
+  recovery_key: 'recovery_key'
+};
+
+exports.Prisma.PackOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description'
+};
+
+exports.Prisma.ShaderOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  url: 'url'
+};
+
+exports.Prisma.ModOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  url: 'url'
+};
+
+exports.Prisma.CommentOrderByRelevanceFieldEnum = {
+  text: 'text'
+};
+
+exports.Prisma.ImageOrderByRelevanceFieldEnum = {
+  url: 'url'
+};
+exports.VersionType = exports.$Enums.VersionType = {
+  FORGE: 'FORGE',
+  OPTIFINE: 'OPTIFINE',
+  JAVA: 'JAVA'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
   Pack: 'Pack',
   Shader: 'Shader',
   Mod: 'Mod',
-  Comments: 'Comments',
+  Comment: 'Comment',
   Image: 'Image',
-  Conflicts: 'Conflicts',
-  ModDependency: 'ModDependency'
+  Conflict: 'Conflict',
+  ModDependency: 'ModDependency',
+  ShaderDependecy: 'ShaderDependecy'
 };
 
 /**

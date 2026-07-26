@@ -4,33 +4,41 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/infrastructure/database/postgres/generated/prisma"
+  provider        = "prisma-client-js"
+  output          = "../src/infrastructure/database/postgres/generated/prisma"
+  previewFeatures = ["fullTextSearchPostgres"]
 }
 
 datasource db {
   provider = "postgresql"
 }
 
+enum VersionType {
+  FORGE
+  OPTIFINE
+  JAVA
+}
+
 model User {
-  id           BigInt     @id @default(autoincrement())
-  email        String     @unique
+  id           BigInt    @id @default(autoincrement())
+  email        String    @unique
   nickname     String
   password     String
   recovery_key String?
-  is_admin     Boolean    @default(false)
+  is_admin     Boolean   @default(false)
   packs        Pack[]
   shaders      Shader[]
   mods         Mod[]
-  comments     Comments[]
-  image        Image?     @relation(fields: [imageId], references: [id])
+  comments     Comment[]
+  image        Image?    @relation(fields: [imageId], references: [id])
   imageId      BigInt?
 }
 
 model Pack {
-  id          BigInt  @id @default(autoincrement())
+  id          BigInt      @id @default(autoincrement())
   max_version Int
   min_version Int
+  versionType VersionType
   name        String
   description String?
   score       Float
@@ -38,10 +46,10 @@ model Pack {
   shaders Shader[]
   mods    Mod[]
 
-  autor    User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id])
   authorId BigInt
 
-  comments Comments[]
+  comments Comment[]
   images   Image[]
 }
 
@@ -54,12 +62,14 @@ model Shader {
   weight      Int
   url         String
 
-  autor    User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id])
   authorId BigInt
 
-  comments  Comments[]
-  images    Image[]
-  conflicts Conflicts[]
+  comments          Comment[]
+  images            Image[]
+  conflicts         Conflict[]
+  versionType       VersionType
+  shaderDependecies ShaderDependecy[]
 }
 
 model Mod {
@@ -72,24 +82,26 @@ model Mod {
   weight      Int
   packs       Pack[]
 
-  autor    User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id])
   authorId BigInt
 
-  comments Comments[]
+  comments Comment[]
   images   Image[]
 
-  conflictsFrom Conflicts[] @relation("ModConflicts")
-  conflictsTo   Conflicts[] @relation("ModConflictTarget")
+  conflictsFrom Conflict[] @relation("ModConflicts")
+  conflictsTo   Conflict[] @relation("ModConflictTarget")
 
-  requiredBy      ModDependency[] @relation("RequiredBy")
-  modDependencies ModDependency[] @relation("ModDependencies")
+  requiredBy        ModDependency[]   @relation("RequiredBy")
+  modDependencies   ModDependency[]   @relation("ModDependencies")
+  versionType       VersionType
+  shaderDependecies ShaderDependecy[]
 }
 
-model Comments {
+model Comment {
   id   BigInt @id @default(autoincrement())
   text String
 
-  autor    User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id])
   authorId BigInt
 
   pack     Pack?   @relation(fields: [packId], references: [id])
@@ -98,6 +110,8 @@ model Comments {
   shaderId BigInt?
   mod      Mod?    @relation(fields: [modId], references: [id])
   modId    BigInt?
+
+  @@map("Comments")
 }
 
 model Image {
@@ -112,17 +126,19 @@ model Image {
   users    User[]
 }
 
-model Conflicts {
+model Conflict {
   id BigInt @id @default(autoincrement())
 
-  shaderId BigInt?
-  shader   Shader? @relation(fields: [shaderId], references: [id])
+  conflictshaderId BigInt?
+  conflictShader   Shader? @relation(fields: [conflictshaderId], references: [id])
 
-  modId BigInt?
-  mod   Mod?    @relation("ModConflicts", fields: [modId], references: [id])
+  modId BigInt
+  mod   Mod    @relation("ModConflicts", fields: [modId], references: [id])
 
   conflictModId BigInt?
   conflictMod   Mod?    @relation("ModConflictTarget", fields: [conflictModId], references: [id])
+
+  @@map("Conflicts")
 }
 
 model ModDependency {
@@ -133,4 +149,14 @@ model ModDependency {
   dependency Mod @relation("RequiredBy", fields: [dependencyId], references: [id])
 
   @@id([modId, dependencyId])
+}
+
+model ShaderDependecy {
+  shaderId BigInt
+  modId    BigInt
+
+  shader Shader @relation(fields: [shaderId], references: [id])
+  mod    Mod    @relation(fields: [modId], references: [id])
+
+  @@id([shaderId, modId])
 }
