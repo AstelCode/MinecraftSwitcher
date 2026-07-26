@@ -1,7 +1,7 @@
 import { Comment, CommentData } from "./Comment";
 import { Shader } from "./Shader";
 import { Mod } from "./Mod";
-import { Image } from "./Image";
+import { Image, ImageData } from "./Image";
 import { User, UserData } from "./User";
 import { VersionType } from "./VersionType";
 import { isValidText } from "../validators/validators";
@@ -12,10 +12,10 @@ export interface PackData {
   min_version: number;
   name: string;
   description: string | null;
-  score: number;
   versionType: VersionType;
   author?: UserData;
   comments?: CommentData[];
+  principalImage?: ImageData | null;
 }
 
 export class Pack {
@@ -24,13 +24,13 @@ export class Pack {
   minVersion!: number;
   name!: string;
   description!: string | null;
-  score!: number;
   comments: Comment[] = [];
   shaders: Shader[] = [];
   mods: Mod[] = [];
   images: Image[] = [];
   author!: User;
   versionType: VersionType = "JAVA";
+  principalImage?: Image;
 
   fromData(data: PackData) {
     this.id = data.id;
@@ -38,7 +38,6 @@ export class Pack {
     this.minVersion = data.min_version;
     this.name = data.name;
     this.description = data.description;
-    this.score = data.score;
     this.versionType = data.versionType;
 
     if (data.author) {
@@ -47,7 +46,9 @@ export class Pack {
     if (data.comments) {
       this.comments = data.comments.map((d) => new Comment().fromData(d));
     }
-
+    if (data.principalImage) {
+      this.principalImage = new Image().fromData(data.principalImage);
+    }
     return this;
   }
 
@@ -63,11 +64,11 @@ export class Pack {
       versionType: this.versionType,
       name: this.name,
       description: this.description ?? "",
-      score: this.score,
       authorId: this.author.id,
       images: this.images,
       shaders: this.shaders,
       mods: this.mods,
+      principalImage: this.principalImage?.id,
     };
   }
   getPersistanceId() {

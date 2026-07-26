@@ -4,18 +4,18 @@ import { HashService } from "@/domain/services/HashService";
 import { TokenService } from "@/domain/services/TokenService";
 export class CreateUserUseCase {
   constructor(
-    public readonly users: UserRepository,
-    public readonly token: TokenService,
-    public readonly hash: HashService,
+    public readonly userRepository: UserRepository,
+    public readonly tokenService: TokenService,
+    public readonly hashService: HashService,
   ) {}
 
-  async create(email: string, password: string): Promise<string> {
+  async execute(email: string, password: string): Promise<string> {
     const user = new User();
     user.create(email, password);
-    const passwordHashed = await this.hash.hashPassword(password);
+    const passwordHashed = await this.hashService.hashPassword(password);
     user.setHashedPassword(passwordHashed);
-    await this.users.save(user);
-    const token = await this.token.generate({
+    await this.userRepository.save(user);
+    const token = await this.tokenService.generate({
       id: user.id,
       email: user.email.email,
     });

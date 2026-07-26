@@ -1918,10 +1918,16 @@ export namespace Prisma {
 
   export type ImageCountOutputType = {
     users: number
+    packsPrincipal: number
+    shadersPrincipal: number
+    modsPrincipal: number
   }
 
   export type ImageCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | ImageCountOutputTypeCountUsersArgs
+    packsPrincipal?: boolean | ImageCountOutputTypeCountPacksPrincipalArgs
+    shadersPrincipal?: boolean | ImageCountOutputTypeCountShadersPrincipalArgs
+    modsPrincipal?: boolean | ImageCountOutputTypeCountModsPrincipalArgs
   }
 
   // Custom InputTypes
@@ -1940,6 +1946,27 @@ export namespace Prisma {
    */
   export type ImageCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
+  }
+
+  /**
+   * ImageCountOutputType without action
+   */
+  export type ImageCountOutputTypeCountPacksPrincipalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PackWhereInput
+  }
+
+  /**
+   * ImageCountOutputType without action
+   */
+  export type ImageCountOutputTypeCountShadersPrincipalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ShaderWhereInput
+  }
+
+  /**
+   * ImageCountOutputType without action
+   */
+  export type ImageCountOutputTypeCountModsPrincipalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ModWhereInput
   }
 
 
@@ -3223,16 +3250,16 @@ export namespace Prisma {
     id: number | null
     max_version: number | null
     min_version: number | null
-    score: number | null
     authorId: number | null
+    principalImageId: number | null
   }
 
   export type PackSumAggregateOutputType = {
     id: bigint | null
     max_version: number | null
     min_version: number | null
-    score: number | null
     authorId: bigint | null
+    principalImageId: bigint | null
   }
 
   export type PackMinAggregateOutputType = {
@@ -3242,8 +3269,8 @@ export namespace Prisma {
     versionType: $Enums.VersionType | null
     name: string | null
     description: string | null
-    score: number | null
     authorId: bigint | null
+    principalImageId: bigint | null
   }
 
   export type PackMaxAggregateOutputType = {
@@ -3253,8 +3280,8 @@ export namespace Prisma {
     versionType: $Enums.VersionType | null
     name: string | null
     description: string | null
-    score: number | null
     authorId: bigint | null
+    principalImageId: bigint | null
   }
 
   export type PackCountAggregateOutputType = {
@@ -3264,8 +3291,8 @@ export namespace Prisma {
     versionType: number
     name: number
     description: number
-    score: number
     authorId: number
+    principalImageId: number
     _all: number
   }
 
@@ -3274,16 +3301,16 @@ export namespace Prisma {
     id?: true
     max_version?: true
     min_version?: true
-    score?: true
     authorId?: true
+    principalImageId?: true
   }
 
   export type PackSumAggregateInputType = {
     id?: true
     max_version?: true
     min_version?: true
-    score?: true
     authorId?: true
+    principalImageId?: true
   }
 
   export type PackMinAggregateInputType = {
@@ -3293,8 +3320,8 @@ export namespace Prisma {
     versionType?: true
     name?: true
     description?: true
-    score?: true
     authorId?: true
+    principalImageId?: true
   }
 
   export type PackMaxAggregateInputType = {
@@ -3304,8 +3331,8 @@ export namespace Prisma {
     versionType?: true
     name?: true
     description?: true
-    score?: true
     authorId?: true
+    principalImageId?: true
   }
 
   export type PackCountAggregateInputType = {
@@ -3315,8 +3342,8 @@ export namespace Prisma {
     versionType?: true
     name?: true
     description?: true
-    score?: true
     authorId?: true
+    principalImageId?: true
     _all?: true
   }
 
@@ -3413,8 +3440,8 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description: string | null
-    score: number
     authorId: bigint
+    principalImageId: bigint | null
     _count: PackCountAggregateOutputType | null
     _avg: PackAvgAggregateOutputType | null
     _sum: PackSumAggregateOutputType | null
@@ -3443,13 +3470,14 @@ export namespace Prisma {
     versionType?: boolean
     name?: boolean
     description?: boolean
-    score?: boolean
     authorId?: boolean
+    principalImageId?: boolean
     shaders?: boolean | Pack$shadersArgs<ExtArgs>
     mods?: boolean | Pack$modsArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
     comments?: boolean | Pack$commentsArgs<ExtArgs>
     images?: boolean | Pack$imagesArgs<ExtArgs>
+    principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
     _count?: boolean | PackCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["pack"]>
 
@@ -3460,9 +3488,10 @@ export namespace Prisma {
     versionType?: boolean
     name?: boolean
     description?: boolean
-    score?: boolean
     authorId?: boolean
+    principalImageId?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["pack"]>
 
   export type PackSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3472,9 +3501,10 @@ export namespace Prisma {
     versionType?: boolean
     name?: boolean
     description?: boolean
-    score?: boolean
     authorId?: boolean
+    principalImageId?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["pack"]>
 
   export type PackSelectScalar = {
@@ -3484,24 +3514,27 @@ export namespace Prisma {
     versionType?: boolean
     name?: boolean
     description?: boolean
-    score?: boolean
     authorId?: boolean
+    principalImageId?: boolean
   }
 
-  export type PackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "max_version" | "min_version" | "versionType" | "name" | "description" | "score" | "authorId", ExtArgs["result"]["pack"]>
+  export type PackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "max_version" | "min_version" | "versionType" | "name" | "description" | "authorId" | "principalImageId", ExtArgs["result"]["pack"]>
   export type PackInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     shaders?: boolean | Pack$shadersArgs<ExtArgs>
     mods?: boolean | Pack$modsArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
     comments?: boolean | Pack$commentsArgs<ExtArgs>
     images?: boolean | Pack$imagesArgs<ExtArgs>
+    principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
     _count?: boolean | PackCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PackIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
   }
   export type PackIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
   }
 
   export type $PackPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3512,6 +3545,7 @@ export namespace Prisma {
       author: Prisma.$UserPayload<ExtArgs>
       comments: Prisma.$CommentPayload<ExtArgs>[]
       images: Prisma.$ImagePayload<ExtArgs>[]
+      principalImage: Prisma.$ImagePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -3520,8 +3554,8 @@ export namespace Prisma {
       versionType: $Enums.VersionType
       name: string
       description: string | null
-      score: number
       authorId: bigint
+      principalImageId: bigint | null
     }, ExtArgs["result"]["pack"]>
     composites: {}
   }
@@ -3921,6 +3955,7 @@ export namespace Prisma {
     author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     comments<T extends Pack$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Pack$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     images<T extends Pack$imagesArgs<ExtArgs> = {}>(args?: Subset<T, Pack$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    principalImage<T extends Pack$principalImageArgs<ExtArgs> = {}>(args?: Subset<T, Pack$principalImageArgs<ExtArgs>>): Prisma__ImageClient<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3956,8 +3991,8 @@ export namespace Prisma {
     readonly versionType: FieldRef<"Pack", 'VersionType'>
     readonly name: FieldRef<"Pack", 'String'>
     readonly description: FieldRef<"Pack", 'String'>
-    readonly score: FieldRef<"Pack", 'Float'>
     readonly authorId: FieldRef<"Pack", 'BigInt'>
+    readonly principalImageId: FieldRef<"Pack", 'BigInt'>
   }
     
 
@@ -4455,6 +4490,25 @@ export namespace Prisma {
   }
 
   /**
+   * Pack.principalImage
+   */
+  export type Pack$principalImageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Image
+     */
+    select?: ImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Image
+     */
+    omit?: ImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ImageInclude<ExtArgs> | null
+    where?: ImageWhereInput
+  }
+
+  /**
    * Pack without action
    */
   export type PackDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4487,98 +4541,98 @@ export namespace Prisma {
 
   export type ShaderAvgAggregateOutputType = {
     id: number | null
-    score: number | null
     weight: number | null
     authorId: number | null
+    principalImageId: number | null
   }
 
   export type ShaderSumAggregateOutputType = {
     id: bigint | null
-    score: number | null
     weight: number | null
     authorId: bigint | null
+    principalImageId: bigint | null
   }
 
   export type ShaderMinAggregateOutputType = {
     id: bigint | null
     name: string | null
     description: string | null
-    score: number | null
     weight: number | null
-    url: string | null
+    src: string | null
     authorId: bigint | null
     versionType: $Enums.VersionType | null
+    principalImageId: bigint | null
   }
 
   export type ShaderMaxAggregateOutputType = {
     id: bigint | null
     name: string | null
     description: string | null
-    score: number | null
     weight: number | null
-    url: string | null
+    src: string | null
     authorId: bigint | null
     versionType: $Enums.VersionType | null
+    principalImageId: bigint | null
   }
 
   export type ShaderCountAggregateOutputType = {
     id: number
     name: number
     description: number
-    score: number
     weight: number
-    url: number
+    src: number
     authorId: number
     versionType: number
+    principalImageId: number
     _all: number
   }
 
 
   export type ShaderAvgAggregateInputType = {
     id?: true
-    score?: true
     weight?: true
     authorId?: true
+    principalImageId?: true
   }
 
   export type ShaderSumAggregateInputType = {
     id?: true
-    score?: true
     weight?: true
     authorId?: true
+    principalImageId?: true
   }
 
   export type ShaderMinAggregateInputType = {
     id?: true
     name?: true
     description?: true
-    score?: true
     weight?: true
-    url?: true
+    src?: true
     authorId?: true
     versionType?: true
+    principalImageId?: true
   }
 
   export type ShaderMaxAggregateInputType = {
     id?: true
     name?: true
     description?: true
-    score?: true
     weight?: true
-    url?: true
+    src?: true
     authorId?: true
     versionType?: true
+    principalImageId?: true
   }
 
   export type ShaderCountAggregateInputType = {
     id?: true
     name?: true
     description?: true
-    score?: true
     weight?: true
-    url?: true
+    src?: true
     authorId?: true
     versionType?: true
+    principalImageId?: true
     _all?: true
   }
 
@@ -4671,12 +4725,12 @@ export namespace Prisma {
   export type ShaderGroupByOutputType = {
     id: bigint
     name: string
-    description: string | null
-    score: number
+    description: string
     weight: number
-    url: string
+    src: string
     authorId: bigint
     versionType: $Enums.VersionType
+    principalImageId: bigint | null
     _count: ShaderCountAggregateOutputType | null
     _avg: ShaderAvgAggregateOutputType | null
     _sum: ShaderSumAggregateOutputType | null
@@ -4702,17 +4756,18 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    score?: boolean
     weight?: boolean
-    url?: boolean
+    src?: boolean
     authorId?: boolean
     versionType?: boolean
+    principalImageId?: boolean
     packs?: boolean | Shader$packsArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
     comments?: boolean | Shader$commentsArgs<ExtArgs>
     images?: boolean | Shader$imagesArgs<ExtArgs>
     conflicts?: boolean | Shader$conflictsArgs<ExtArgs>
     shaderDependecies?: boolean | Shader$shaderDependeciesArgs<ExtArgs>
+    principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
     _count?: boolean | ShaderCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["shader"]>
 
@@ -4720,38 +4775,40 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    score?: boolean
     weight?: boolean
-    url?: boolean
+    src?: boolean
     authorId?: boolean
     versionType?: boolean
+    principalImageId?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["shader"]>
 
   export type ShaderSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     description?: boolean
-    score?: boolean
     weight?: boolean
-    url?: boolean
+    src?: boolean
     authorId?: boolean
     versionType?: boolean
+    principalImageId?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["shader"]>
 
   export type ShaderSelectScalar = {
     id?: boolean
     name?: boolean
     description?: boolean
-    score?: boolean
     weight?: boolean
-    url?: boolean
+    src?: boolean
     authorId?: boolean
     versionType?: boolean
+    principalImageId?: boolean
   }
 
-  export type ShaderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "score" | "weight" | "url" | "authorId" | "versionType", ExtArgs["result"]["shader"]>
+  export type ShaderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "weight" | "src" | "authorId" | "versionType" | "principalImageId", ExtArgs["result"]["shader"]>
   export type ShaderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     packs?: boolean | Shader$packsArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
@@ -4759,13 +4816,16 @@ export namespace Prisma {
     images?: boolean | Shader$imagesArgs<ExtArgs>
     conflicts?: boolean | Shader$conflictsArgs<ExtArgs>
     shaderDependecies?: boolean | Shader$shaderDependeciesArgs<ExtArgs>
+    principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
     _count?: boolean | ShaderCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ShaderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
   }
   export type ShaderIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
   }
 
   export type $ShaderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4777,16 +4837,17 @@ export namespace Prisma {
       images: Prisma.$ImagePayload<ExtArgs>[]
       conflicts: Prisma.$ConflictPayload<ExtArgs>[]
       shaderDependecies: Prisma.$ShaderDependecyPayload<ExtArgs>[]
+      principalImage: Prisma.$ImagePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       name: string
-      description: string | null
-      score: number
+      description: string
       weight: number
-      url: string
+      src: string
       authorId: bigint
       versionType: $Enums.VersionType
+      principalImageId: bigint | null
     }, ExtArgs["result"]["shader"]>
     composites: {}
   }
@@ -5187,6 +5248,7 @@ export namespace Prisma {
     images<T extends Shader$imagesArgs<ExtArgs> = {}>(args?: Subset<T, Shader$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     conflicts<T extends Shader$conflictsArgs<ExtArgs> = {}>(args?: Subset<T, Shader$conflictsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConflictPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shaderDependecies<T extends Shader$shaderDependeciesArgs<ExtArgs> = {}>(args?: Subset<T, Shader$shaderDependeciesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShaderDependecyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    principalImage<T extends Shader$principalImageArgs<ExtArgs> = {}>(args?: Subset<T, Shader$principalImageArgs<ExtArgs>>): Prisma__ImageClient<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5219,11 +5281,11 @@ export namespace Prisma {
     readonly id: FieldRef<"Shader", 'BigInt'>
     readonly name: FieldRef<"Shader", 'String'>
     readonly description: FieldRef<"Shader", 'String'>
-    readonly score: FieldRef<"Shader", 'Float'>
     readonly weight: FieldRef<"Shader", 'Int'>
-    readonly url: FieldRef<"Shader", 'String'>
+    readonly src: FieldRef<"Shader", 'String'>
     readonly authorId: FieldRef<"Shader", 'BigInt'>
     readonly versionType: FieldRef<"Shader", 'VersionType'>
+    readonly principalImageId: FieldRef<"Shader", 'BigInt'>
   }
     
 
@@ -5745,6 +5807,25 @@ export namespace Prisma {
   }
 
   /**
+   * Shader.principalImage
+   */
+  export type Shader$principalImageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Image
+     */
+    select?: ImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Image
+     */
+    omit?: ImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ImageInclude<ExtArgs> | null
+    where?: ImageWhereInput
+  }
+
+  /**
    * Shader without action
    */
   export type ShaderDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5781,6 +5862,7 @@ export namespace Prisma {
     max_version: number | null
     weight: number | null
     authorId: number | null
+    principalImageId: number | null
   }
 
   export type ModSumAggregateOutputType = {
@@ -5789,6 +5871,7 @@ export namespace Prisma {
     max_version: number | null
     weight: number | null
     authorId: bigint | null
+    principalImageId: bigint | null
   }
 
   export type ModMinAggregateOutputType = {
@@ -5797,10 +5880,11 @@ export namespace Prisma {
     description: string | null
     min_version: number | null
     max_version: number | null
-    url: string | null
+    src: string | null
     weight: number | null
     authorId: bigint | null
     versionType: $Enums.VersionType | null
+    principalImageId: bigint | null
   }
 
   export type ModMaxAggregateOutputType = {
@@ -5809,10 +5893,11 @@ export namespace Prisma {
     description: string | null
     min_version: number | null
     max_version: number | null
-    url: string | null
+    src: string | null
     weight: number | null
     authorId: bigint | null
     versionType: $Enums.VersionType | null
+    principalImageId: bigint | null
   }
 
   export type ModCountAggregateOutputType = {
@@ -5821,10 +5906,11 @@ export namespace Prisma {
     description: number
     min_version: number
     max_version: number
-    url: number
+    src: number
     weight: number
     authorId: number
     versionType: number
+    principalImageId: number
     _all: number
   }
 
@@ -5835,6 +5921,7 @@ export namespace Prisma {
     max_version?: true
     weight?: true
     authorId?: true
+    principalImageId?: true
   }
 
   export type ModSumAggregateInputType = {
@@ -5843,6 +5930,7 @@ export namespace Prisma {
     max_version?: true
     weight?: true
     authorId?: true
+    principalImageId?: true
   }
 
   export type ModMinAggregateInputType = {
@@ -5851,10 +5939,11 @@ export namespace Prisma {
     description?: true
     min_version?: true
     max_version?: true
-    url?: true
+    src?: true
     weight?: true
     authorId?: true
     versionType?: true
+    principalImageId?: true
   }
 
   export type ModMaxAggregateInputType = {
@@ -5863,10 +5952,11 @@ export namespace Prisma {
     description?: true
     min_version?: true
     max_version?: true
-    url?: true
+    src?: true
     weight?: true
     authorId?: true
     versionType?: true
+    principalImageId?: true
   }
 
   export type ModCountAggregateInputType = {
@@ -5875,10 +5965,11 @@ export namespace Prisma {
     description?: true
     min_version?: true
     max_version?: true
-    url?: true
+    src?: true
     weight?: true
     authorId?: true
     versionType?: true
+    principalImageId?: true
     _all?: true
   }
 
@@ -5971,13 +6062,14 @@ export namespace Prisma {
   export type ModGroupByOutputType = {
     id: bigint
     name: string
-    description: string | null
+    description: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     authorId: bigint
     versionType: $Enums.VersionType
+    principalImageId: bigint | null
     _count: ModCountAggregateOutputType | null
     _avg: ModAvgAggregateOutputType | null
     _sum: ModSumAggregateOutputType | null
@@ -6005,10 +6097,11 @@ export namespace Prisma {
     description?: boolean
     min_version?: boolean
     max_version?: boolean
-    url?: boolean
+    src?: boolean
     weight?: boolean
     authorId?: boolean
     versionType?: boolean
+    principalImageId?: boolean
     packs?: boolean | Mod$packsArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
     comments?: boolean | Mod$commentsArgs<ExtArgs>
@@ -6018,6 +6111,7 @@ export namespace Prisma {
     requiredBy?: boolean | Mod$requiredByArgs<ExtArgs>
     modDependencies?: boolean | Mod$modDependenciesArgs<ExtArgs>
     shaderDependecies?: boolean | Mod$shaderDependeciesArgs<ExtArgs>
+    principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
     _count?: boolean | ModCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mod"]>
 
@@ -6027,11 +6121,13 @@ export namespace Prisma {
     description?: boolean
     min_version?: boolean
     max_version?: boolean
-    url?: boolean
+    src?: boolean
     weight?: boolean
     authorId?: boolean
     versionType?: boolean
+    principalImageId?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["mod"]>
 
   export type ModSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6040,11 +6136,13 @@ export namespace Prisma {
     description?: boolean
     min_version?: boolean
     max_version?: boolean
-    url?: boolean
+    src?: boolean
     weight?: boolean
     authorId?: boolean
     versionType?: boolean
+    principalImageId?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["mod"]>
 
   export type ModSelectScalar = {
@@ -6053,13 +6151,14 @@ export namespace Prisma {
     description?: boolean
     min_version?: boolean
     max_version?: boolean
-    url?: boolean
+    src?: boolean
     weight?: boolean
     authorId?: boolean
     versionType?: boolean
+    principalImageId?: boolean
   }
 
-  export type ModOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "min_version" | "max_version" | "url" | "weight" | "authorId" | "versionType", ExtArgs["result"]["mod"]>
+  export type ModOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "min_version" | "max_version" | "src" | "weight" | "authorId" | "versionType" | "principalImageId", ExtArgs["result"]["mod"]>
   export type ModInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     packs?: boolean | Mod$packsArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
@@ -6070,13 +6169,16 @@ export namespace Prisma {
     requiredBy?: boolean | Mod$requiredByArgs<ExtArgs>
     modDependencies?: boolean | Mod$modDependenciesArgs<ExtArgs>
     shaderDependecies?: boolean | Mod$shaderDependeciesArgs<ExtArgs>
+    principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
     _count?: boolean | ModCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ModIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
   }
   export type ModIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
+    principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
   }
 
   export type $ModPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6091,17 +6193,19 @@ export namespace Prisma {
       requiredBy: Prisma.$ModDependencyPayload<ExtArgs>[]
       modDependencies: Prisma.$ModDependencyPayload<ExtArgs>[]
       shaderDependecies: Prisma.$ShaderDependecyPayload<ExtArgs>[]
+      principalImage: Prisma.$ImagePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       name: string
-      description: string | null
+      description: string
       min_version: number
       max_version: number
-      url: string
+      src: string
       weight: number
       authorId: bigint
       versionType: $Enums.VersionType
+      principalImageId: bigint | null
     }, ExtArgs["result"]["mod"]>
     composites: {}
   }
@@ -6505,6 +6609,7 @@ export namespace Prisma {
     requiredBy<T extends Mod$requiredByArgs<ExtArgs> = {}>(args?: Subset<T, Mod$requiredByArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModDependencyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     modDependencies<T extends Mod$modDependenciesArgs<ExtArgs> = {}>(args?: Subset<T, Mod$modDependenciesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModDependencyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shaderDependecies<T extends Mod$shaderDependeciesArgs<ExtArgs> = {}>(args?: Subset<T, Mod$shaderDependeciesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShaderDependecyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    principalImage<T extends Mod$principalImageArgs<ExtArgs> = {}>(args?: Subset<T, Mod$principalImageArgs<ExtArgs>>): Prisma__ImageClient<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6539,10 +6644,11 @@ export namespace Prisma {
     readonly description: FieldRef<"Mod", 'String'>
     readonly min_version: FieldRef<"Mod", 'Int'>
     readonly max_version: FieldRef<"Mod", 'Int'>
-    readonly url: FieldRef<"Mod", 'String'>
+    readonly src: FieldRef<"Mod", 'String'>
     readonly weight: FieldRef<"Mod", 'Int'>
     readonly authorId: FieldRef<"Mod", 'BigInt'>
     readonly versionType: FieldRef<"Mod", 'VersionType'>
+    readonly principalImageId: FieldRef<"Mod", 'BigInt'>
   }
     
 
@@ -7133,6 +7239,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ShaderDependecyScalarFieldEnum | ShaderDependecyScalarFieldEnum[]
+  }
+
+  /**
+   * Mod.principalImage
+   */
+  export type Mod$principalImageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Image
+     */
+    select?: ImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Image
+     */
+    omit?: ImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ImageInclude<ExtArgs> | null
+    where?: ImageWhereInput
   }
 
   /**
@@ -8389,7 +8514,8 @@ export namespace Prisma {
 
   export type ImageMinAggregateOutputType = {
     id: bigint | null
-    url: string | null
+    src: string | null
+    basePath: string | null
     modId: bigint | null
     shaderId: bigint | null
     packId: bigint | null
@@ -8397,7 +8523,8 @@ export namespace Prisma {
 
   export type ImageMaxAggregateOutputType = {
     id: bigint | null
-    url: string | null
+    src: string | null
+    basePath: string | null
     modId: bigint | null
     shaderId: bigint | null
     packId: bigint | null
@@ -8405,7 +8532,8 @@ export namespace Prisma {
 
   export type ImageCountAggregateOutputType = {
     id: number
-    url: number
+    src: number
+    basePath: number
     modId: number
     shaderId: number
     packId: number
@@ -8429,7 +8557,8 @@ export namespace Prisma {
 
   export type ImageMinAggregateInputType = {
     id?: true
-    url?: true
+    src?: true
+    basePath?: true
     modId?: true
     shaderId?: true
     packId?: true
@@ -8437,7 +8566,8 @@ export namespace Prisma {
 
   export type ImageMaxAggregateInputType = {
     id?: true
-    url?: true
+    src?: true
+    basePath?: true
     modId?: true
     shaderId?: true
     packId?: true
@@ -8445,7 +8575,8 @@ export namespace Prisma {
 
   export type ImageCountAggregateInputType = {
     id?: true
-    url?: true
+    src?: true
+    basePath?: true
     modId?: true
     shaderId?: true
     packId?: true
@@ -8540,7 +8671,8 @@ export namespace Prisma {
 
   export type ImageGroupByOutputType = {
     id: bigint
-    url: string
+    src: string
+    basePath: string
     modId: bigint | null
     shaderId: bigint | null
     packId: bigint | null
@@ -8567,7 +8699,8 @@ export namespace Prisma {
 
   export type ImageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    url?: boolean
+    src?: boolean
+    basePath?: boolean
     modId?: boolean
     shaderId?: boolean
     packId?: boolean
@@ -8575,12 +8708,16 @@ export namespace Prisma {
     shader?: boolean | Image$shaderArgs<ExtArgs>
     pack?: boolean | Image$packArgs<ExtArgs>
     users?: boolean | Image$usersArgs<ExtArgs>
+    packsPrincipal?: boolean | Image$packsPrincipalArgs<ExtArgs>
+    shadersPrincipal?: boolean | Image$shadersPrincipalArgs<ExtArgs>
+    modsPrincipal?: boolean | Image$modsPrincipalArgs<ExtArgs>
     _count?: boolean | ImageCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["image"]>
 
   export type ImageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    url?: boolean
+    src?: boolean
+    basePath?: boolean
     modId?: boolean
     shaderId?: boolean
     packId?: boolean
@@ -8591,7 +8728,8 @@ export namespace Prisma {
 
   export type ImageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    url?: boolean
+    src?: boolean
+    basePath?: boolean
     modId?: boolean
     shaderId?: boolean
     packId?: boolean
@@ -8602,18 +8740,22 @@ export namespace Prisma {
 
   export type ImageSelectScalar = {
     id?: boolean
-    url?: boolean
+    src?: boolean
+    basePath?: boolean
     modId?: boolean
     shaderId?: boolean
     packId?: boolean
   }
 
-  export type ImageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "url" | "modId" | "shaderId" | "packId", ExtArgs["result"]["image"]>
+  export type ImageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "src" | "basePath" | "modId" | "shaderId" | "packId", ExtArgs["result"]["image"]>
   export type ImageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mod?: boolean | Image$modArgs<ExtArgs>
     shader?: boolean | Image$shaderArgs<ExtArgs>
     pack?: boolean | Image$packArgs<ExtArgs>
     users?: boolean | Image$usersArgs<ExtArgs>
+    packsPrincipal?: boolean | Image$packsPrincipalArgs<ExtArgs>
+    shadersPrincipal?: boolean | Image$shadersPrincipalArgs<ExtArgs>
+    modsPrincipal?: boolean | Image$modsPrincipalArgs<ExtArgs>
     _count?: boolean | ImageCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ImageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8634,10 +8776,14 @@ export namespace Prisma {
       shader: Prisma.$ShaderPayload<ExtArgs> | null
       pack: Prisma.$PackPayload<ExtArgs> | null
       users: Prisma.$UserPayload<ExtArgs>[]
+      packsPrincipal: Prisma.$PackPayload<ExtArgs>[]
+      shadersPrincipal: Prisma.$ShaderPayload<ExtArgs>[]
+      modsPrincipal: Prisma.$ModPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
-      url: string
+      src: string
+      basePath: string
       modId: bigint | null
       shaderId: bigint | null
       packId: bigint | null
@@ -9039,6 +9185,9 @@ export namespace Prisma {
     shader<T extends Image$shaderArgs<ExtArgs> = {}>(args?: Subset<T, Image$shaderArgs<ExtArgs>>): Prisma__ShaderClient<$Result.GetResult<Prisma.$ShaderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     pack<T extends Image$packArgs<ExtArgs> = {}>(args?: Subset<T, Image$packArgs<ExtArgs>>): Prisma__PackClient<$Result.GetResult<Prisma.$PackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     users<T extends Image$usersArgs<ExtArgs> = {}>(args?: Subset<T, Image$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    packsPrincipal<T extends Image$packsPrincipalArgs<ExtArgs> = {}>(args?: Subset<T, Image$packsPrincipalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    shadersPrincipal<T extends Image$shadersPrincipalArgs<ExtArgs> = {}>(args?: Subset<T, Image$shadersPrincipalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShaderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    modsPrincipal<T extends Image$modsPrincipalArgs<ExtArgs> = {}>(args?: Subset<T, Image$modsPrincipalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9069,7 +9218,8 @@ export namespace Prisma {
    */
   interface ImageFieldRefs {
     readonly id: FieldRef<"Image", 'BigInt'>
-    readonly url: FieldRef<"Image", 'String'>
+    readonly src: FieldRef<"Image", 'String'>
+    readonly basePath: FieldRef<"Image", 'String'>
     readonly modId: FieldRef<"Image", 'BigInt'>
     readonly shaderId: FieldRef<"Image", 'BigInt'>
     readonly packId: FieldRef<"Image", 'BigInt'>
@@ -9552,6 +9702,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * Image.packsPrincipal
+   */
+  export type Image$packsPrincipalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pack
+     */
+    select?: PackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pack
+     */
+    omit?: PackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackInclude<ExtArgs> | null
+    where?: PackWhereInput
+    orderBy?: PackOrderByWithRelationInput | PackOrderByWithRelationInput[]
+    cursor?: PackWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PackScalarFieldEnum | PackScalarFieldEnum[]
+  }
+
+  /**
+   * Image.shadersPrincipal
+   */
+  export type Image$shadersPrincipalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shader
+     */
+    select?: ShaderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shader
+     */
+    omit?: ShaderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShaderInclude<ExtArgs> | null
+    where?: ShaderWhereInput
+    orderBy?: ShaderOrderByWithRelationInput | ShaderOrderByWithRelationInput[]
+    cursor?: ShaderWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ShaderScalarFieldEnum | ShaderScalarFieldEnum[]
+  }
+
+  /**
+   * Image.modsPrincipal
+   */
+  export type Image$modsPrincipalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mod
+     */
+    select?: ModSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mod
+     */
+    omit?: ModOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModInclude<ExtArgs> | null
+    where?: ModWhereInput
+    orderBy?: ModOrderByWithRelationInput | ModOrderByWithRelationInput[]
+    cursor?: ModWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ModScalarFieldEnum | ModScalarFieldEnum[]
   }
 
   /**
@@ -12897,8 +13119,8 @@ export namespace Prisma {
     versionType: 'versionType',
     name: 'name',
     description: 'description',
-    score: 'score',
-    authorId: 'authorId'
+    authorId: 'authorId',
+    principalImageId: 'principalImageId'
   };
 
   export type PackScalarFieldEnum = (typeof PackScalarFieldEnum)[keyof typeof PackScalarFieldEnum]
@@ -12908,11 +13130,11 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     description: 'description',
-    score: 'score',
     weight: 'weight',
-    url: 'url',
+    src: 'src',
     authorId: 'authorId',
-    versionType: 'versionType'
+    versionType: 'versionType',
+    principalImageId: 'principalImageId'
   };
 
   export type ShaderScalarFieldEnum = (typeof ShaderScalarFieldEnum)[keyof typeof ShaderScalarFieldEnum]
@@ -12924,10 +13146,11 @@ export namespace Prisma {
     description: 'description',
     min_version: 'min_version',
     max_version: 'max_version',
-    url: 'url',
+    src: 'src',
     weight: 'weight',
     authorId: 'authorId',
-    versionType: 'versionType'
+    versionType: 'versionType',
+    principalImageId: 'principalImageId'
   };
 
   export type ModScalarFieldEnum = (typeof ModScalarFieldEnum)[keyof typeof ModScalarFieldEnum]
@@ -12947,7 +13170,8 @@ export namespace Prisma {
 
   export const ImageScalarFieldEnum: {
     id: 'id',
-    url: 'url',
+    src: 'src',
+    basePath: 'basePath',
     modId: 'modId',
     shaderId: 'shaderId',
     packId: 'packId'
@@ -13027,7 +13251,7 @@ export namespace Prisma {
   export const ShaderOrderByRelevanceFieldEnum: {
     name: 'name',
     description: 'description',
-    url: 'url'
+    src: 'src'
   };
 
   export type ShaderOrderByRelevanceFieldEnum = (typeof ShaderOrderByRelevanceFieldEnum)[keyof typeof ShaderOrderByRelevanceFieldEnum]
@@ -13036,7 +13260,7 @@ export namespace Prisma {
   export const ModOrderByRelevanceFieldEnum: {
     name: 'name',
     description: 'description',
-    url: 'url'
+    src: 'src'
   };
 
   export type ModOrderByRelevanceFieldEnum = (typeof ModOrderByRelevanceFieldEnum)[keyof typeof ModOrderByRelevanceFieldEnum]
@@ -13050,7 +13274,8 @@ export namespace Prisma {
 
 
   export const ImageOrderByRelevanceFieldEnum: {
-    url: 'url'
+    src: 'src',
+    basePath: 'basePath'
   };
 
   export type ImageOrderByRelevanceFieldEnum = (typeof ImageOrderByRelevanceFieldEnum)[keyof typeof ImageOrderByRelevanceFieldEnum]
@@ -13231,13 +13456,14 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFilter<"Pack"> | $Enums.VersionType
     name?: StringFilter<"Pack"> | string
     description?: StringNullableFilter<"Pack"> | string | null
-    score?: FloatFilter<"Pack"> | number
     authorId?: BigIntFilter<"Pack"> | bigint | number
+    principalImageId?: BigIntNullableFilter<"Pack"> | bigint | number | null
     shaders?: ShaderListRelationFilter
     mods?: ModListRelationFilter
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
+    principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }
 
   export type PackOrderByWithRelationInput = {
@@ -13247,13 +13473,14 @@ export namespace Prisma {
     versionType?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
-    score?: SortOrder
     authorId?: SortOrder
+    principalImageId?: SortOrderInput | SortOrder
     shaders?: ShaderOrderByRelationAggregateInput
     mods?: ModOrderByRelationAggregateInput
     author?: UserOrderByWithRelationInput
     comments?: CommentOrderByRelationAggregateInput
     images?: ImageOrderByRelationAggregateInput
+    principalImage?: ImageOrderByWithRelationInput
     _relevance?: PackOrderByRelevanceInput
   }
 
@@ -13267,13 +13494,14 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFilter<"Pack"> | $Enums.VersionType
     name?: StringFilter<"Pack"> | string
     description?: StringNullableFilter<"Pack"> | string | null
-    score?: FloatFilter<"Pack"> | number
     authorId?: BigIntFilter<"Pack"> | bigint | number
+    principalImageId?: BigIntNullableFilter<"Pack"> | bigint | number | null
     shaders?: ShaderListRelationFilter
     mods?: ModListRelationFilter
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
+    principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }, "id">
 
   export type PackOrderByWithAggregationInput = {
@@ -13283,8 +13511,8 @@ export namespace Prisma {
     versionType?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
-    score?: SortOrder
     authorId?: SortOrder
+    principalImageId?: SortOrderInput | SortOrder
     _count?: PackCountOrderByAggregateInput
     _avg?: PackAvgOrderByAggregateInput
     _max?: PackMaxOrderByAggregateInput
@@ -13302,8 +13530,8 @@ export namespace Prisma {
     versionType?: EnumVersionTypeWithAggregatesFilter<"Pack"> | $Enums.VersionType
     name?: StringWithAggregatesFilter<"Pack"> | string
     description?: StringNullableWithAggregatesFilter<"Pack"> | string | null
-    score?: FloatWithAggregatesFilter<"Pack"> | number
     authorId?: BigIntWithAggregatesFilter<"Pack"> | bigint | number
+    principalImageId?: BigIntNullableWithAggregatesFilter<"Pack"> | bigint | number | null
   }
 
   export type ShaderWhereInput = {
@@ -13312,35 +13540,37 @@ export namespace Prisma {
     NOT?: ShaderWhereInput | ShaderWhereInput[]
     id?: BigIntFilter<"Shader"> | bigint | number
     name?: StringFilter<"Shader"> | string
-    description?: StringNullableFilter<"Shader"> | string | null
-    score?: FloatFilter<"Shader"> | number
+    description?: StringFilter<"Shader"> | string
     weight?: IntFilter<"Shader"> | number
-    url?: StringFilter<"Shader"> | string
+    src?: StringFilter<"Shader"> | string
     authorId?: BigIntFilter<"Shader"> | bigint | number
     versionType?: EnumVersionTypeFilter<"Shader"> | $Enums.VersionType
+    principalImageId?: BigIntNullableFilter<"Shader"> | bigint | number | null
     packs?: PackListRelationFilter
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
     conflicts?: ConflictListRelationFilter
     shaderDependecies?: ShaderDependecyListRelationFilter
+    principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }
 
   export type ShaderOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrderInput | SortOrder
-    score?: SortOrder
+    description?: SortOrder
     weight?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
     authorId?: SortOrder
     versionType?: SortOrder
+    principalImageId?: SortOrderInput | SortOrder
     packs?: PackOrderByRelationAggregateInput
     author?: UserOrderByWithRelationInput
     comments?: CommentOrderByRelationAggregateInput
     images?: ImageOrderByRelationAggregateInput
     conflicts?: ConflictOrderByRelationAggregateInput
     shaderDependecies?: ShaderDependecyOrderByRelationAggregateInput
+    principalImage?: ImageOrderByWithRelationInput
     _relevance?: ShaderOrderByRelevanceInput
   }
 
@@ -13350,29 +13580,30 @@ export namespace Prisma {
     OR?: ShaderWhereInput[]
     NOT?: ShaderWhereInput | ShaderWhereInput[]
     name?: StringFilter<"Shader"> | string
-    description?: StringNullableFilter<"Shader"> | string | null
-    score?: FloatFilter<"Shader"> | number
+    description?: StringFilter<"Shader"> | string
     weight?: IntFilter<"Shader"> | number
-    url?: StringFilter<"Shader"> | string
+    src?: StringFilter<"Shader"> | string
     authorId?: BigIntFilter<"Shader"> | bigint | number
     versionType?: EnumVersionTypeFilter<"Shader"> | $Enums.VersionType
+    principalImageId?: BigIntNullableFilter<"Shader"> | bigint | number | null
     packs?: PackListRelationFilter
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
     conflicts?: ConflictListRelationFilter
     shaderDependecies?: ShaderDependecyListRelationFilter
+    principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }, "id">
 
   export type ShaderOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrderInput | SortOrder
-    score?: SortOrder
+    description?: SortOrder
     weight?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
     authorId?: SortOrder
     versionType?: SortOrder
+    principalImageId?: SortOrderInput | SortOrder
     _count?: ShaderCountOrderByAggregateInput
     _avg?: ShaderAvgOrderByAggregateInput
     _max?: ShaderMaxOrderByAggregateInput
@@ -13386,12 +13617,12 @@ export namespace Prisma {
     NOT?: ShaderScalarWhereWithAggregatesInput | ShaderScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"Shader"> | bigint | number
     name?: StringWithAggregatesFilter<"Shader"> | string
-    description?: StringNullableWithAggregatesFilter<"Shader"> | string | null
-    score?: FloatWithAggregatesFilter<"Shader"> | number
+    description?: StringWithAggregatesFilter<"Shader"> | string
     weight?: IntWithAggregatesFilter<"Shader"> | number
-    url?: StringWithAggregatesFilter<"Shader"> | string
+    src?: StringWithAggregatesFilter<"Shader"> | string
     authorId?: BigIntWithAggregatesFilter<"Shader"> | bigint | number
     versionType?: EnumVersionTypeWithAggregatesFilter<"Shader"> | $Enums.VersionType
+    principalImageId?: BigIntNullableWithAggregatesFilter<"Shader"> | bigint | number | null
   }
 
   export type ModWhereInput = {
@@ -13400,13 +13631,14 @@ export namespace Prisma {
     NOT?: ModWhereInput | ModWhereInput[]
     id?: BigIntFilter<"Mod"> | bigint | number
     name?: StringFilter<"Mod"> | string
-    description?: StringNullableFilter<"Mod"> | string | null
+    description?: StringFilter<"Mod"> | string
     min_version?: IntFilter<"Mod"> | number
     max_version?: IntFilter<"Mod"> | number
-    url?: StringFilter<"Mod"> | string
+    src?: StringFilter<"Mod"> | string
     weight?: IntFilter<"Mod"> | number
     authorId?: BigIntFilter<"Mod"> | bigint | number
     versionType?: EnumVersionTypeFilter<"Mod"> | $Enums.VersionType
+    principalImageId?: BigIntNullableFilter<"Mod"> | bigint | number | null
     packs?: PackListRelationFilter
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
@@ -13416,18 +13648,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyListRelationFilter
     modDependencies?: ModDependencyListRelationFilter
     shaderDependecies?: ShaderDependecyListRelationFilter
+    principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }
 
   export type ModOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrderInput | SortOrder
+    description?: SortOrder
     min_version?: SortOrder
     max_version?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
     weight?: SortOrder
     authorId?: SortOrder
     versionType?: SortOrder
+    principalImageId?: SortOrderInput | SortOrder
     packs?: PackOrderByRelationAggregateInput
     author?: UserOrderByWithRelationInput
     comments?: CommentOrderByRelationAggregateInput
@@ -13437,6 +13671,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyOrderByRelationAggregateInput
     modDependencies?: ModDependencyOrderByRelationAggregateInput
     shaderDependecies?: ShaderDependecyOrderByRelationAggregateInput
+    principalImage?: ImageOrderByWithRelationInput
     _relevance?: ModOrderByRelevanceInput
   }
 
@@ -13446,13 +13681,14 @@ export namespace Prisma {
     OR?: ModWhereInput[]
     NOT?: ModWhereInput | ModWhereInput[]
     name?: StringFilter<"Mod"> | string
-    description?: StringNullableFilter<"Mod"> | string | null
+    description?: StringFilter<"Mod"> | string
     min_version?: IntFilter<"Mod"> | number
     max_version?: IntFilter<"Mod"> | number
-    url?: StringFilter<"Mod"> | string
+    src?: StringFilter<"Mod"> | string
     weight?: IntFilter<"Mod"> | number
     authorId?: BigIntFilter<"Mod"> | bigint | number
     versionType?: EnumVersionTypeFilter<"Mod"> | $Enums.VersionType
+    principalImageId?: BigIntNullableFilter<"Mod"> | bigint | number | null
     packs?: PackListRelationFilter
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
@@ -13462,18 +13698,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyListRelationFilter
     modDependencies?: ModDependencyListRelationFilter
     shaderDependecies?: ShaderDependecyListRelationFilter
+    principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }, "id">
 
   export type ModOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrderInput | SortOrder
+    description?: SortOrder
     min_version?: SortOrder
     max_version?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
     weight?: SortOrder
     authorId?: SortOrder
     versionType?: SortOrder
+    principalImageId?: SortOrderInput | SortOrder
     _count?: ModCountOrderByAggregateInput
     _avg?: ModAvgOrderByAggregateInput
     _max?: ModMaxOrderByAggregateInput
@@ -13487,13 +13725,14 @@ export namespace Prisma {
     NOT?: ModScalarWhereWithAggregatesInput | ModScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"Mod"> | bigint | number
     name?: StringWithAggregatesFilter<"Mod"> | string
-    description?: StringNullableWithAggregatesFilter<"Mod"> | string | null
+    description?: StringWithAggregatesFilter<"Mod"> | string
     min_version?: IntWithAggregatesFilter<"Mod"> | number
     max_version?: IntWithAggregatesFilter<"Mod"> | number
-    url?: StringWithAggregatesFilter<"Mod"> | string
+    src?: StringWithAggregatesFilter<"Mod"> | string
     weight?: IntWithAggregatesFilter<"Mod"> | number
     authorId?: BigIntWithAggregatesFilter<"Mod"> | bigint | number
     versionType?: EnumVersionTypeWithAggregatesFilter<"Mod"> | $Enums.VersionType
+    principalImageId?: BigIntNullableWithAggregatesFilter<"Mod"> | bigint | number | null
   }
 
   export type CommentWhereInput = {
@@ -13573,7 +13812,8 @@ export namespace Prisma {
     OR?: ImageWhereInput[]
     NOT?: ImageWhereInput | ImageWhereInput[]
     id?: BigIntFilter<"Image"> | bigint | number
-    url?: StringFilter<"Image"> | string
+    src?: StringFilter<"Image"> | string
+    basePath?: StringFilter<"Image"> | string
     modId?: BigIntNullableFilter<"Image"> | bigint | number | null
     shaderId?: BigIntNullableFilter<"Image"> | bigint | number | null
     packId?: BigIntNullableFilter<"Image"> | bigint | number | null
@@ -13581,11 +13821,15 @@ export namespace Prisma {
     shader?: XOR<ShaderNullableScalarRelationFilter, ShaderWhereInput> | null
     pack?: XOR<PackNullableScalarRelationFilter, PackWhereInput> | null
     users?: UserListRelationFilter
+    packsPrincipal?: PackListRelationFilter
+    shadersPrincipal?: ShaderListRelationFilter
+    modsPrincipal?: ModListRelationFilter
   }
 
   export type ImageOrderByWithRelationInput = {
     id?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
+    basePath?: SortOrder
     modId?: SortOrderInput | SortOrder
     shaderId?: SortOrderInput | SortOrder
     packId?: SortOrderInput | SortOrder
@@ -13593,6 +13837,9 @@ export namespace Prisma {
     shader?: ShaderOrderByWithRelationInput
     pack?: PackOrderByWithRelationInput
     users?: UserOrderByRelationAggregateInput
+    packsPrincipal?: PackOrderByRelationAggregateInput
+    shadersPrincipal?: ShaderOrderByRelationAggregateInput
+    modsPrincipal?: ModOrderByRelationAggregateInput
     _relevance?: ImageOrderByRelevanceInput
   }
 
@@ -13601,7 +13848,8 @@ export namespace Prisma {
     AND?: ImageWhereInput | ImageWhereInput[]
     OR?: ImageWhereInput[]
     NOT?: ImageWhereInput | ImageWhereInput[]
-    url?: StringFilter<"Image"> | string
+    src?: StringFilter<"Image"> | string
+    basePath?: StringFilter<"Image"> | string
     modId?: BigIntNullableFilter<"Image"> | bigint | number | null
     shaderId?: BigIntNullableFilter<"Image"> | bigint | number | null
     packId?: BigIntNullableFilter<"Image"> | bigint | number | null
@@ -13609,11 +13857,15 @@ export namespace Prisma {
     shader?: XOR<ShaderNullableScalarRelationFilter, ShaderWhereInput> | null
     pack?: XOR<PackNullableScalarRelationFilter, PackWhereInput> | null
     users?: UserListRelationFilter
+    packsPrincipal?: PackListRelationFilter
+    shadersPrincipal?: ShaderListRelationFilter
+    modsPrincipal?: ModListRelationFilter
   }, "id">
 
   export type ImageOrderByWithAggregationInput = {
     id?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
+    basePath?: SortOrder
     modId?: SortOrderInput | SortOrder
     shaderId?: SortOrderInput | SortOrder
     packId?: SortOrderInput | SortOrder
@@ -13629,7 +13881,8 @@ export namespace Prisma {
     OR?: ImageScalarWhereWithAggregatesInput[]
     NOT?: ImageScalarWhereWithAggregatesInput | ImageScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"Image"> | bigint | number
-    url?: StringWithAggregatesFilter<"Image"> | string
+    src?: StringWithAggregatesFilter<"Image"> | string
+    basePath?: StringWithAggregatesFilter<"Image"> | string
     modId?: BigIntNullableWithAggregatesFilter<"Image"> | bigint | number | null
     shaderId?: BigIntNullableWithAggregatesFilter<"Image"> | bigint | number | null
     packId?: BigIntNullableWithAggregatesFilter<"Image"> | bigint | number | null
@@ -13877,12 +14130,12 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     shaders?: ShaderCreateNestedManyWithoutPacksInput
     mods?: ModCreateNestedManyWithoutPacksInput
     author: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
+    principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
   export type PackUncheckedCreateInput = {
@@ -13892,8 +14145,8 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     authorId: bigint | number
+    principalImageId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
@@ -13907,12 +14160,12 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     shaders?: ShaderUpdateManyWithoutPacksNestedInput
     mods?: ModUpdateManyWithoutPacksNestedInput
     author?: UserUpdateOneRequiredWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
+    principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
   export type PackUncheckedUpdateInput = {
@@ -13922,8 +14175,8 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
@@ -13937,8 +14190,8 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     authorId: bigint | number
+    principalImageId?: bigint | number | null
   }
 
   export type PackUpdateManyMutationInput = {
@@ -13948,7 +14201,6 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
   }
 
   export type PackUncheckedUpdateManyInput = {
@@ -13958,17 +14210,16 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type ShaderCreateInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
     author: UserCreateNestedOneWithoutShadersInput
@@ -13976,17 +14227,18 @@ export namespace Prisma {
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
   export type ShaderUncheckedCreateInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
     comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
@@ -13997,10 +14249,9 @@ export namespace Prisma {
   export type ShaderUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
     author?: UserUpdateOneRequiredWithoutShadersNestedInput
@@ -14008,17 +14259,18 @@ export namespace Prisma {
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
   export type ShaderUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
     comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
@@ -14029,42 +14281,41 @@ export namespace Prisma {
   export type ShaderCreateManyInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
   }
 
   export type ShaderUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
   }
 
   export type ShaderUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type ModCreateInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
@@ -14076,18 +14327,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
   export type ModUncheckedCreateInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
     comments?: CommentUncheckedCreateNestedManyWithoutModInput
     images?: ImageUncheckedCreateNestedManyWithoutModInput
@@ -14101,10 +14354,10 @@ export namespace Prisma {
   export type ModUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
@@ -14116,18 +14369,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
   export type ModUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
     comments?: CommentUncheckedUpdateManyWithoutModNestedInput
     images?: ImageUncheckedUpdateManyWithoutModNestedInput
@@ -14141,22 +14396,23 @@ export namespace Prisma {
   export type ModCreateManyInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
   }
 
   export type ModUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
   }
@@ -14164,13 +14420,14 @@ export namespace Prisma {
   export type ModUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type CommentCreateInput = {
@@ -14234,43 +14491,60 @@ export namespace Prisma {
 
   export type ImageCreateInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     mod?: ModCreateNestedOneWithoutImagesInput
     shader?: ShaderCreateNestedOneWithoutImagesInput
     pack?: PackCreateNestedOneWithoutImagesInput
     users?: UserCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModCreateNestedManyWithoutPrincipalImageInput
   }
 
   export type ImageUncheckedCreateInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
     packId?: bigint | number | null
     users?: UserUncheckedCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackUncheckedCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderUncheckedCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModUncheckedCreateNestedManyWithoutPrincipalImageInput
   }
 
   export type ImageUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     mod?: ModUpdateOneWithoutImagesNestedInput
     shader?: ShaderUpdateOneWithoutImagesNestedInput
     pack?: PackUpdateOneWithoutImagesNestedInput
     users?: UserUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUpdateManyWithoutPrincipalImageNestedInput
   }
 
   export type ImageUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     users?: UserUncheckedUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUncheckedUpdateManyWithoutPrincipalImageNestedInput
   }
 
   export type ImageCreateManyInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
     packId?: bigint | number | null
@@ -14278,12 +14552,14 @@ export namespace Prisma {
 
   export type ImageUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
   }
 
   export type ImageUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -14654,17 +14930,6 @@ export namespace Prisma {
     not?: NestedEnumVersionTypeFilter<$PrismaModel> | $Enums.VersionType
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -14693,16 +14958,16 @@ export namespace Prisma {
     versionType?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    score?: SortOrder
     authorId?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type PackAvgOrderByAggregateInput = {
     id?: SortOrder
     max_version?: SortOrder
     min_version?: SortOrder
-    score?: SortOrder
     authorId?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type PackMaxOrderByAggregateInput = {
@@ -14712,8 +14977,8 @@ export namespace Prisma {
     versionType?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    score?: SortOrder
     authorId?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type PackMinOrderByAggregateInput = {
@@ -14723,16 +14988,16 @@ export namespace Prisma {
     versionType?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    score?: SortOrder
     authorId?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type PackSumOrderByAggregateInput = {
     id?: SortOrder
     max_version?: SortOrder
     min_version?: SortOrder
-    score?: SortOrder
     authorId?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -14759,22 +15024,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumVersionTypeFilter<$PrismaModel>
     _max?: NestedEnumVersionTypeFilter<$PrismaModel>
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type ConflictListRelationFilter = {
@@ -14807,47 +15056,47 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    score?: SortOrder
     weight?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
     authorId?: SortOrder
     versionType?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type ShaderAvgOrderByAggregateInput = {
     id?: SortOrder
-    score?: SortOrder
     weight?: SortOrder
     authorId?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type ShaderMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    score?: SortOrder
     weight?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
     authorId?: SortOrder
     versionType?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type ShaderMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    score?: SortOrder
     weight?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
     authorId?: SortOrder
     versionType?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type ShaderSumOrderByAggregateInput = {
     id?: SortOrder
-    score?: SortOrder
     weight?: SortOrder
     authorId?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type ModDependencyListRelationFilter = {
@@ -14872,10 +15121,11 @@ export namespace Prisma {
     description?: SortOrder
     min_version?: SortOrder
     max_version?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
     weight?: SortOrder
     authorId?: SortOrder
     versionType?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type ModAvgOrderByAggregateInput = {
@@ -14884,6 +15134,7 @@ export namespace Prisma {
     max_version?: SortOrder
     weight?: SortOrder
     authorId?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type ModMaxOrderByAggregateInput = {
@@ -14892,10 +15143,11 @@ export namespace Prisma {
     description?: SortOrder
     min_version?: SortOrder
     max_version?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
     weight?: SortOrder
     authorId?: SortOrder
     versionType?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type ModMinOrderByAggregateInput = {
@@ -14904,10 +15156,11 @@ export namespace Prisma {
     description?: SortOrder
     min_version?: SortOrder
     max_version?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
     weight?: SortOrder
     authorId?: SortOrder
     versionType?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type ModSumOrderByAggregateInput = {
@@ -14916,6 +15169,7 @@ export namespace Prisma {
     max_version?: SortOrder
     weight?: SortOrder
     authorId?: SortOrder
+    principalImageId?: SortOrder
   }
 
   export type PackNullableScalarRelationFilter = {
@@ -15000,7 +15254,8 @@ export namespace Prisma {
 
   export type ImageCountOrderByAggregateInput = {
     id?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
+    basePath?: SortOrder
     modId?: SortOrder
     shaderId?: SortOrder
     packId?: SortOrder
@@ -15015,7 +15270,8 @@ export namespace Prisma {
 
   export type ImageMaxOrderByAggregateInput = {
     id?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
+    basePath?: SortOrder
     modId?: SortOrder
     shaderId?: SortOrder
     packId?: SortOrder
@@ -15023,7 +15279,8 @@ export namespace Prisma {
 
   export type ImageMinOrderByAggregateInput = {
     id?: SortOrder
-    url?: SortOrder
+    src?: SortOrder
+    basePath?: SortOrder
     modId?: SortOrder
     shaderId?: SortOrder
     packId?: SortOrder
@@ -15385,6 +15642,12 @@ export namespace Prisma {
     connect?: ImageWhereUniqueInput | ImageWhereUniqueInput[]
   }
 
+  export type ImageCreateNestedOneWithoutPacksPrincipalInput = {
+    create?: XOR<ImageCreateWithoutPacksPrincipalInput, ImageUncheckedCreateWithoutPacksPrincipalInput>
+    connectOrCreate?: ImageCreateOrConnectWithoutPacksPrincipalInput
+    connect?: ImageWhereUniqueInput
+  }
+
   export type ShaderUncheckedCreateNestedManyWithoutPacksInput = {
     create?: XOR<ShaderCreateWithoutPacksInput, ShaderUncheckedCreateWithoutPacksInput> | ShaderCreateWithoutPacksInput[] | ShaderUncheckedCreateWithoutPacksInput[]
     connectOrCreate?: ShaderCreateOrConnectWithoutPacksInput | ShaderCreateOrConnectWithoutPacksInput[]
@@ -15421,14 +15684,6 @@ export namespace Prisma {
 
   export type EnumVersionTypeFieldUpdateOperationsInput = {
     set?: $Enums.VersionType
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type ShaderUpdateManyWithoutPacksNestedInput = {
@@ -15491,6 +15746,16 @@ export namespace Prisma {
     update?: ImageUpdateWithWhereUniqueWithoutPackInput | ImageUpdateWithWhereUniqueWithoutPackInput[]
     updateMany?: ImageUpdateManyWithWhereWithoutPackInput | ImageUpdateManyWithWhereWithoutPackInput[]
     deleteMany?: ImageScalarWhereInput | ImageScalarWhereInput[]
+  }
+
+  export type ImageUpdateOneWithoutPacksPrincipalNestedInput = {
+    create?: XOR<ImageCreateWithoutPacksPrincipalInput, ImageUncheckedCreateWithoutPacksPrincipalInput>
+    connectOrCreate?: ImageCreateOrConnectWithoutPacksPrincipalInput
+    upsert?: ImageUpsertWithoutPacksPrincipalInput
+    disconnect?: ImageWhereInput | boolean
+    delete?: ImageWhereInput | boolean
+    connect?: ImageWhereUniqueInput
+    update?: XOR<XOR<ImageUpdateToOneWithWhereWithoutPacksPrincipalInput, ImageUpdateWithoutPacksPrincipalInput>, ImageUncheckedUpdateWithoutPacksPrincipalInput>
   }
 
   export type ShaderUncheckedUpdateManyWithoutPacksNestedInput = {
@@ -15585,6 +15850,12 @@ export namespace Prisma {
     connectOrCreate?: ShaderDependecyCreateOrConnectWithoutShaderInput | ShaderDependecyCreateOrConnectWithoutShaderInput[]
     createMany?: ShaderDependecyCreateManyShaderInputEnvelope
     connect?: ShaderDependecyWhereUniqueInput | ShaderDependecyWhereUniqueInput[]
+  }
+
+  export type ImageCreateNestedOneWithoutShadersPrincipalInput = {
+    create?: XOR<ImageCreateWithoutShadersPrincipalInput, ImageUncheckedCreateWithoutShadersPrincipalInput>
+    connectOrCreate?: ImageCreateOrConnectWithoutShadersPrincipalInput
+    connect?: ImageWhereUniqueInput
   }
 
   export type PackUncheckedCreateNestedManyWithoutShadersInput = {
@@ -15696,6 +15967,16 @@ export namespace Prisma {
     update?: ShaderDependecyUpdateWithWhereUniqueWithoutShaderInput | ShaderDependecyUpdateWithWhereUniqueWithoutShaderInput[]
     updateMany?: ShaderDependecyUpdateManyWithWhereWithoutShaderInput | ShaderDependecyUpdateManyWithWhereWithoutShaderInput[]
     deleteMany?: ShaderDependecyScalarWhereInput | ShaderDependecyScalarWhereInput[]
+  }
+
+  export type ImageUpdateOneWithoutShadersPrincipalNestedInput = {
+    create?: XOR<ImageCreateWithoutShadersPrincipalInput, ImageUncheckedCreateWithoutShadersPrincipalInput>
+    connectOrCreate?: ImageCreateOrConnectWithoutShadersPrincipalInput
+    upsert?: ImageUpsertWithoutShadersPrincipalInput
+    disconnect?: ImageWhereInput | boolean
+    delete?: ImageWhereInput | boolean
+    connect?: ImageWhereUniqueInput
+    update?: XOR<XOR<ImageUpdateToOneWithWhereWithoutShadersPrincipalInput, ImageUpdateWithoutShadersPrincipalInput>, ImageUncheckedUpdateWithoutShadersPrincipalInput>
   }
 
   export type PackUncheckedUpdateManyWithoutShadersNestedInput = {
@@ -15826,6 +16107,12 @@ export namespace Prisma {
     connectOrCreate?: ShaderDependecyCreateOrConnectWithoutModInput | ShaderDependecyCreateOrConnectWithoutModInput[]
     createMany?: ShaderDependecyCreateManyModInputEnvelope
     connect?: ShaderDependecyWhereUniqueInput | ShaderDependecyWhereUniqueInput[]
+  }
+
+  export type ImageCreateNestedOneWithoutModsPrincipalInput = {
+    create?: XOR<ImageCreateWithoutModsPrincipalInput, ImageUncheckedCreateWithoutModsPrincipalInput>
+    connectOrCreate?: ImageCreateOrConnectWithoutModsPrincipalInput
+    connect?: ImageWhereUniqueInput
   }
 
   export type PackUncheckedCreateNestedManyWithoutModsInput = {
@@ -16000,6 +16287,16 @@ export namespace Prisma {
     update?: ShaderDependecyUpdateWithWhereUniqueWithoutModInput | ShaderDependecyUpdateWithWhereUniqueWithoutModInput[]
     updateMany?: ShaderDependecyUpdateManyWithWhereWithoutModInput | ShaderDependecyUpdateManyWithWhereWithoutModInput[]
     deleteMany?: ShaderDependecyScalarWhereInput | ShaderDependecyScalarWhereInput[]
+  }
+
+  export type ImageUpdateOneWithoutModsPrincipalNestedInput = {
+    create?: XOR<ImageCreateWithoutModsPrincipalInput, ImageUncheckedCreateWithoutModsPrincipalInput>
+    connectOrCreate?: ImageCreateOrConnectWithoutModsPrincipalInput
+    upsert?: ImageUpsertWithoutModsPrincipalInput
+    disconnect?: ImageWhereInput | boolean
+    delete?: ImageWhereInput | boolean
+    connect?: ImageWhereUniqueInput
+    update?: XOR<XOR<ImageUpdateToOneWithWhereWithoutModsPrincipalInput, ImageUpdateWithoutModsPrincipalInput>, ImageUncheckedUpdateWithoutModsPrincipalInput>
   }
 
   export type PackUncheckedUpdateManyWithoutModsNestedInput = {
@@ -16200,11 +16497,53 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
+  export type PackCreateNestedManyWithoutPrincipalImageInput = {
+    create?: XOR<PackCreateWithoutPrincipalImageInput, PackUncheckedCreateWithoutPrincipalImageInput> | PackCreateWithoutPrincipalImageInput[] | PackUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: PackCreateOrConnectWithoutPrincipalImageInput | PackCreateOrConnectWithoutPrincipalImageInput[]
+    createMany?: PackCreateManyPrincipalImageInputEnvelope
+    connect?: PackWhereUniqueInput | PackWhereUniqueInput[]
+  }
+
+  export type ShaderCreateNestedManyWithoutPrincipalImageInput = {
+    create?: XOR<ShaderCreateWithoutPrincipalImageInput, ShaderUncheckedCreateWithoutPrincipalImageInput> | ShaderCreateWithoutPrincipalImageInput[] | ShaderUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: ShaderCreateOrConnectWithoutPrincipalImageInput | ShaderCreateOrConnectWithoutPrincipalImageInput[]
+    createMany?: ShaderCreateManyPrincipalImageInputEnvelope
+    connect?: ShaderWhereUniqueInput | ShaderWhereUniqueInput[]
+  }
+
+  export type ModCreateNestedManyWithoutPrincipalImageInput = {
+    create?: XOR<ModCreateWithoutPrincipalImageInput, ModUncheckedCreateWithoutPrincipalImageInput> | ModCreateWithoutPrincipalImageInput[] | ModUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: ModCreateOrConnectWithoutPrincipalImageInput | ModCreateOrConnectWithoutPrincipalImageInput[]
+    createMany?: ModCreateManyPrincipalImageInputEnvelope
+    connect?: ModWhereUniqueInput | ModWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutImageInput = {
     create?: XOR<UserCreateWithoutImageInput, UserUncheckedCreateWithoutImageInput> | UserCreateWithoutImageInput[] | UserUncheckedCreateWithoutImageInput[]
     connectOrCreate?: UserCreateOrConnectWithoutImageInput | UserCreateOrConnectWithoutImageInput[]
     createMany?: UserCreateManyImageInputEnvelope
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type PackUncheckedCreateNestedManyWithoutPrincipalImageInput = {
+    create?: XOR<PackCreateWithoutPrincipalImageInput, PackUncheckedCreateWithoutPrincipalImageInput> | PackCreateWithoutPrincipalImageInput[] | PackUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: PackCreateOrConnectWithoutPrincipalImageInput | PackCreateOrConnectWithoutPrincipalImageInput[]
+    createMany?: PackCreateManyPrincipalImageInputEnvelope
+    connect?: PackWhereUniqueInput | PackWhereUniqueInput[]
+  }
+
+  export type ShaderUncheckedCreateNestedManyWithoutPrincipalImageInput = {
+    create?: XOR<ShaderCreateWithoutPrincipalImageInput, ShaderUncheckedCreateWithoutPrincipalImageInput> | ShaderCreateWithoutPrincipalImageInput[] | ShaderUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: ShaderCreateOrConnectWithoutPrincipalImageInput | ShaderCreateOrConnectWithoutPrincipalImageInput[]
+    createMany?: ShaderCreateManyPrincipalImageInputEnvelope
+    connect?: ShaderWhereUniqueInput | ShaderWhereUniqueInput[]
+  }
+
+  export type ModUncheckedCreateNestedManyWithoutPrincipalImageInput = {
+    create?: XOR<ModCreateWithoutPrincipalImageInput, ModUncheckedCreateWithoutPrincipalImageInput> | ModCreateWithoutPrincipalImageInput[] | ModUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: ModCreateOrConnectWithoutPrincipalImageInput | ModCreateOrConnectWithoutPrincipalImageInput[]
+    createMany?: ModCreateManyPrincipalImageInputEnvelope
+    connect?: ModWhereUniqueInput | ModWhereUniqueInput[]
   }
 
   export type ModUpdateOneWithoutImagesNestedInput = {
@@ -16251,6 +16590,48 @@ export namespace Prisma {
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
+  export type PackUpdateManyWithoutPrincipalImageNestedInput = {
+    create?: XOR<PackCreateWithoutPrincipalImageInput, PackUncheckedCreateWithoutPrincipalImageInput> | PackCreateWithoutPrincipalImageInput[] | PackUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: PackCreateOrConnectWithoutPrincipalImageInput | PackCreateOrConnectWithoutPrincipalImageInput[]
+    upsert?: PackUpsertWithWhereUniqueWithoutPrincipalImageInput | PackUpsertWithWhereUniqueWithoutPrincipalImageInput[]
+    createMany?: PackCreateManyPrincipalImageInputEnvelope
+    set?: PackWhereUniqueInput | PackWhereUniqueInput[]
+    disconnect?: PackWhereUniqueInput | PackWhereUniqueInput[]
+    delete?: PackWhereUniqueInput | PackWhereUniqueInput[]
+    connect?: PackWhereUniqueInput | PackWhereUniqueInput[]
+    update?: PackUpdateWithWhereUniqueWithoutPrincipalImageInput | PackUpdateWithWhereUniqueWithoutPrincipalImageInput[]
+    updateMany?: PackUpdateManyWithWhereWithoutPrincipalImageInput | PackUpdateManyWithWhereWithoutPrincipalImageInput[]
+    deleteMany?: PackScalarWhereInput | PackScalarWhereInput[]
+  }
+
+  export type ShaderUpdateManyWithoutPrincipalImageNestedInput = {
+    create?: XOR<ShaderCreateWithoutPrincipalImageInput, ShaderUncheckedCreateWithoutPrincipalImageInput> | ShaderCreateWithoutPrincipalImageInput[] | ShaderUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: ShaderCreateOrConnectWithoutPrincipalImageInput | ShaderCreateOrConnectWithoutPrincipalImageInput[]
+    upsert?: ShaderUpsertWithWhereUniqueWithoutPrincipalImageInput | ShaderUpsertWithWhereUniqueWithoutPrincipalImageInput[]
+    createMany?: ShaderCreateManyPrincipalImageInputEnvelope
+    set?: ShaderWhereUniqueInput | ShaderWhereUniqueInput[]
+    disconnect?: ShaderWhereUniqueInput | ShaderWhereUniqueInput[]
+    delete?: ShaderWhereUniqueInput | ShaderWhereUniqueInput[]
+    connect?: ShaderWhereUniqueInput | ShaderWhereUniqueInput[]
+    update?: ShaderUpdateWithWhereUniqueWithoutPrincipalImageInput | ShaderUpdateWithWhereUniqueWithoutPrincipalImageInput[]
+    updateMany?: ShaderUpdateManyWithWhereWithoutPrincipalImageInput | ShaderUpdateManyWithWhereWithoutPrincipalImageInput[]
+    deleteMany?: ShaderScalarWhereInput | ShaderScalarWhereInput[]
+  }
+
+  export type ModUpdateManyWithoutPrincipalImageNestedInput = {
+    create?: XOR<ModCreateWithoutPrincipalImageInput, ModUncheckedCreateWithoutPrincipalImageInput> | ModCreateWithoutPrincipalImageInput[] | ModUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: ModCreateOrConnectWithoutPrincipalImageInput | ModCreateOrConnectWithoutPrincipalImageInput[]
+    upsert?: ModUpsertWithWhereUniqueWithoutPrincipalImageInput | ModUpsertWithWhereUniqueWithoutPrincipalImageInput[]
+    createMany?: ModCreateManyPrincipalImageInputEnvelope
+    set?: ModWhereUniqueInput | ModWhereUniqueInput[]
+    disconnect?: ModWhereUniqueInput | ModWhereUniqueInput[]
+    delete?: ModWhereUniqueInput | ModWhereUniqueInput[]
+    connect?: ModWhereUniqueInput | ModWhereUniqueInput[]
+    update?: ModUpdateWithWhereUniqueWithoutPrincipalImageInput | ModUpdateWithWhereUniqueWithoutPrincipalImageInput[]
+    updateMany?: ModUpdateManyWithWhereWithoutPrincipalImageInput | ModUpdateManyWithWhereWithoutPrincipalImageInput[]
+    deleteMany?: ModScalarWhereInput | ModScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutImageNestedInput = {
     create?: XOR<UserCreateWithoutImageInput, UserUncheckedCreateWithoutImageInput> | UserCreateWithoutImageInput[] | UserUncheckedCreateWithoutImageInput[]
     connectOrCreate?: UserCreateOrConnectWithoutImageInput | UserCreateOrConnectWithoutImageInput[]
@@ -16263,6 +16644,48 @@ export namespace Prisma {
     update?: UserUpdateWithWhereUniqueWithoutImageInput | UserUpdateWithWhereUniqueWithoutImageInput[]
     updateMany?: UserUpdateManyWithWhereWithoutImageInput | UserUpdateManyWithWhereWithoutImageInput[]
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type PackUncheckedUpdateManyWithoutPrincipalImageNestedInput = {
+    create?: XOR<PackCreateWithoutPrincipalImageInput, PackUncheckedCreateWithoutPrincipalImageInput> | PackCreateWithoutPrincipalImageInput[] | PackUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: PackCreateOrConnectWithoutPrincipalImageInput | PackCreateOrConnectWithoutPrincipalImageInput[]
+    upsert?: PackUpsertWithWhereUniqueWithoutPrincipalImageInput | PackUpsertWithWhereUniqueWithoutPrincipalImageInput[]
+    createMany?: PackCreateManyPrincipalImageInputEnvelope
+    set?: PackWhereUniqueInput | PackWhereUniqueInput[]
+    disconnect?: PackWhereUniqueInput | PackWhereUniqueInput[]
+    delete?: PackWhereUniqueInput | PackWhereUniqueInput[]
+    connect?: PackWhereUniqueInput | PackWhereUniqueInput[]
+    update?: PackUpdateWithWhereUniqueWithoutPrincipalImageInput | PackUpdateWithWhereUniqueWithoutPrincipalImageInput[]
+    updateMany?: PackUpdateManyWithWhereWithoutPrincipalImageInput | PackUpdateManyWithWhereWithoutPrincipalImageInput[]
+    deleteMany?: PackScalarWhereInput | PackScalarWhereInput[]
+  }
+
+  export type ShaderUncheckedUpdateManyWithoutPrincipalImageNestedInput = {
+    create?: XOR<ShaderCreateWithoutPrincipalImageInput, ShaderUncheckedCreateWithoutPrincipalImageInput> | ShaderCreateWithoutPrincipalImageInput[] | ShaderUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: ShaderCreateOrConnectWithoutPrincipalImageInput | ShaderCreateOrConnectWithoutPrincipalImageInput[]
+    upsert?: ShaderUpsertWithWhereUniqueWithoutPrincipalImageInput | ShaderUpsertWithWhereUniqueWithoutPrincipalImageInput[]
+    createMany?: ShaderCreateManyPrincipalImageInputEnvelope
+    set?: ShaderWhereUniqueInput | ShaderWhereUniqueInput[]
+    disconnect?: ShaderWhereUniqueInput | ShaderWhereUniqueInput[]
+    delete?: ShaderWhereUniqueInput | ShaderWhereUniqueInput[]
+    connect?: ShaderWhereUniqueInput | ShaderWhereUniqueInput[]
+    update?: ShaderUpdateWithWhereUniqueWithoutPrincipalImageInput | ShaderUpdateWithWhereUniqueWithoutPrincipalImageInput[]
+    updateMany?: ShaderUpdateManyWithWhereWithoutPrincipalImageInput | ShaderUpdateManyWithWhereWithoutPrincipalImageInput[]
+    deleteMany?: ShaderScalarWhereInput | ShaderScalarWhereInput[]
+  }
+
+  export type ModUncheckedUpdateManyWithoutPrincipalImageNestedInput = {
+    create?: XOR<ModCreateWithoutPrincipalImageInput, ModUncheckedCreateWithoutPrincipalImageInput> | ModCreateWithoutPrincipalImageInput[] | ModUncheckedCreateWithoutPrincipalImageInput[]
+    connectOrCreate?: ModCreateOrConnectWithoutPrincipalImageInput | ModCreateOrConnectWithoutPrincipalImageInput[]
+    upsert?: ModUpsertWithWhereUniqueWithoutPrincipalImageInput | ModUpsertWithWhereUniqueWithoutPrincipalImageInput[]
+    createMany?: ModCreateManyPrincipalImageInputEnvelope
+    set?: ModWhereUniqueInput | ModWhereUniqueInput[]
+    disconnect?: ModWhereUniqueInput | ModWhereUniqueInput[]
+    delete?: ModWhereUniqueInput | ModWhereUniqueInput[]
+    connect?: ModWhereUniqueInput | ModWhereUniqueInput[]
+    update?: ModUpdateWithWhereUniqueWithoutPrincipalImageInput | ModUpdateWithWhereUniqueWithoutPrincipalImageInput[]
+    updateMany?: ModUpdateManyWithWhereWithoutPrincipalImageInput | ModUpdateManyWithWhereWithoutPrincipalImageInput[]
+    deleteMany?: ModScalarWhereInput | ModScalarWhereInput[]
   }
 
   export type ShaderCreateNestedOneWithoutConflictsInput = {
@@ -16577,22 +17000,6 @@ export namespace Prisma {
     _max?: NestedEnumVersionTypeFilter<$PrismaModel>
   }
 
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
   export type PackCreateWithoutAuthorInput = {
     id?: bigint | number
     max_version: number
@@ -16600,11 +17007,11 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     shaders?: ShaderCreateNestedManyWithoutPacksInput
     mods?: ModCreateNestedManyWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
+    principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
   export type PackUncheckedCreateWithoutAuthorInput = {
@@ -16614,7 +17021,7 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
+    principalImageId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
@@ -16634,26 +17041,26 @@ export namespace Prisma {
   export type ShaderCreateWithoutAuthorInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
     comments?: CommentCreateNestedManyWithoutShaderInput
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
   export type ShaderUncheckedCreateWithoutAuthorInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
     comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
@@ -16674,10 +17081,10 @@ export namespace Prisma {
   export type ModCreateWithoutAuthorInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
@@ -16688,17 +17095,19 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
   export type ModUncheckedCreateWithoutAuthorInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
     comments?: CommentUncheckedCreateNestedManyWithoutModInput
     images?: ImageUncheckedCreateNestedManyWithoutModInput
@@ -16747,18 +17156,26 @@ export namespace Prisma {
 
   export type ImageCreateWithoutUsersInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     mod?: ModCreateNestedOneWithoutImagesInput
     shader?: ShaderCreateNestedOneWithoutImagesInput
     pack?: PackCreateNestedOneWithoutImagesInput
+    packsPrincipal?: PackCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModCreateNestedManyWithoutPrincipalImageInput
   }
 
   export type ImageUncheckedCreateWithoutUsersInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
     packId?: bigint | number | null
+    packsPrincipal?: PackUncheckedCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderUncheckedCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModUncheckedCreateNestedManyWithoutPrincipalImageInput
   }
 
   export type ImageCreateOrConnectWithoutUsersInput = {
@@ -16792,8 +17209,8 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFilter<"Pack"> | $Enums.VersionType
     name?: StringFilter<"Pack"> | string
     description?: StringNullableFilter<"Pack"> | string | null
-    score?: FloatFilter<"Pack"> | number
     authorId?: BigIntFilter<"Pack"> | bigint | number
+    principalImageId?: BigIntNullableFilter<"Pack"> | bigint | number | null
   }
 
   export type ShaderUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -16818,12 +17235,12 @@ export namespace Prisma {
     NOT?: ShaderScalarWhereInput | ShaderScalarWhereInput[]
     id?: BigIntFilter<"Shader"> | bigint | number
     name?: StringFilter<"Shader"> | string
-    description?: StringNullableFilter<"Shader"> | string | null
-    score?: FloatFilter<"Shader"> | number
+    description?: StringFilter<"Shader"> | string
     weight?: IntFilter<"Shader"> | number
-    url?: StringFilter<"Shader"> | string
+    src?: StringFilter<"Shader"> | string
     authorId?: BigIntFilter<"Shader"> | bigint | number
     versionType?: EnumVersionTypeFilter<"Shader"> | $Enums.VersionType
+    principalImageId?: BigIntNullableFilter<"Shader"> | bigint | number | null
   }
 
   export type ModUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -16848,13 +17265,14 @@ export namespace Prisma {
     NOT?: ModScalarWhereInput | ModScalarWhereInput[]
     id?: BigIntFilter<"Mod"> | bigint | number
     name?: StringFilter<"Mod"> | string
-    description?: StringNullableFilter<"Mod"> | string | null
+    description?: StringFilter<"Mod"> | string
     min_version?: IntFilter<"Mod"> | number
     max_version?: IntFilter<"Mod"> | number
-    url?: StringFilter<"Mod"> | string
+    src?: StringFilter<"Mod"> | string
     weight?: IntFilter<"Mod"> | number
     authorId?: BigIntFilter<"Mod"> | bigint | number
     versionType?: EnumVersionTypeFilter<"Mod"> | $Enums.VersionType
+    principalImageId?: BigIntNullableFilter<"Mod"> | bigint | number | null
   }
 
   export type CommentUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -16898,44 +17316,52 @@ export namespace Prisma {
 
   export type ImageUpdateWithoutUsersInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     mod?: ModUpdateOneWithoutImagesNestedInput
     shader?: ShaderUpdateOneWithoutImagesNestedInput
     pack?: PackUpdateOneWithoutImagesNestedInput
+    packsPrincipal?: PackUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUpdateManyWithoutPrincipalImageNestedInput
   }
 
   export type ImageUncheckedUpdateWithoutUsersInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packsPrincipal?: PackUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUncheckedUpdateManyWithoutPrincipalImageNestedInput
   }
 
   export type ShaderCreateWithoutPacksInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     versionType: $Enums.VersionType
     author: UserCreateNestedOneWithoutShadersInput
     comments?: CommentCreateNestedManyWithoutShaderInput
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
   export type ShaderUncheckedCreateWithoutPacksInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
     conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
@@ -16950,10 +17376,10 @@ export namespace Prisma {
   export type ModCreateWithoutPacksInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
     author: UserCreateNestedOneWithoutModsInput
@@ -16964,18 +17390,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
   export type ModUncheckedCreateWithoutPacksInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     comments?: CommentUncheckedCreateNestedManyWithoutModInput
     images?: ImageUncheckedCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictUncheckedCreateNestedManyWithoutModInput
@@ -17049,18 +17477,26 @@ export namespace Prisma {
 
   export type ImageCreateWithoutPackInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     mod?: ModCreateNestedOneWithoutImagesInput
     shader?: ShaderCreateNestedOneWithoutImagesInput
     users?: UserCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModCreateNestedManyWithoutPrincipalImageInput
   }
 
   export type ImageUncheckedCreateWithoutPackInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
     users?: UserUncheckedCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackUncheckedCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderUncheckedCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModUncheckedCreateNestedManyWithoutPrincipalImageInput
   }
 
   export type ImageCreateOrConnectWithoutPackInput = {
@@ -17071,6 +17507,35 @@ export namespace Prisma {
   export type ImageCreateManyPackInputEnvelope = {
     data: ImageCreateManyPackInput | ImageCreateManyPackInput[]
     skipDuplicates?: boolean
+  }
+
+  export type ImageCreateWithoutPacksPrincipalInput = {
+    id?: bigint | number
+    src: string
+    basePath: string
+    mod?: ModCreateNestedOneWithoutImagesInput
+    shader?: ShaderCreateNestedOneWithoutImagesInput
+    pack?: PackCreateNestedOneWithoutImagesInput
+    users?: UserCreateNestedManyWithoutImageInput
+    shadersPrincipal?: ShaderCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModCreateNestedManyWithoutPrincipalImageInput
+  }
+
+  export type ImageUncheckedCreateWithoutPacksPrincipalInput = {
+    id?: bigint | number
+    src: string
+    basePath: string
+    modId?: bigint | number | null
+    shaderId?: bigint | number | null
+    packId?: bigint | number | null
+    users?: UserUncheckedCreateNestedManyWithoutImageInput
+    shadersPrincipal?: ShaderUncheckedCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModUncheckedCreateNestedManyWithoutPrincipalImageInput
+  }
+
+  export type ImageCreateOrConnectWithoutPacksPrincipalInput = {
+    where: ImageWhereUniqueInput
+    create: XOR<ImageCreateWithoutPacksPrincipalInput, ImageUncheckedCreateWithoutPacksPrincipalInput>
   }
 
   export type ShaderUpsertWithWhereUniqueWithoutPacksInput = {
@@ -17179,10 +17644,46 @@ export namespace Prisma {
     OR?: ImageScalarWhereInput[]
     NOT?: ImageScalarWhereInput | ImageScalarWhereInput[]
     id?: BigIntFilter<"Image"> | bigint | number
-    url?: StringFilter<"Image"> | string
+    src?: StringFilter<"Image"> | string
+    basePath?: StringFilter<"Image"> | string
     modId?: BigIntNullableFilter<"Image"> | bigint | number | null
     shaderId?: BigIntNullableFilter<"Image"> | bigint | number | null
     packId?: BigIntNullableFilter<"Image"> | bigint | number | null
+  }
+
+  export type ImageUpsertWithoutPacksPrincipalInput = {
+    update: XOR<ImageUpdateWithoutPacksPrincipalInput, ImageUncheckedUpdateWithoutPacksPrincipalInput>
+    create: XOR<ImageCreateWithoutPacksPrincipalInput, ImageUncheckedCreateWithoutPacksPrincipalInput>
+    where?: ImageWhereInput
+  }
+
+  export type ImageUpdateToOneWithWhereWithoutPacksPrincipalInput = {
+    where?: ImageWhereInput
+    data: XOR<ImageUpdateWithoutPacksPrincipalInput, ImageUncheckedUpdateWithoutPacksPrincipalInput>
+  }
+
+  export type ImageUpdateWithoutPacksPrincipalInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
+    mod?: ModUpdateOneWithoutImagesNestedInput
+    shader?: ShaderUpdateOneWithoutImagesNestedInput
+    pack?: PackUpdateOneWithoutImagesNestedInput
+    users?: UserUpdateManyWithoutImageNestedInput
+    shadersPrincipal?: ShaderUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUpdateManyWithoutPrincipalImageNestedInput
+  }
+
+  export type ImageUncheckedUpdateWithoutPacksPrincipalInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    users?: UserUncheckedUpdateManyWithoutImageNestedInput
+    shadersPrincipal?: ShaderUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUncheckedUpdateManyWithoutPrincipalImageNestedInput
   }
 
   export type PackCreateWithoutShadersInput = {
@@ -17192,11 +17693,11 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     mods?: ModCreateNestedManyWithoutPacksInput
     author: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
+    principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
   export type PackUncheckedCreateWithoutShadersInput = {
@@ -17206,8 +17707,8 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     authorId: bigint | number
+    principalImageId?: bigint | number | null
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
     images?: ImageUncheckedCreateNestedManyWithoutPackInput
@@ -17277,18 +17778,26 @@ export namespace Prisma {
 
   export type ImageCreateWithoutShaderInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     mod?: ModCreateNestedOneWithoutImagesInput
     pack?: PackCreateNestedOneWithoutImagesInput
     users?: UserCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModCreateNestedManyWithoutPrincipalImageInput
   }
 
   export type ImageUncheckedCreateWithoutShaderInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     modId?: bigint | number | null
     packId?: bigint | number | null
     users?: UserUncheckedCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackUncheckedCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderUncheckedCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModUncheckedCreateNestedManyWithoutPrincipalImageInput
   }
 
   export type ImageCreateOrConnectWithoutShaderInput = {
@@ -17339,6 +17848,35 @@ export namespace Prisma {
   export type ShaderDependecyCreateManyShaderInputEnvelope = {
     data: ShaderDependecyCreateManyShaderInput | ShaderDependecyCreateManyShaderInput[]
     skipDuplicates?: boolean
+  }
+
+  export type ImageCreateWithoutShadersPrincipalInput = {
+    id?: bigint | number
+    src: string
+    basePath: string
+    mod?: ModCreateNestedOneWithoutImagesInput
+    shader?: ShaderCreateNestedOneWithoutImagesInput
+    pack?: PackCreateNestedOneWithoutImagesInput
+    users?: UserCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModCreateNestedManyWithoutPrincipalImageInput
+  }
+
+  export type ImageUncheckedCreateWithoutShadersPrincipalInput = {
+    id?: bigint | number
+    src: string
+    basePath: string
+    modId?: bigint | number | null
+    shaderId?: bigint | number | null
+    packId?: bigint | number | null
+    users?: UserUncheckedCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackUncheckedCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModUncheckedCreateNestedManyWithoutPrincipalImageInput
+  }
+
+  export type ImageCreateOrConnectWithoutShadersPrincipalInput = {
+    where: ImageWhereUniqueInput
+    create: XOR<ImageCreateWithoutShadersPrincipalInput, ImageUncheckedCreateWithoutShadersPrincipalInput>
   }
 
   export type PackUpsertWithWhereUniqueWithoutShadersInput = {
@@ -17476,6 +18014,41 @@ export namespace Prisma {
     modId?: BigIntFilter<"ShaderDependecy"> | bigint | number
   }
 
+  export type ImageUpsertWithoutShadersPrincipalInput = {
+    update: XOR<ImageUpdateWithoutShadersPrincipalInput, ImageUncheckedUpdateWithoutShadersPrincipalInput>
+    create: XOR<ImageCreateWithoutShadersPrincipalInput, ImageUncheckedCreateWithoutShadersPrincipalInput>
+    where?: ImageWhereInput
+  }
+
+  export type ImageUpdateToOneWithWhereWithoutShadersPrincipalInput = {
+    where?: ImageWhereInput
+    data: XOR<ImageUpdateWithoutShadersPrincipalInput, ImageUncheckedUpdateWithoutShadersPrincipalInput>
+  }
+
+  export type ImageUpdateWithoutShadersPrincipalInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
+    mod?: ModUpdateOneWithoutImagesNestedInput
+    shader?: ShaderUpdateOneWithoutImagesNestedInput
+    pack?: PackUpdateOneWithoutImagesNestedInput
+    users?: UserUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUpdateManyWithoutPrincipalImageNestedInput
+  }
+
+  export type ImageUncheckedUpdateWithoutShadersPrincipalInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    users?: UserUncheckedUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUncheckedUpdateManyWithoutPrincipalImageNestedInput
+  }
+
   export type PackCreateWithoutModsInput = {
     id?: bigint | number
     max_version: number
@@ -17483,11 +18056,11 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     shaders?: ShaderCreateNestedManyWithoutPacksInput
     author: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
+    principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
   export type PackUncheckedCreateWithoutModsInput = {
@@ -17497,8 +18070,8 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     authorId: bigint | number
+    principalImageId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
     images?: ImageUncheckedCreateNestedManyWithoutPackInput
@@ -17568,18 +18141,26 @@ export namespace Prisma {
 
   export type ImageCreateWithoutModInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     shader?: ShaderCreateNestedOneWithoutImagesInput
     pack?: PackCreateNestedOneWithoutImagesInput
     users?: UserCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModCreateNestedManyWithoutPrincipalImageInput
   }
 
   export type ImageUncheckedCreateWithoutModInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     shaderId?: bigint | number | null
     packId?: bigint | number | null
     users?: UserUncheckedCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackUncheckedCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderUncheckedCreateNestedManyWithoutPrincipalImageInput
+    modsPrincipal?: ModUncheckedCreateNestedManyWithoutPrincipalImageInput
   }
 
   export type ImageCreateOrConnectWithoutModInput = {
@@ -17688,6 +18269,35 @@ export namespace Prisma {
   export type ShaderDependecyCreateManyModInputEnvelope = {
     data: ShaderDependecyCreateManyModInput | ShaderDependecyCreateManyModInput[]
     skipDuplicates?: boolean
+  }
+
+  export type ImageCreateWithoutModsPrincipalInput = {
+    id?: bigint | number
+    src: string
+    basePath: string
+    mod?: ModCreateNestedOneWithoutImagesInput
+    shader?: ShaderCreateNestedOneWithoutImagesInput
+    pack?: PackCreateNestedOneWithoutImagesInput
+    users?: UserCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderCreateNestedManyWithoutPrincipalImageInput
+  }
+
+  export type ImageUncheckedCreateWithoutModsPrincipalInput = {
+    id?: bigint | number
+    src: string
+    basePath: string
+    modId?: bigint | number | null
+    shaderId?: bigint | number | null
+    packId?: bigint | number | null
+    users?: UserUncheckedCreateNestedManyWithoutImageInput
+    packsPrincipal?: PackUncheckedCreateNestedManyWithoutPrincipalImageInput
+    shadersPrincipal?: ShaderUncheckedCreateNestedManyWithoutPrincipalImageInput
+  }
+
+  export type ImageCreateOrConnectWithoutModsPrincipalInput = {
+    where: ImageWhereUniqueInput
+    create: XOR<ImageCreateWithoutModsPrincipalInput, ImageUncheckedCreateWithoutModsPrincipalInput>
   }
 
   export type PackUpsertWithWhereUniqueWithoutModsInput = {
@@ -17863,6 +18473,41 @@ export namespace Prisma {
     data: XOR<ShaderDependecyUpdateManyMutationInput, ShaderDependecyUncheckedUpdateManyWithoutModInput>
   }
 
+  export type ImageUpsertWithoutModsPrincipalInput = {
+    update: XOR<ImageUpdateWithoutModsPrincipalInput, ImageUncheckedUpdateWithoutModsPrincipalInput>
+    create: XOR<ImageCreateWithoutModsPrincipalInput, ImageUncheckedCreateWithoutModsPrincipalInput>
+    where?: ImageWhereInput
+  }
+
+  export type ImageUpdateToOneWithWhereWithoutModsPrincipalInput = {
+    where?: ImageWhereInput
+    data: XOR<ImageUpdateWithoutModsPrincipalInput, ImageUncheckedUpdateWithoutModsPrincipalInput>
+  }
+
+  export type ImageUpdateWithoutModsPrincipalInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
+    mod?: ModUpdateOneWithoutImagesNestedInput
+    shader?: ShaderUpdateOneWithoutImagesNestedInput
+    pack?: PackUpdateOneWithoutImagesNestedInput
+    users?: UserUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUpdateManyWithoutPrincipalImageNestedInput
+  }
+
+  export type ImageUncheckedUpdateWithoutModsPrincipalInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    users?: UserUncheckedUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUncheckedUpdateManyWithoutPrincipalImageNestedInput
+  }
+
   export type UserCreateWithoutCommentsInput = {
     id?: bigint | number
     email: string
@@ -17901,11 +18546,11 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     shaders?: ShaderCreateNestedManyWithoutPacksInput
     mods?: ModCreateNestedManyWithoutPacksInput
     author: UserCreateNestedOneWithoutPacksInput
     images?: ImageCreateNestedManyWithoutPackInput
+    principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
   export type PackUncheckedCreateWithoutCommentsInput = {
@@ -17915,8 +18560,8 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     authorId: bigint | number
+    principalImageId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     images?: ImageUncheckedCreateNestedManyWithoutPackInput
@@ -17930,27 +18575,27 @@ export namespace Prisma {
   export type ShaderCreateWithoutCommentsInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
     author: UserCreateNestedOneWithoutShadersInput
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
   export type ShaderUncheckedCreateWithoutCommentsInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
     conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
@@ -17965,10 +18610,10 @@ export namespace Prisma {
   export type ModCreateWithoutCommentsInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
@@ -17979,18 +18624,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
   export type ModUncheckedCreateWithoutCommentsInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
     images?: ImageUncheckedCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictUncheckedCreateNestedManyWithoutModInput
@@ -18060,11 +18707,11 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     shaders?: ShaderUpdateManyWithoutPacksNestedInput
     mods?: ModUpdateManyWithoutPacksNestedInput
     author?: UserUpdateOneRequiredWithoutPacksNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
+    principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
   export type PackUncheckedUpdateWithoutCommentsInput = {
@@ -18074,8 +18721,8 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     images?: ImageUncheckedUpdateManyWithoutPackNestedInput
@@ -18095,27 +18742,27 @@ export namespace Prisma {
   export type ShaderUpdateWithoutCommentsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
     author?: UserUpdateOneRequiredWithoutShadersNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
   export type ShaderUncheckedUpdateWithoutCommentsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
@@ -18136,10 +18783,10 @@ export namespace Prisma {
   export type ModUpdateWithoutCommentsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
@@ -18150,18 +18797,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
   export type ModUncheckedUpdateWithoutCommentsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
     images?: ImageUncheckedUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUncheckedUpdateManyWithoutModNestedInput
@@ -18174,10 +18823,10 @@ export namespace Prisma {
   export type ModCreateWithoutImagesInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
@@ -18188,18 +18837,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
   export type ModUncheckedCreateWithoutImagesInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
     comments?: CommentUncheckedCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictUncheckedCreateNestedManyWithoutModInput
@@ -18217,27 +18868,27 @@ export namespace Prisma {
   export type ShaderCreateWithoutImagesInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
     author: UserCreateNestedOneWithoutShadersInput
     comments?: CommentCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
   export type ShaderUncheckedCreateWithoutImagesInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
     comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
     conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
@@ -18256,11 +18907,11 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     shaders?: ShaderCreateNestedManyWithoutPacksInput
     mods?: ModCreateNestedManyWithoutPacksInput
     author: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
+    principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
   export type PackUncheckedCreateWithoutImagesInput = {
@@ -18270,8 +18921,8 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
     authorId: bigint | number
+    principalImageId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
@@ -18318,6 +18969,134 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PackCreateWithoutPrincipalImageInput = {
+    id?: bigint | number
+    max_version: number
+    min_version: number
+    versionType: $Enums.VersionType
+    name: string
+    description?: string | null
+    shaders?: ShaderCreateNestedManyWithoutPacksInput
+    mods?: ModCreateNestedManyWithoutPacksInput
+    author: UserCreateNestedOneWithoutPacksInput
+    comments?: CommentCreateNestedManyWithoutPackInput
+    images?: ImageCreateNestedManyWithoutPackInput
+  }
+
+  export type PackUncheckedCreateWithoutPrincipalImageInput = {
+    id?: bigint | number
+    max_version: number
+    min_version: number
+    versionType: $Enums.VersionType
+    name: string
+    description?: string | null
+    authorId: bigint | number
+    shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
+    mods?: ModUncheckedCreateNestedManyWithoutPacksInput
+    comments?: CommentUncheckedCreateNestedManyWithoutPackInput
+    images?: ImageUncheckedCreateNestedManyWithoutPackInput
+  }
+
+  export type PackCreateOrConnectWithoutPrincipalImageInput = {
+    where: PackWhereUniqueInput
+    create: XOR<PackCreateWithoutPrincipalImageInput, PackUncheckedCreateWithoutPrincipalImageInput>
+  }
+
+  export type PackCreateManyPrincipalImageInputEnvelope = {
+    data: PackCreateManyPrincipalImageInput | PackCreateManyPrincipalImageInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ShaderCreateWithoutPrincipalImageInput = {
+    id?: bigint | number
+    name: string
+    description?: string
+    weight: number
+    src: string
+    versionType: $Enums.VersionType
+    packs?: PackCreateNestedManyWithoutShadersInput
+    author: UserCreateNestedOneWithoutShadersInput
+    comments?: CommentCreateNestedManyWithoutShaderInput
+    images?: ImageCreateNestedManyWithoutShaderInput
+    conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
+    shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+  }
+
+  export type ShaderUncheckedCreateWithoutPrincipalImageInput = {
+    id?: bigint | number
+    name: string
+    description?: string
+    weight: number
+    src: string
+    authorId: bigint | number
+    versionType: $Enums.VersionType
+    packs?: PackUncheckedCreateNestedManyWithoutShadersInput
+    comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
+    images?: ImageUncheckedCreateNestedManyWithoutShaderInput
+    conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
+    shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutShaderInput
+  }
+
+  export type ShaderCreateOrConnectWithoutPrincipalImageInput = {
+    where: ShaderWhereUniqueInput
+    create: XOR<ShaderCreateWithoutPrincipalImageInput, ShaderUncheckedCreateWithoutPrincipalImageInput>
+  }
+
+  export type ShaderCreateManyPrincipalImageInputEnvelope = {
+    data: ShaderCreateManyPrincipalImageInput | ShaderCreateManyPrincipalImageInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ModCreateWithoutPrincipalImageInput = {
+    id?: bigint | number
+    name: string
+    description?: string
+    min_version: number
+    max_version: number
+    src: string
+    weight: number
+    versionType: $Enums.VersionType
+    packs?: PackCreateNestedManyWithoutModsInput
+    author: UserCreateNestedOneWithoutModsInput
+    comments?: CommentCreateNestedManyWithoutModInput
+    images?: ImageCreateNestedManyWithoutModInput
+    conflictsFrom?: ConflictCreateNestedManyWithoutModInput
+    conflictsTo?: ConflictCreateNestedManyWithoutConflictModInput
+    requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
+    modDependencies?: ModDependencyCreateNestedManyWithoutModInput
+    shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+  }
+
+  export type ModUncheckedCreateWithoutPrincipalImageInput = {
+    id?: bigint | number
+    name: string
+    description?: string
+    min_version: number
+    max_version: number
+    src: string
+    weight: number
+    authorId: bigint | number
+    versionType: $Enums.VersionType
+    packs?: PackUncheckedCreateNestedManyWithoutModsInput
+    comments?: CommentUncheckedCreateNestedManyWithoutModInput
+    images?: ImageUncheckedCreateNestedManyWithoutModInput
+    conflictsFrom?: ConflictUncheckedCreateNestedManyWithoutModInput
+    conflictsTo?: ConflictUncheckedCreateNestedManyWithoutConflictModInput
+    requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
+    modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
+    shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+  }
+
+  export type ModCreateOrConnectWithoutPrincipalImageInput = {
+    where: ModWhereUniqueInput
+    create: XOR<ModCreateWithoutPrincipalImageInput, ModUncheckedCreateWithoutPrincipalImageInput>
+  }
+
+  export type ModCreateManyPrincipalImageInputEnvelope = {
+    data: ModCreateManyPrincipalImageInput | ModCreateManyPrincipalImageInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ModUpsertWithoutImagesInput = {
     update: XOR<ModUpdateWithoutImagesInput, ModUncheckedUpdateWithoutImagesInput>
     create: XOR<ModCreateWithoutImagesInput, ModUncheckedCreateWithoutImagesInput>
@@ -18332,10 +19111,10 @@ export namespace Prisma {
   export type ModUpdateWithoutImagesInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
@@ -18346,18 +19125,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
   export type ModUncheckedUpdateWithoutImagesInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
     comments?: CommentUncheckedUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUncheckedUpdateManyWithoutModNestedInput
@@ -18381,27 +19162,27 @@ export namespace Prisma {
   export type ShaderUpdateWithoutImagesInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
     author?: UserUpdateOneRequiredWithoutShadersNestedInput
     comments?: CommentUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
   export type ShaderUncheckedUpdateWithoutImagesInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
     comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
@@ -18426,11 +19207,11 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     shaders?: ShaderUpdateManyWithoutPacksNestedInput
     mods?: ModUpdateManyWithoutPacksNestedInput
     author?: UserUpdateOneRequiredWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
+    principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
   export type PackUncheckedUpdateWithoutImagesInput = {
@@ -18440,8 +19221,8 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
@@ -18476,30 +19257,78 @@ export namespace Prisma {
     imageId?: BigIntNullableFilter<"User"> | bigint | number | null
   }
 
+  export type PackUpsertWithWhereUniqueWithoutPrincipalImageInput = {
+    where: PackWhereUniqueInput
+    update: XOR<PackUpdateWithoutPrincipalImageInput, PackUncheckedUpdateWithoutPrincipalImageInput>
+    create: XOR<PackCreateWithoutPrincipalImageInput, PackUncheckedCreateWithoutPrincipalImageInput>
+  }
+
+  export type PackUpdateWithWhereUniqueWithoutPrincipalImageInput = {
+    where: PackWhereUniqueInput
+    data: XOR<PackUpdateWithoutPrincipalImageInput, PackUncheckedUpdateWithoutPrincipalImageInput>
+  }
+
+  export type PackUpdateManyWithWhereWithoutPrincipalImageInput = {
+    where: PackScalarWhereInput
+    data: XOR<PackUpdateManyMutationInput, PackUncheckedUpdateManyWithoutPrincipalImageInput>
+  }
+
+  export type ShaderUpsertWithWhereUniqueWithoutPrincipalImageInput = {
+    where: ShaderWhereUniqueInput
+    update: XOR<ShaderUpdateWithoutPrincipalImageInput, ShaderUncheckedUpdateWithoutPrincipalImageInput>
+    create: XOR<ShaderCreateWithoutPrincipalImageInput, ShaderUncheckedCreateWithoutPrincipalImageInput>
+  }
+
+  export type ShaderUpdateWithWhereUniqueWithoutPrincipalImageInput = {
+    where: ShaderWhereUniqueInput
+    data: XOR<ShaderUpdateWithoutPrincipalImageInput, ShaderUncheckedUpdateWithoutPrincipalImageInput>
+  }
+
+  export type ShaderUpdateManyWithWhereWithoutPrincipalImageInput = {
+    where: ShaderScalarWhereInput
+    data: XOR<ShaderUpdateManyMutationInput, ShaderUncheckedUpdateManyWithoutPrincipalImageInput>
+  }
+
+  export type ModUpsertWithWhereUniqueWithoutPrincipalImageInput = {
+    where: ModWhereUniqueInput
+    update: XOR<ModUpdateWithoutPrincipalImageInput, ModUncheckedUpdateWithoutPrincipalImageInput>
+    create: XOR<ModCreateWithoutPrincipalImageInput, ModUncheckedCreateWithoutPrincipalImageInput>
+  }
+
+  export type ModUpdateWithWhereUniqueWithoutPrincipalImageInput = {
+    where: ModWhereUniqueInput
+    data: XOR<ModUpdateWithoutPrincipalImageInput, ModUncheckedUpdateWithoutPrincipalImageInput>
+  }
+
+  export type ModUpdateManyWithWhereWithoutPrincipalImageInput = {
+    where: ModScalarWhereInput
+    data: XOR<ModUpdateManyMutationInput, ModUncheckedUpdateManyWithoutPrincipalImageInput>
+  }
+
   export type ShaderCreateWithoutConflictsInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
     author: UserCreateNestedOneWithoutShadersInput
     comments?: CommentCreateNestedManyWithoutShaderInput
     images?: ImageCreateNestedManyWithoutShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
   export type ShaderUncheckedCreateWithoutConflictsInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
     comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
@@ -18514,10 +19343,10 @@ export namespace Prisma {
   export type ModCreateWithoutConflictsFromInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
@@ -18528,18 +19357,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
   export type ModUncheckedCreateWithoutConflictsFromInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
     comments?: CommentUncheckedCreateNestedManyWithoutModInput
     images?: ImageUncheckedCreateNestedManyWithoutModInput
@@ -18557,10 +19388,10 @@ export namespace Prisma {
   export type ModCreateWithoutConflictsToInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
@@ -18571,18 +19402,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
   export type ModUncheckedCreateWithoutConflictsToInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
     comments?: CommentUncheckedCreateNestedManyWithoutModInput
     images?: ImageUncheckedCreateNestedManyWithoutModInput
@@ -18611,27 +19444,27 @@ export namespace Prisma {
   export type ShaderUpdateWithoutConflictsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
     author?: UserUpdateOneRequiredWithoutShadersNestedInput
     comments?: CommentUpdateManyWithoutShaderNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
   export type ShaderUncheckedUpdateWithoutConflictsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
     comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
@@ -18652,10 +19485,10 @@ export namespace Prisma {
   export type ModUpdateWithoutConflictsFromInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
@@ -18666,18 +19499,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
   export type ModUncheckedUpdateWithoutConflictsFromInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
     comments?: CommentUncheckedUpdateManyWithoutModNestedInput
     images?: ImageUncheckedUpdateManyWithoutModNestedInput
@@ -18701,10 +19536,10 @@ export namespace Prisma {
   export type ModUpdateWithoutConflictsToInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
@@ -18715,18 +19550,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
   export type ModUncheckedUpdateWithoutConflictsToInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
     comments?: CommentUncheckedUpdateManyWithoutModNestedInput
     images?: ImageUncheckedUpdateManyWithoutModNestedInput
@@ -18739,10 +19576,10 @@ export namespace Prisma {
   export type ModCreateWithoutModDependenciesInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
@@ -18753,18 +19590,20 @@ export namespace Prisma {
     conflictsTo?: ConflictCreateNestedManyWithoutConflictModInput
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
   export type ModUncheckedCreateWithoutModDependenciesInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
     comments?: CommentUncheckedCreateNestedManyWithoutModInput
     images?: ImageUncheckedCreateNestedManyWithoutModInput
@@ -18782,10 +19621,10 @@ export namespace Prisma {
   export type ModCreateWithoutRequiredByInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
@@ -18796,18 +19635,20 @@ export namespace Prisma {
     conflictsTo?: ConflictCreateNestedManyWithoutConflictModInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
   export type ModUncheckedCreateWithoutRequiredByInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
     comments?: CommentUncheckedCreateNestedManyWithoutModInput
     images?: ImageUncheckedCreateNestedManyWithoutModInput
@@ -18836,10 +19677,10 @@ export namespace Prisma {
   export type ModUpdateWithoutModDependenciesInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
@@ -18850,18 +19691,20 @@ export namespace Prisma {
     conflictsTo?: ConflictUpdateManyWithoutConflictModNestedInput
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
   export type ModUncheckedUpdateWithoutModDependenciesInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
     comments?: CommentUncheckedUpdateManyWithoutModNestedInput
     images?: ImageUncheckedUpdateManyWithoutModNestedInput
@@ -18885,10 +19728,10 @@ export namespace Prisma {
   export type ModUpdateWithoutRequiredByInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
@@ -18899,18 +19742,20 @@ export namespace Prisma {
     conflictsTo?: ConflictUpdateManyWithoutConflictModNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
   export type ModUncheckedUpdateWithoutRequiredByInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
     comments?: CommentUncheckedUpdateManyWithoutModNestedInput
     images?: ImageUncheckedUpdateManyWithoutModNestedInput
@@ -18923,27 +19768,27 @@ export namespace Prisma {
   export type ShaderCreateWithoutShaderDependeciesInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
     author: UserCreateNestedOneWithoutShadersInput
     comments?: CommentCreateNestedManyWithoutShaderInput
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
+    principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
   export type ShaderUncheckedCreateWithoutShaderDependeciesInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
     comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
@@ -18958,10 +19803,10 @@ export namespace Prisma {
   export type ModCreateWithoutShaderDependeciesInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
@@ -18972,18 +19817,20 @@ export namespace Prisma {
     conflictsTo?: ConflictCreateNestedManyWithoutConflictModInput
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
+    principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
   export type ModUncheckedCreateWithoutShaderDependeciesInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     authorId: bigint | number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
     comments?: CommentUncheckedCreateNestedManyWithoutModInput
     images?: ImageUncheckedCreateNestedManyWithoutModInput
@@ -19012,27 +19859,27 @@ export namespace Prisma {
   export type ShaderUpdateWithoutShaderDependeciesInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
     author?: UserUpdateOneRequiredWithoutShadersNestedInput
     comments?: CommentUpdateManyWithoutShaderNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
+    principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
   export type ShaderUncheckedUpdateWithoutShaderDependeciesInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
     comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
@@ -19053,10 +19900,10 @@ export namespace Prisma {
   export type ModUpdateWithoutShaderDependeciesInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
@@ -19067,18 +19914,20 @@ export namespace Prisma {
     conflictsTo?: ConflictUpdateManyWithoutConflictModNestedInput
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
+    principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
   export type ModUncheckedUpdateWithoutShaderDependeciesInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
     comments?: CommentUncheckedUpdateManyWithoutModNestedInput
     images?: ImageUncheckedUpdateManyWithoutModNestedInput
@@ -19095,28 +19944,29 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    score: number
+    principalImageId?: bigint | number | null
   }
 
   export type ShaderCreateManyAuthorInput = {
     id?: bigint | number
     name: string
-    description?: string | null
-    score: number
+    description?: string
     weight: number
-    url: string
+    src: string
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
   }
 
   export type ModCreateManyAuthorInput = {
     id?: bigint | number
     name: string
-    description?: string | null
+    description?: string
     min_version: number
     max_version: number
-    url: string
+    src: string
     weight: number
     versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
   }
 
   export type CommentCreateManyAuthorInput = {
@@ -19134,11 +19984,11 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     shaders?: ShaderUpdateManyWithoutPacksNestedInput
     mods?: ModUpdateManyWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
+    principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
   export type PackUncheckedUpdateWithoutAuthorInput = {
@@ -19148,7 +19998,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
@@ -19162,32 +20012,32 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type ShaderUpdateWithoutAuthorInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
     comments?: CommentUpdateManyWithoutShaderNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
   export type ShaderUncheckedUpdateWithoutAuthorInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
     comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
@@ -19198,20 +20048,20 @@ export namespace Prisma {
   export type ShaderUncheckedUpdateManyWithoutAuthorInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type ModUpdateWithoutAuthorInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
@@ -19222,17 +20072,19 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
   export type ModUncheckedUpdateWithoutAuthorInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
     comments?: CommentUncheckedUpdateManyWithoutModNestedInput
     images?: ImageUncheckedUpdateManyWithoutModNestedInput
@@ -19246,12 +20098,13 @@ export namespace Prisma {
   export type ModUncheckedUpdateManyWithoutAuthorInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type CommentUpdateWithoutAuthorInput = {
@@ -19288,7 +20141,8 @@ export namespace Prisma {
 
   export type ImageCreateManyPackInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
   }
@@ -19296,27 +20150,27 @@ export namespace Prisma {
   export type ShaderUpdateWithoutPacksInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     author?: UserUpdateOneRequiredWithoutShadersNestedInput
     comments?: CommentUpdateManyWithoutShaderNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
   export type ShaderUncheckedUpdateWithoutPacksInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
@@ -19326,21 +20180,21 @@ export namespace Prisma {
   export type ShaderUncheckedUpdateManyWithoutPacksInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type ModUpdateWithoutPacksInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     author?: UserUpdateOneRequiredWithoutModsNestedInput
@@ -19351,18 +20205,20 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
   export type ModUncheckedUpdateWithoutPacksInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     comments?: CommentUncheckedUpdateManyWithoutModNestedInput
     images?: ImageUncheckedUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUncheckedUpdateManyWithoutModNestedInput
@@ -19375,13 +20231,14 @@ export namespace Prisma {
   export type ModUncheckedUpdateManyWithoutPacksInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: StringFieldUpdateOperationsInput | string
     min_version?: IntFieldUpdateOperationsInput | number
     max_version?: IntFieldUpdateOperationsInput | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type CommentUpdateWithoutPackInput = {
@@ -19410,23 +20267,32 @@ export namespace Prisma {
 
   export type ImageUpdateWithoutPackInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     mod?: ModUpdateOneWithoutImagesNestedInput
     shader?: ShaderUpdateOneWithoutImagesNestedInput
     users?: UserUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUpdateManyWithoutPrincipalImageNestedInput
   }
 
   export type ImageUncheckedUpdateWithoutPackInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     users?: UserUncheckedUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUncheckedUpdateManyWithoutPrincipalImageNestedInput
   }
 
   export type ImageUncheckedUpdateManyWithoutPackInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -19441,7 +20307,8 @@ export namespace Prisma {
 
   export type ImageCreateManyShaderInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     modId?: bigint | number | null
     packId?: bigint | number | null
   }
@@ -19463,11 +20330,11 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     mods?: ModUpdateManyWithoutPacksNestedInput
     author?: UserUpdateOneRequiredWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
+    principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
   export type PackUncheckedUpdateWithoutShadersInput = {
@@ -19477,8 +20344,8 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
     images?: ImageUncheckedUpdateManyWithoutPackNestedInput
@@ -19491,8 +20358,8 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type CommentUpdateWithoutShaderInput = {
@@ -19521,23 +20388,32 @@ export namespace Prisma {
 
   export type ImageUpdateWithoutShaderInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     mod?: ModUpdateOneWithoutImagesNestedInput
     pack?: PackUpdateOneWithoutImagesNestedInput
     users?: UserUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUpdateManyWithoutPrincipalImageNestedInput
   }
 
   export type ImageUncheckedUpdateWithoutShaderInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     users?: UserUncheckedUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUncheckedUpdateManyWithoutPrincipalImageNestedInput
   }
 
   export type ImageUncheckedUpdateManyWithoutShaderInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -19582,7 +20458,8 @@ export namespace Prisma {
 
   export type ImageCreateManyModInput = {
     id?: bigint | number
-    url: string
+    src: string
+    basePath: string
     shaderId?: bigint | number | null
     packId?: bigint | number | null
   }
@@ -19618,11 +20495,11 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     shaders?: ShaderUpdateManyWithoutPacksNestedInput
     author?: UserUpdateOneRequiredWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
+    principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
   export type PackUncheckedUpdateWithoutModsInput = {
@@ -19632,8 +20509,8 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
     images?: ImageUncheckedUpdateManyWithoutPackNestedInput
@@ -19646,8 +20523,8 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
     authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type CommentUpdateWithoutModInput = {
@@ -19676,23 +20553,32 @@ export namespace Prisma {
 
   export type ImageUpdateWithoutModInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     shader?: ShaderUpdateOneWithoutImagesNestedInput
     pack?: PackUpdateOneWithoutImagesNestedInput
     users?: UserUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUpdateManyWithoutPrincipalImageNestedInput
   }
 
   export type ImageUncheckedUpdateWithoutModInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     users?: UserUncheckedUpdateManyWithoutImageNestedInput
+    packsPrincipal?: PackUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    shadersPrincipal?: ShaderUncheckedUpdateManyWithoutPrincipalImageNestedInput
+    modsPrincipal?: ModUncheckedUpdateManyWithoutPrincipalImageNestedInput
   }
 
   export type ImageUncheckedUpdateManyWithoutModInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    url?: StringFieldUpdateOperationsInput | string
+    src?: StringFieldUpdateOperationsInput | string
+    basePath?: StringFieldUpdateOperationsInput | string
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -19778,6 +20664,38 @@ export namespace Prisma {
     is_admin?: boolean
   }
 
+  export type PackCreateManyPrincipalImageInput = {
+    id?: bigint | number
+    max_version: number
+    min_version: number
+    versionType: $Enums.VersionType
+    name: string
+    description?: string | null
+    authorId: bigint | number
+  }
+
+  export type ShaderCreateManyPrincipalImageInput = {
+    id?: bigint | number
+    name: string
+    description?: string
+    weight: number
+    src: string
+    authorId: bigint | number
+    versionType: $Enums.VersionType
+  }
+
+  export type ModCreateManyPrincipalImageInput = {
+    id?: bigint | number
+    name: string
+    description?: string
+    min_version: number
+    max_version: number
+    src: string
+    weight: number
+    authorId: bigint | number
+    versionType: $Enums.VersionType
+  }
+
   export type UserUpdateWithoutImageInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     email?: StringFieldUpdateOperationsInput | string
@@ -19811,6 +20729,136 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type PackUpdateWithoutPrincipalImageInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    max_version?: IntFieldUpdateOperationsInput | number
+    min_version?: IntFieldUpdateOperationsInput | number
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    shaders?: ShaderUpdateManyWithoutPacksNestedInput
+    mods?: ModUpdateManyWithoutPacksNestedInput
+    author?: UserUpdateOneRequiredWithoutPacksNestedInput
+    comments?: CommentUpdateManyWithoutPackNestedInput
+    images?: ImageUpdateManyWithoutPackNestedInput
+  }
+
+  export type PackUncheckedUpdateWithoutPrincipalImageInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    max_version?: IntFieldUpdateOperationsInput | number
+    min_version?: IntFieldUpdateOperationsInput | number
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
+    mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
+    images?: ImageUncheckedUpdateManyWithoutPackNestedInput
+  }
+
+  export type PackUncheckedUpdateManyWithoutPrincipalImageInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    max_version?: IntFieldUpdateOperationsInput | number
+    min_version?: IntFieldUpdateOperationsInput | number
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+  }
+
+  export type ShaderUpdateWithoutPrincipalImageInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    weight?: IntFieldUpdateOperationsInput | number
+    src?: StringFieldUpdateOperationsInput | string
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    packs?: PackUpdateManyWithoutShadersNestedInput
+    author?: UserUpdateOneRequiredWithoutShadersNestedInput
+    comments?: CommentUpdateManyWithoutShaderNestedInput
+    images?: ImageUpdateManyWithoutShaderNestedInput
+    conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
+    shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+  }
+
+  export type ShaderUncheckedUpdateWithoutPrincipalImageInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    weight?: IntFieldUpdateOperationsInput | number
+    src?: StringFieldUpdateOperationsInput | string
+    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
+    images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
+    conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
+    shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutShaderNestedInput
+  }
+
+  export type ShaderUncheckedUpdateManyWithoutPrincipalImageInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    weight?: IntFieldUpdateOperationsInput | number
+    src?: StringFieldUpdateOperationsInput | string
+    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+  }
+
+  export type ModUpdateWithoutPrincipalImageInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    min_version?: IntFieldUpdateOperationsInput | number
+    max_version?: IntFieldUpdateOperationsInput | number
+    src?: StringFieldUpdateOperationsInput | string
+    weight?: IntFieldUpdateOperationsInput | number
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    packs?: PackUpdateManyWithoutModsNestedInput
+    author?: UserUpdateOneRequiredWithoutModsNestedInput
+    comments?: CommentUpdateManyWithoutModNestedInput
+    images?: ImageUpdateManyWithoutModNestedInput
+    conflictsFrom?: ConflictUpdateManyWithoutModNestedInput
+    conflictsTo?: ConflictUpdateManyWithoutConflictModNestedInput
+    requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
+    modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
+    shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+  }
+
+  export type ModUncheckedUpdateWithoutPrincipalImageInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    min_version?: IntFieldUpdateOperationsInput | number
+    max_version?: IntFieldUpdateOperationsInput | number
+    src?: StringFieldUpdateOperationsInput | string
+    weight?: IntFieldUpdateOperationsInput | number
+    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    packs?: PackUncheckedUpdateManyWithoutModsNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutModNestedInput
+    images?: ImageUncheckedUpdateManyWithoutModNestedInput
+    conflictsFrom?: ConflictUncheckedUpdateManyWithoutModNestedInput
+    conflictsTo?: ConflictUncheckedUpdateManyWithoutConflictModNestedInput
+    requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
+    modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
+    shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+  }
+
+  export type ModUncheckedUpdateManyWithoutPrincipalImageInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    min_version?: IntFieldUpdateOperationsInput | number
+    max_version?: IntFieldUpdateOperationsInput | number
+    src?: StringFieldUpdateOperationsInput | string
+    weight?: IntFieldUpdateOperationsInput | number
+    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
   }
 
 

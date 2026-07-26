@@ -35,6 +35,24 @@ export class PostgresUserRepository implements UserRepository {
       },
     });
   }
+
+  async updateImage(userId: bigint, imageId: bigint): Promise<void> {
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        image: imageId ? { connect: { id: imageId } } : undefined,
+      },
+    });
+  }
+
+  async updatePassword(userId: bigint, password: string): Promise<void> {
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        password,
+      },
+    });
+  }
   async findById(id: bigint): Promise<User | undefined> {
     const data = await prisma.user.findFirst({
       where: { id },

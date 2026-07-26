@@ -5,7 +5,8 @@ import { isValidText } from "../validators/validators";
 
 export interface ImageData {
   id: bigint;
-  url: string;
+  src: string;
+  basePath: string;
   shader?: ShaderData | null;
   mod?: ModData | null;
   pack?: PackData | null;
@@ -13,7 +14,8 @@ export interface ImageData {
 
 export class Image {
   id!: bigint;
-  url!: string;
+  src!: string;
+  basePath!: string;
   shader?: Shader;
   mod?: Mod;
   pack?: Pack;
@@ -23,7 +25,7 @@ export class Image {
     return this;
   }
   create(url: string) {
-    this.url = url;
+    this.src = url;
     return this;
   }
   setShader(shader: Shader) {
@@ -41,7 +43,8 @@ export class Image {
 
   fromData(data: ImageData) {
     this.id = data.id;
-    this.url = data.url;
+    this.src = data.src;
+    this.basePath = data.basePath;
     if (data.shader) {
       this.shader = new Shader().fromData(data.shader);
     }
@@ -55,9 +58,10 @@ export class Image {
   }
 
   toPersistence() {
-    if (!isValidText(this.url)) throw new Error("url is empty");
+    if (!isValidText(this.src)) throw new Error("url is empty");
     return {
-      url: this.url,
+      src: this.src,
+      basePath: this.basePath,
       packId: this.pack?.id,
       modId: this.mod?.id,
       shaderId: this.shader?.id,

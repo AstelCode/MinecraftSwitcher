@@ -9,7 +9,7 @@ export class PostgresModRepository implements ModRepository {
       description,
       min_version,
       max_version,
-      url,
+      src,
       weight,
       autorId,
       versionType,
@@ -21,7 +21,7 @@ export class PostgresModRepository implements ModRepository {
         description,
         min_version,
         max_version,
-        url,
+        src,
         weight,
         author: { connect: { id: autorId } },
         versionType,
@@ -37,10 +37,11 @@ export class PostgresModRepository implements ModRepository {
       description,
       min_version,
       max_version,
-      url,
+      src,
       weight,
       versionType,
       images,
+      principalImage,
     } = mod.toPersistence();
 
     const id = mod.getPersistanceId();
@@ -54,12 +55,17 @@ export class PostgresModRepository implements ModRepository {
         description,
         min_version,
         max_version,
-        url,
+        src,
         weight,
         versionType,
         images: {
           connect: images.map((item) => ({ id: item.id })),
         },
+        principalImage: principalImage
+          ? {
+              connect: { id: principalImage },
+            }
+          : undefined,
       },
     });
   }

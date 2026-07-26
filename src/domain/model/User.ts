@@ -3,7 +3,7 @@ import { isValidText } from "../validators/validators";
 import { Email } from "../value-objects/Email";
 import { Password } from "../value-objects/Password";
 import { CommentData, Comment } from "./Comment";
-import { Image } from "./Image";
+import { Image, ImageData } from "./Image";
 import { Pack } from "./Pack";
 
 export interface UserData {
@@ -12,10 +12,7 @@ export interface UserData {
   email: string;
   password: string;
   is_admin: boolean;
-  image?: {
-    id: bigint;
-    url: string;
-  } | null;
+  image?: ImageData | null;
   recoveryKey?: string | null;
   comments?: CommentData[];
 }
@@ -67,7 +64,8 @@ export class User {
     if (data.image) {
       this.image = new Image().fromData({
         id: data.image.id,
-        url: data.image.url,
+        src: data.image.src,
+        basePath: data.image.basePath,
       });
     }
     if (data.comments) {

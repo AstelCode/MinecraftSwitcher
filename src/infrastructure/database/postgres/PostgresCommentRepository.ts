@@ -3,6 +3,12 @@ import { CommentRepository } from "@/domain/repositories/CommentRepository";
 import { prisma } from "./prisma";
 
 export class PostgresCommentRepository implements CommentRepository {
+  async updateText(commentId: bigint, text: string): Promise<void> {
+    await prisma.comment.update({
+      where: { id: commentId },
+      data: { text },
+    });
+  }
   async save(commment: Comment): Promise<void> {
     const { text, authorId, packId, shaderId, modId } =
       commment.toPersistance();
@@ -30,10 +36,10 @@ export class PostgresCommentRepository implements CommentRepository {
     const data = await prisma.comment.findFirst({
       where: { id },
       include: {
-        shader: true,
-        mod: true,
+        shader: { include: { principalImage: true } },
+        mod: { include: { principalImage: true } },
         author: true,
-        pack: true,
+        pack: { include: { principalImage: true } },
       },
     });
     if (!data) return;
@@ -47,13 +53,21 @@ export class PostgresCommentRepository implements CommentRepository {
       },
     });
   }
+  async deleteByUser(id: bigint, userId: bigint): Promise<void> {
+    await prisma.comment.delete({
+      where: {
+        id,
+        userId,
+      },
+    });
+  }
   async listAll(): Promise<Comment[]> {
     const data = await prisma.comment.findMany({
       include: {
-        author: true,
-        shader: true,
-        mod: true,
-        pack: true,
+        author: { include: { image: true } },
+        shader: { include: { principalImage: true } },
+        mod: { include: { principalImage: true } },
+        pack: { include: { principalImage: true } },
       },
     });
     return data.map((item) => new Comment().fromData(item));
@@ -64,7 +78,7 @@ export class PostgresCommentRepository implements CommentRepository {
         shaderId: shader_id,
       },
       include: {
-        author: true,
+        author: { include: { image: true } },
       },
     });
     return data.map((item) => new Comment().fromData(item));
@@ -75,7 +89,7 @@ export class PostgresCommentRepository implements CommentRepository {
         modId: mod_id,
       },
       include: {
-        author: true,
+        author: { include: { image: true } },
       },
     });
     return data.map((item) => new Comment().fromData(item));
@@ -86,7 +100,21 @@ export class PostgresCommentRepository implements CommentRepository {
         packId: pack_id,
       },
       include: {
-        author: true,
+        author: { include: { image: true } },
+      },
+    });
+    return data.map((item) => new Comment().fromData(item));
+  }
+
+  async listByUser(userId: bigint): Promise<Comment[]> {
+    const data = await prisma.comment.findMany({
+      where: {
+        authorId: userId,
+      },
+      include: {
+        shader: { include: { images: true } },
+        mod: { include: { images: true } },
+        pack: { include: { images: true } },
       },
     });
     return data.map((item) => new Comment().fromData(item));

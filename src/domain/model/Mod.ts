@@ -12,7 +12,7 @@ export interface ModData {
   description: string | null;
   min_version: number;
   max_version: number;
-  url: string;
+  src: string;
   weight: number;
   images?: ImageData[];
   author?: UserData;
@@ -20,6 +20,7 @@ export interface ModData {
   conflictsFrom?: ConflictData[];
   versionType: VersionType;
   comments?: CommentData[];
+  principalImage?: ImageData | null;
 }
 
 export class Mod {
@@ -28,7 +29,7 @@ export class Mod {
   description!: string;
   minVersion!: number;
   maxVersion!: number;
-  url!: string;
+  src!: string;
   weight!: number;
   dependencies!: ModDependency[];
   conflicts!: Conflict[];
@@ -36,10 +37,11 @@ export class Mod {
   author!: User;
   versionType: VersionType = "JAVA";
   comments: Comment[] = [];
+  principalImage?: Image;
 
   toPersistence() {
     if (!isValidText(this.name)) throw new Error("mod name is empty");
-    if (!isValidText(this.url)) throw new Error("mod url is empty");
+    if (!isValidText(this.src)) throw new Error("mod url is empty");
     if (!this.weight) throw new Error("mod weight is empty or zero");
     if (!this.minVersion) throw new Error("mod minVersion is empty");
     if (!this.maxVersion) throw new Error("mod maxVersion is empty");
@@ -50,13 +52,14 @@ export class Mod {
       description: this.description ?? "",
       min_version: this.minVersion,
       max_version: this.maxVersion,
-      url: this.url,
+      src: this.src,
       weight: this.weight,
       autorId: this.author.id,
       images: this.images ?? [],
       versionType: this.versionType,
       conflicts: this.conflicts ?? [],
       dependencies: this.dependencies ?? [],
+      principalImage: this.principalImage?.id,
     };
   }
   fromData(data: ModData) {
@@ -65,7 +68,7 @@ export class Mod {
     this.description = data.description ?? "";
     this.maxVersion = data.min_version;
     this.minVersion = data.min_version;
-    this.url = data.url;
+    this.src = data.src;
     this.weight = data.weight;
     this.versionType = data.versionType;
 
@@ -73,6 +76,9 @@ export class Mod {
     if (data.images)
       this.images = data.images.map((item) => new Image().fromData(item));
 
+    if (data.principalImage) {
+      this.principalImage = new Image().fromData(data.principalImage);
+    }
     if (data.modDependencies) {
       this.dependencies = data.modDependencies.map((item) =>
         new ModDependency().fromData(item),

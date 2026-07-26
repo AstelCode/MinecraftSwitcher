@@ -41,7 +41,6 @@ model Pack {
   versionType VersionType
   name        String
   description String?
-  score       Float
 
   shaders Shader[]
   mods    Mod[]
@@ -50,35 +49,40 @@ model Pack {
   authorId BigInt
 
   comments Comment[]
-  images   Image[]
+  images   Image[]   @relation("packImage")
+
+  principalImage   Image?  @relation("PrincipalImage", fields: [principalImageId], references: [id])
+  principalImageId BigInt?
 }
 
 model Shader {
-  id          BigInt  @id @default(autoincrement())
+  id          BigInt @id @default(autoincrement())
   name        String
-  description String?
-  score       Float
+  description String @default("")
   packs       Pack[]
   weight      Int
-  url         String
+  src         String
 
   author   User   @relation(fields: [authorId], references: [id])
   authorId BigInt
 
   comments          Comment[]
-  images            Image[]
+  images            Image[]           @relation("shaderImage")
   conflicts         Conflict[]
   versionType       VersionType
   shaderDependecies ShaderDependecy[]
+
+  principalImage   Image?  @relation("PrincipalImage", fields: [principalImageId], references: [id])
+  principalImageId BigInt?
 }
 
 model Mod {
-  id          BigInt  @id @default(autoincrement())
+  id          BigInt @id @default(autoincrement())
   name        String
-  description String?
+  description String @default("")
   min_version Int
   max_version Int
-  url         String
+  src         String
   weight      Int
   packs       Pack[]
 
@@ -86,7 +90,7 @@ model Mod {
   authorId BigInt
 
   comments Comment[]
-  images   Image[]
+  images   Image[]   @relation("modImage")
 
   conflictsFrom Conflict[] @relation("ModConflicts")
   conflictsTo   Conflict[] @relation("ModConflictTarget")
@@ -95,6 +99,8 @@ model Mod {
   modDependencies   ModDependency[]   @relation("ModDependencies")
   versionType       VersionType
   shaderDependecies ShaderDependecy[]
+  principalImage    Image?            @relation("PrincipalImage", fields: [principalImageId], references: [id])
+  principalImageId  BigInt?
 }
 
 model Comment {
@@ -115,15 +121,19 @@ model Comment {
 }
 
 model Image {
-  id       BigInt  @id @default(autoincrement())
-  url      String
-  mod      Mod?    @relation(fields: [modId], references: [id])
-  modId    BigInt?
-  shader   Shader? @relation(fields: [shaderId], references: [id])
-  shaderId BigInt?
-  pack     Pack?   @relation(fields: [packId], references: [id])
-  packId   BigInt?
-  users    User[]
+  id               BigInt   @id @default(autoincrement())
+  src              String
+  basePath         String
+  mod              Mod?     @relation("modImage", fields: [modId], references: [id])
+  modId            BigInt?
+  shader           Shader?  @relation("shaderImage", fields: [shaderId], references: [id])
+  shaderId         BigInt?
+  pack             Pack?    @relation("packImage", fields: [packId], references: [id])
+  packId           BigInt?
+  users            User[]
+  packsPrincipal   Pack[]   @relation("PrincipalImage")
+  shadersPrincipal Shader[] @relation("PrincipalImage")
+  modsPrincipal    Mod[]    @relation("PrincipalImage")
 }
 
 model Conflict {

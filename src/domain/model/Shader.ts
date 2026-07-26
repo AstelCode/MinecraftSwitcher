@@ -10,30 +10,30 @@ export interface ShaderData {
   id: bigint;
   name: string;
   description: string | null;
-  score: number; // Añadido porque en Prisma es Float y no opcional
-  url: string;
   weight: number;
+  versionType: VersionType;
+  src: string;
   images?: ImageData[];
   author?: UserData;
   shaderDependencies?: ShaderDependencyData[];
   conflictsFrom?: ConflictData[];
-  versionType: VersionType;
   comments?: CommentData[];
+  principalImage?: ImageData | null;
 }
 
 export class Shader {
   id!: bigint;
   name!: string;
   description!: string;
-  url!: string;
+  src!: string;
   weight!: number;
   images: Image[] = [];
   author!: User;
-  score!: number;
   versionType: VersionType = "JAVA";
   conflicts: Conflict[] = [];
   shaderDependencies: ShaderDependency[] = [];
   comments: Comment[] = [];
+  principalImage?: Image;
 
   toPersistence() {
     if (!isValidText(this.name)) throw new Error("shader name is empty");
@@ -46,24 +46,22 @@ export class Shader {
       throw new Error("shader description is invalid");
     }
 
-    if (!isValidText(this.url)) throw new Error("shader url is empty");
+    if (!isValidText(this.src)) throw new Error("shader url is empty");
     if (!this.weight) throw new Error("shader weight is empty or zero");
     if (!this.author) throw new Error("shader author is empty");
-    if (this.score === undefined || this.score === null)
-      throw new Error("shader score is empty");
 
     return {
       id: this.id,
       name: this.name,
       description: this.description ?? "",
-      score: this.score,
-      url: this.url,
+      src: this.src,
       weight: this.weight,
       authorId: this.author.id,
       images: this.images ?? [],
       versionType: this.versionType,
       conflicts: this.conflicts ?? [],
       shaderDependencies: this.shaderDependencies ?? [],
+      principalImage: this.principalImage?.id,
     };
   }
 
@@ -71,8 +69,7 @@ export class Shader {
     this.id = data.id;
     this.name = data.name;
     this.description = data.description ?? "";
-    this.score = data.score;
-    this.url = data.url;
+    this.src = data.src;
     this.weight = data.weight;
     this.versionType = data.versionType;
 
@@ -98,6 +95,9 @@ export class Shader {
     }
     if (data.comments) {
       this.comments = data.comments.map((d) => new Comment().fromData(d));
+    }
+    if (data.principalImage) {
+      this.principalImage = new Image().fromData(data.principalImage);
     }
     return this;
   }

@@ -137,19 +137,19 @@ exports.Prisma.PackScalarFieldEnum = {
   versionType: 'versionType',
   name: 'name',
   description: 'description',
-  score: 'score',
-  authorId: 'authorId'
+  authorId: 'authorId',
+  principalImageId: 'principalImageId'
 };
 
 exports.Prisma.ShaderScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  score: 'score',
   weight: 'weight',
-  url: 'url',
+  src: 'src',
   authorId: 'authorId',
-  versionType: 'versionType'
+  versionType: 'versionType',
+  principalImageId: 'principalImageId'
 };
 
 exports.Prisma.ModScalarFieldEnum = {
@@ -158,10 +158,11 @@ exports.Prisma.ModScalarFieldEnum = {
   description: 'description',
   min_version: 'min_version',
   max_version: 'max_version',
-  url: 'url',
+  src: 'src',
   weight: 'weight',
   authorId: 'authorId',
-  versionType: 'versionType'
+  versionType: 'versionType',
+  principalImageId: 'principalImageId'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -175,7 +176,8 @@ exports.Prisma.CommentScalarFieldEnum = {
 
 exports.Prisma.ImageScalarFieldEnum = {
   id: 'id',
-  url: 'url',
+  src: 'src',
+  basePath: 'basePath',
   modId: 'modId',
   shaderId: 'shaderId',
   packId: 'packId'
@@ -228,13 +230,13 @@ exports.Prisma.PackOrderByRelevanceFieldEnum = {
 exports.Prisma.ShaderOrderByRelevanceFieldEnum = {
   name: 'name',
   description: 'description',
-  url: 'url'
+  src: 'src'
 };
 
 exports.Prisma.ModOrderByRelevanceFieldEnum = {
   name: 'name',
   description: 'description',
-  url: 'url'
+  src: 'src'
 };
 
 exports.Prisma.CommentOrderByRelevanceFieldEnum = {
@@ -242,7 +244,8 @@ exports.Prisma.CommentOrderByRelevanceFieldEnum = {
 };
 
 exports.Prisma.ImageOrderByRelevanceFieldEnum = {
-  url: 'url'
+  src: 'src',
+  basePath: 'basePath'
 };
 exports.VersionType = exports.$Enums.VersionType = {
   FORGE: 'FORGE',

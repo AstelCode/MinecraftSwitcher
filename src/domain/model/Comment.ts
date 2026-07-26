@@ -40,6 +40,29 @@ export class Comment {
     return this;
   }
 
+  forShader(text: string, shaderId: bigint) {
+    this.shader = new Shader();
+    this.shader.id = shaderId;
+    this.text = text;
+    return this;
+  }
+  forMod(text: string, modId: bigint) {
+    this.mod = new Mod();
+    this.mod.id = modId;
+    this.text = text;
+    return this;
+  }
+  forPack(text: string, packId: bigint) {
+    this.pack = new Pack();
+    this.pack.id = packId;
+    this.text = text;
+    return this;
+  }
+  setAuthor(user: User) {
+    this.author = user;
+    return this;
+  }
+
   toPersistance() {
     if (!this.author) throw new Error("comment auhor not assigned");
 

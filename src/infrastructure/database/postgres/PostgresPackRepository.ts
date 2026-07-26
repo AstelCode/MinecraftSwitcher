@@ -10,7 +10,6 @@ export class PostgresPackRepository implements PackRepository {
       versionType,
       name,
       description,
-      score,
       authorId,
     } = pack.toPersistance();
 
@@ -20,7 +19,6 @@ export class PostgresPackRepository implements PackRepository {
         description,
         max_version,
         min_version,
-        score,
         versionType,
         author: { connect: { id: authorId } },
       },
@@ -36,10 +34,10 @@ export class PostgresPackRepository implements PackRepository {
       versionType,
       name,
       description,
-      score,
       images,
       mods,
       shaders,
+      principalImage,
     } = pack.toPersistance();
 
     const id = pack.getPersistanceId();
@@ -53,7 +51,6 @@ export class PostgresPackRepository implements PackRepository {
         description,
         max_version,
         min_version,
-        score,
         versionType,
         images: {
           connect: images.map((item) => ({ id: item.id })),
@@ -64,6 +61,9 @@ export class PostgresPackRepository implements PackRepository {
         shaders: {
           connect: shaders.map((item) => ({ id: item.id })),
         },
+        principalImage: principalImage
+          ? { connect: { id: principalImage } }
+          : undefined,
       },
     });
   }
@@ -72,6 +72,7 @@ export class PostgresPackRepository implements PackRepository {
     const pack = await prisma.pack.findFirst({
       where: { id },
       include: {
+        principalImage: true,
         author: true,
         comments: true,
         images: true,

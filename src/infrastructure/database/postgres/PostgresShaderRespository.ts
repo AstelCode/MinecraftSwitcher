@@ -3,18 +3,36 @@ import { ShaderRepository } from "@/domain/repositories/ShaderRepository";
 import { prisma } from "./prisma";
 
 export class PostgresShaderRepository implements ShaderRepository {
+  async addImage(shaderId: bigint, imageId: bigint): Promise<void> {
+    await prisma.shader.update({
+      where: { id: shaderId },
+      data: {
+        images: {
+          connect: { id: imageId },
+        },
+      },
+    });
+  }
+  async setPrincipalImage(shaderId: bigint, imageId: bigint): Promise<void> {
+    await prisma.shader.update({
+      where: { id: shaderId },
+      data: {
+        principalImage: { connect: { id: imageId } },
+      },
+    });
+  }
+
   async save(shader: Shader): Promise<void> {
-    const { name, description, score, weight, authorId, versionType, url } =
+    const { name, description, weight, authorId, versionType, src } =
       shader.toPersistence();
     const newShader = await prisma.shader.create({
       data: {
         name,
         description,
-        score,
         weight,
         author: { connect: { id: authorId } },
         versionType,
-        url,
+        src,
       },
     });
     shader.id = newShader.id;
@@ -23,11 +41,9 @@ export class PostgresShaderRepository implements ShaderRepository {
     const {
       name,
       description,
-      score,
       weight,
-      authorId,
       versionType,
-      url,
+      src: url,
       images,
     } = shader.toPersistence();
     const id = shader.getPersistanceId();
@@ -38,7 +54,6 @@ export class PostgresShaderRepository implements ShaderRepository {
       data: {
         name,
         description,
-        score,
         weight,
         versionType,
         url,
@@ -48,6 +63,14 @@ export class PostgresShaderRepository implements ShaderRepository {
       },
     });
   }
+
+  async updateSrc(shaderId: bigint, src: string): Promise<void> {
+    await prisma.shader.update({
+      where: { id: shaderId },
+      data: { src },
+    });
+  }
+
   async findById(id: bigint): Promise<Shader | undefined> {
     const shader = await prisma.shader.findFirst({
       where: { id },
@@ -63,6 +86,9 @@ export class PostgresShaderRepository implements ShaderRepository {
   }
   async delete(id: bigint): Promise<void> {
     await prisma.shader.delete({ where: { id } });
+  }
+  async deleteByAuthor(id: bigint, authorId: bigint): Promise<void> {
+    await prisma.shader.delete({ where: { id, authorId } });
   }
   async listAll(): Promise<Shader[]> {
     const data = await prisma.shader.findMany({ include: { images: true } });
