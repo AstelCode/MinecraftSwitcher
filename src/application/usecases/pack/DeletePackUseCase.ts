@@ -1,3 +1,4 @@
+import { FileRepository } from "@/domain/repositories/FileRepository";
 import { PackRepository } from "@/domain/repositories/PackRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
 import { TokenService } from "@/domain/services/TokenService";
@@ -6,6 +7,7 @@ export interface DeletePackUseCaseDependencies {
   userRepository: Pick<UserRepository, "findById">;
   packRepository: Pick<PackRepository, "findById" | "delete">;
   tokenService: Pick<TokenService, "verify">;
+  fileRepository: Pick<FileRepository, "deletePackData">;
 }
 
 export class DeletePackUseCase {
@@ -26,10 +28,11 @@ export class DeletePackUseCase {
       throw new Error("Pack not found.");
     }
 
-    if (pack.author.id !== user.id) {
+    if (!user.isSuperadmin && pack.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
     await this.deps.packRepository.delete(packId);
+    await this.deps.fileRepository.deletePackData(packId);
   }
 }

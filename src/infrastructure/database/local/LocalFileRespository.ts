@@ -6,120 +6,140 @@ const relativeBasePath = process.env.LOCAL_STORAGE_PATH || "./uploads";
 const absoluteBasePath = path.resolve(process.cwd(), relativeBasePath);
 
 export class LocalFileRepository implements FileRepository {
-  async saveProfileImage(name: string, file: File): Promise<string> {
-    const folder = "profiles";
+  async deleteUserData(userId: bigint): Promise<void> {
+    const targetDirectory = path.join(absoluteBasePath, `users/${userId}`);
+    if (fs.existsSync(targetDirectory)) {
+      await fs.promises.rm(targetDirectory, { recursive: true, force: true });
+    }
+  }
+
+  async saveProfileImage(userId: bigint, name: string, file: File): Promise<string> {
+    const folder = `users/${userId}/profiles`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${fileName}`;
   }
-  async deleteProfileImage(filePath: string): Promise<void> {
+  async deleteProfileImage(userId: bigint, filePath: string): Promise<void> {
     const fileName = path.basename(filePath);
-    await this.delete("profiles", fileName);
+    await this.delete(`users/${userId}/profiles`, fileName);
   }
 
-  async saveShaderImage(name: string, file: File): Promise<string> {
-    const folder = "shaders/images";
+  async deleteShaderData(shaderId: bigint): Promise<void> {
+    const targetDirectory = path.join(absoluteBasePath, `shaders/${shaderId}`);
+    if (fs.existsSync(targetDirectory)) {
+      await fs.promises.rm(targetDirectory, { recursive: true, force: true });
+    }
+  }
+
+  async saveShaderImage(shaderId: bigint, name: string, file: File): Promise<string> {
+    const folder = `shaders/${shaderId}/images`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
-
-  async deleteShaderImage(filePath: string): Promise<void> {
+  async deleteShaderImage(shaderId: bigint, filePath: string): Promise<void> {
     const fileName = path.basename(filePath);
-    await this.delete("shaders/images", fileName);
+    await this.delete(`shaders/${shaderId}/images`, fileName);
   }
 
-  async saveShaderFile(name: string, file: File): Promise<string> {
-    const folder = "shaders/files";
+  async saveShaderFile(shaderId: bigint, name: string, file: File): Promise<string> {
+    const folder = `shaders/${shaderId}/files`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
-
-  async deleteShaderFile(filePath: string): Promise<void> {
+  async deleteShaderFile(shaderId: bigint, filePath: string): Promise<void> {
     const fileName = path.basename(filePath);
-    await this.delete("shaders/files", fileName);
+    await this.delete(`shaders/${shaderId}/files`, fileName);
   }
 
-  async saveShaderPrincipalFile(name: string, file: File): Promise<string> {
-    const folder = "shaders/principal";
+  async saveShaderPrincipalFile(shaderId: bigint, name: string, file: File): Promise<string> {
+    const folder = `shaders/${shaderId}/principal`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
-
-  async deleteShaderPrincipalFile(filePath: string): Promise<void> {
+  async deleteShaderPrincipalFile(shaderId: bigint, filePath: string): Promise<void> {
     const fileName = path.basename(filePath);
-    await this.delete("shaders/principal", fileName);
+    await this.delete(`shaders/${shaderId}/principal`, fileName);
   }
 
-  async saveModImage(name: string, file: File): Promise<string> {
-    const folder = "mods/images";
+  async deleteModData(modId: bigint): Promise<void> {
+    const targetDirectory = path.join(absoluteBasePath, `mods/${modId}`);
+    if (fs.existsSync(targetDirectory)) {
+      await fs.promises.rm(targetDirectory, { recursive: true, force: true });
+    }
+  }
+
+  async saveModImage(modId: bigint, name: string, file: File): Promise<string> {
+    const folder = `mods/${modId}/images`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
-
-  async deleteModImage(filePath: string): Promise<void> {
+  async deleteModImage(modId: bigint, filePath: string): Promise<void> {
     const fileName = path.basename(filePath);
-    await this.delete("mods/images", fileName);
+    await this.delete(`mods/${modId}/images`, fileName);
   }
 
-  async saveModFile(name: string, file: File): Promise<string> {
-    const folder = "mods/files";
+  async saveModFile(modId: bigint, name: string, file: File): Promise<string> {
+    const folder = `mods/${modId}/files`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
-
-  async deleteModFile(filePath: string): Promise<void> {
+  async deleteModFile(modId: bigint, filePath: string): Promise<void> {
     const fileName = path.basename(filePath);
-    await this.delete("mods/files", fileName);
+    await this.delete(`mods/${modId}/files`, fileName);
   }
 
-  async saveModPrincipalFile(name: string, file: File): Promise<string> {
-    const folder = "mods/principal";
+  async saveModPrincipalFile(modId: bigint, name: string, file: File): Promise<string> {
+    const folder = `mods/${modId}/principal`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
-
-  async deleteModPrincipalFile(filePath: string): Promise<void> {
+  async deleteModPrincipalFile(modId: bigint, filePath: string): Promise<void> {
     const fileName = path.basename(filePath);
-    await this.delete("mods/principal", fileName);
+    await this.delete(`mods/${modId}/principal`, fileName);
   }
 
-  async savePackImage(name: string, file: File): Promise<string> {
-    const folder = "packs/images";
+  async deletePackData(packId: bigint): Promise<void> {
+    const targetDirectory = path.join(absoluteBasePath, `packs/${packId}`);
+    if (fs.existsSync(targetDirectory)) {
+      await fs.promises.rm(targetDirectory, { recursive: true, force: true });
+    }
+  }
+
+  async savePackImage(packId: bigint, name: string, file: File): Promise<string> {
+    const folder = `packs/${packId}/images`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
-
-  async deletePackImage(filePath: string): Promise<void> {
+  async deletePackImage(packId: bigint, filePath: string): Promise<void> {
     const fileName = path.basename(filePath);
-    await this.delete("packs/images", fileName);
+    await this.delete(`packs/${packId}/images`, fileName);
   }
 
-  async savePackPrincipalFile(name: string, file: File): Promise<string> {
-    const folder = "packs/principal";
+  async savePackPrincipalFile(packId: bigint, name: string, file: File): Promise<string> {
+    const folder = `packs/${packId}/principal`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
-
-  async deletePackPrincipalFile(filePath: string): Promise<void> {
+  async deletePackPrincipalFile(packId: bigint, filePath: string): Promise<void> {
     const fileName = path.basename(filePath);
-    await this.delete("packs/principal", fileName);
+    await this.delete(`packs/${packId}/principal`, fileName);
   }
 
   getBaseUrl(): string {

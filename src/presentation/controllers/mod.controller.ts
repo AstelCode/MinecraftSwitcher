@@ -12,6 +12,7 @@ import { DeleteModImageUseCase } from "../../application/usecases/mod/DeleteModI
 import { UpdateModPrincipalImageUseCase } from "../../application/usecases/mod/UpdateModPrincipalImageUseCase";
 import { UpdateModFileUseCase } from "../../application/usecases/mod/UpdateModFileUseCase";
 import { GetModUseCase } from "../../application/usecases/mod/GetModUseCase";
+import { AssignModToAdminUseCase } from "../../application/usecases/mod/AssignModToAdminUseCase";
 import {
   UpdateModSchema,
   ModIdParamsSchema,
@@ -35,6 +36,7 @@ export class ModController {
     private updateModPrincipalImageUseCase: UpdateModPrincipalImageUseCase,
     private updateModFileUseCase: UpdateModFileUseCase,
     private getModUseCase: GetModUseCase,
+    private assignModToAdminUseCase: AssignModToAdminUseCase,
   ) {}
 
   async create(req: FastifyRequest, reply: FastifyReply) {
@@ -173,5 +175,13 @@ export class ModController {
 
     await this.updateModFileUseCase.execute(token, BigInt(modId), file);
     return reply.status(200).send({ message: "Mod file updated successfully" });
+  }
+
+  async assign(req: FastifyRequest, reply: FastifyReply) {
+    const { modId } = ModIdParamsSchema.parse(req.params);
+    const { adminId } = req.body as { adminId: string };
+    const token = req.headers.authorization?.split(" ")[1] || "";
+    await this.assignModToAdminUseCase.execute(token, BigInt(modId), BigInt(adminId));
+    return reply.status(200).send({ message: "Mod assigned successfully" });
   }
 }

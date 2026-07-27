@@ -20,12 +20,13 @@ enum VersionType {
 }
 
 model User {
-  id           BigInt  @id @default(autoincrement())
-  email        String  @unique
-  nickname     String
-  password     String
-  recovery_key String?
-  is_admin     Boolean @default(false)
+  id            BigInt  @id @default(autoincrement())
+  email         String  @unique
+  nickname      String
+  password      String
+  recovery_key  String?
+  is_admin      Boolean @default(false)
+  is_superadmin Boolean @default(false)
 
   packs    Pack[]
   shaders  Shader[]
@@ -49,8 +50,8 @@ model Pack {
   shaders Shader[]
   mods    Mod[]
 
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId BigInt
+  author   User?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId BigInt?
 
   comments Comment[]
   images   Image[]   @relation("packImage")
@@ -68,8 +69,8 @@ model Shader {
   weight      Int
   src         String
 
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId BigInt
+  author   User?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId BigInt?
 
   comments          Comment[]
   images            Image[]           @relation("shaderImage")
@@ -91,8 +92,8 @@ model Mod {
   weight      Int
   packs       Pack[]
 
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId BigInt
+  author   User?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId BigInt?
 
   comments Comment[]
   images   Image[]   @relation("modImage")

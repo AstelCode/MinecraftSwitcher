@@ -30,7 +30,7 @@ export class DeleteConflictUseCase {
       throw new Error("Invalid conflict: mod not assigned.");
     }
 
-    if (conflict.mod.author.id !== user.id) {
+    if (!user.isSuperadmin && conflict.mod.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 

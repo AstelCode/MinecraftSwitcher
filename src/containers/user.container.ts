@@ -7,6 +7,8 @@ import { DeleteUserUseCase } from "../application/usecases/user/DeleteUserUseCas
 import { ListUsersUseCase } from "../application/usecases/user/ListUsersUseCase";
 import { ChangeImageUseCase } from "../application/usecases/user/ChangeImageUseCase";
 import { GetUserUseCase } from "../application/usecases/user/GetUserUseCase";
+import { DeleteUserByAdminUseCase } from "../application/usecases/user/DeleteUserByAdminUseCase";
+import { DeleteUserBySuperAdminUseCase } from "../application/usecases/user/DeleteUserBySuperAdminUseCase";
 import { UserController } from "../presentation/controllers/user.controller";
 import { userRoutes } from "../presentation/routes/user.routes";
 
@@ -19,6 +21,8 @@ export function setupUserDependencies(app: FastifyInstance, globalContext: any) 
   const listUsersUseCase = new ListUsersUseCase(globalContext);
   const changeImageUseCase = new ChangeImageUseCase(globalContext);
   const getUserUseCase = new GetUserUseCase(globalContext);
+  const deleteUserByAdminUseCase = new DeleteUserByAdminUseCase(globalContext);
+  const deleteUserBySuperAdminUseCase = new DeleteUserBySuperAdminUseCase(globalContext);
 
   const userController = new UserController(
     createUserUseCase,
@@ -29,6 +33,8 @@ export function setupUserDependencies(app: FastifyInstance, globalContext: any) 
     listUsersUseCase,
     changeImageUseCase,
     getUserUseCase,
+    deleteUserByAdminUseCase,
+    deleteUserBySuperAdminUseCase,
   );
   app.register(userRoutes, { prefix: "/api/users", userController });
 }

@@ -17,4 +17,5 @@ export async function modRoutes(app: FastifyInstance, opts: { modController: Mod
   app.delete("/:modId/images/:imageId", (req, reply) => modController.deleteImage(req, reply));
   app.put("/:modId/principal-image", (req, reply) => modController.updatePrincipalImage(req, reply));
   app.put("/:modId/file", (req, reply) => modController.updateFile(req, reply));
+  app.put("/:modId/assign", (req, reply) => modController.assign(req, reply));
 }

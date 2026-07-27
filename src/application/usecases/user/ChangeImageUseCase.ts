@@ -27,6 +27,7 @@ export class ChangeImageUseCase {
     let image;
     try {
       filePath = await this.deps.fileRepository.saveProfileImage(
+        user.id,
         `${user.id}_${this.deps.uuidService.generate()}`,
         file,
       );
@@ -40,11 +41,11 @@ export class ChangeImageUseCase {
           await this.deps.userRepository.updateImage(user.id, image.id);
         }
       } catch (error) {
-        await this.deps.fileRepository.deleteProfileImage(user.id.toString());
+        await this.deps.fileRepository.deleteProfileImage(user.id, filePath);
         throw error;
       }
       if (oldImage) {
-        await this.deps.fileRepository.deleteProfileImage(oldImage.src);
+        await this.deps.fileRepository.deleteProfileImage(user.id, oldImage.src);
       }
     } catch (error) {
       throw error;

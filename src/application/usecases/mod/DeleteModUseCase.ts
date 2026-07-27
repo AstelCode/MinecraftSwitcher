@@ -5,7 +5,7 @@ import { TokenService } from "@/domain/services/TokenService";
 
 export interface DeleteModUseCaseDependencies {
   userRepository: Pick<UserRepository, "findById">;
-  fileRepository: Pick<FileRepository, "deleteModFile">;
+  fileRepository: Pick<FileRepository, "deleteModData">;
   modRepository: Pick<ModRepository, "findById" | "delete">;
   tokenService: Pick<TokenService, "verify">;
 }
@@ -27,12 +27,12 @@ export class DeleteModUseCase {
       throw new Error("Mod not found.");
     }
 
-    if (mod.author.id !== user.id) {
+    if (!user.isSuperadmin && mod.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
     // Se asume que delete maneja la lógica para remover el registro validando permisos o existencia
     await this.deps.modRepository.delete(modId);
-    await this.deps.fileRepository.deleteModFile(mod.src);
+    await this.deps.fileRepository.deleteModData(mod.id);
   }
 }

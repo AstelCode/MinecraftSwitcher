@@ -28,7 +28,7 @@ export class UpdateShaderFileUseCase {
       throw new Error("Shader not found.");
     }
 
-    if (shader.author.id !== user.id) {
+    if (!user.isSuperadmin && shader.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
@@ -37,14 +37,14 @@ export class UpdateShaderFileUseCase {
 
     try {
       const fileName = `shader_${shader.id}`;
-      newSrc = await this.deps.fileRepository.saveShaderFile(fileName, file);
+      newSrc = await this.deps.fileRepository.saveShaderFile(shader.id, fileName, file);
       await this.deps.shaderRepository.updateSrc(shader.id, newSrc);
       if (oldSrc) {
-        await this.deps.fileRepository.deleteShaderFile(oldSrc);
+        await this.deps.fileRepository.deleteShaderFile(shader.id, oldSrc);
       }
     } catch (error) {
       if (newSrc) {
-        await this.deps.fileRepository.deleteShaderFile(newSrc);
+        await this.deps.fileRepository.deleteShaderFile(shader.id, newSrc);
       }
       throw error;
     }

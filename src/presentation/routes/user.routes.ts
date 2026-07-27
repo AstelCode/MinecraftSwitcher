@@ -9,6 +9,8 @@ export async function userRoutes(app: FastifyInstance, opts: { userController: U
   app.patch("/password", (req, reply) => userController.changePassword(req, reply));
   app.patch("/image", (req, reply) => userController.changeImage(req, reply));
   app.delete("/", (req, reply) => userController.delete(req, reply));
+  app.delete("/admin/:id", (req, reply) => userController.deleteByAdmin(req, reply));
+  app.delete("/superadmin/:id", (req, reply) => userController.deleteBySuperAdmin(req, reply));
   app.get("/", (req, reply) => userController.list(req, reply));
   app.get("/profile", (req, reply) => userController.get(req, reply));
 }

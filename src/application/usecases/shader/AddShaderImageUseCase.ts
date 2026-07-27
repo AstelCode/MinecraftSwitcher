@@ -11,7 +11,7 @@ export interface AddShaderImageUseCaseDependencies {
   shaderRepository: Pick<ShaderRepository, "findById" | "addImage">;
   tokenService: Pick<TokenService, "verify">;
   imageRepository: Pick<ImageRepository, "save" | "delete">;
-  fileRepository: Pick<FileRepository, "saveShaderImage" | "deleteShaderFile">;
+  fileRepository: Pick<FileRepository, "saveShaderImage" | "deleteShaderImage">;
   uuidService: Pick<UuidService, "generate">;
 }
 
@@ -33,7 +33,7 @@ export class AddShaderImageUseCase {
       throw new Error("Shader not found.");
     }
 
-    if (shader.author.id !== user.id) {
+    if (shader.author?.id !== user.id && !user.isSuperadmin) {
       throw new Error("Unauthorized.");
     }
 
@@ -45,7 +45,11 @@ export class AddShaderImageUseCase {
     let image: Image | undefined;
 
     try {
-      filePath = await this.deps.fileRepository.saveShaderImage(fileName, file);
+      filePath = await this.deps.fileRepository.saveShaderImage(
+        shader.id,
+        fileName,
+        file,
+      );
 
       image = new Image();
       image.src = filePath;
@@ -59,7 +63,7 @@ export class AddShaderImageUseCase {
       }
 
       if (filePath) {
-        await this.deps.fileRepository.deleteShaderFile(filePath);
+        await this.deps.fileRepository.deleteShaderImage(shader.id, filePath);
       }
 
       throw error;

@@ -21,4 +21,5 @@ export async function packRoutes(app: FastifyInstance, opts: { packController: P
   app.post("/:packId/images", (req, reply) => packController.addImage(req, reply));
   app.delete("/:packId/images/:imageId", (req, reply) => packController.deleteImage(req, reply));
   app.put("/:packId/principal-image", (req, reply) => packController.updatePrincipalImage(req, reply));
+  app.put("/:packId/assign", (req, reply) => packController.assign(req, reply));
 }

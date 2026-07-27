@@ -29,7 +29,7 @@ export class DeleteShaderDependencyUseCase {
       throw new Error("Shader dependency not found.");
     }
 
-    if (dependency.shader.author.id !== user.id) {
+    if (!user.isSuperadmin && dependency.shader.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 

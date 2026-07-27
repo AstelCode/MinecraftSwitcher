@@ -15,7 +15,7 @@ export interface ModData {
   src: string;
   weight: number;
   images?: ImageData[];
-  author?: UserData;
+  author?: UserData | null;
   modDependencies?: ModDependencyData[];
   conflictsFrom?: ConflictData[];
   versionType: VersionType;
@@ -34,7 +34,7 @@ export class Mod {
   dependencies!: ModDependency[];
   conflicts!: Conflict[];
   images!: Image[];
-  author!: User;
+  author?: User | null;
   versionType: VersionType = "JAVA";
   comments: Comment[] = [];
   principalImage?: Image;
@@ -45,7 +45,6 @@ export class Mod {
     if (!this.weight) throw new Error("mod weight is empty or zero");
     if (!this.minVersion) throw new Error("mod minVersion is empty");
     if (!this.maxVersion) throw new Error("mod maxVersion is empty");
-    if (!this.author) throw new Error("mod autor is empty");
     return {
       id: this.id,
       name: this.name,
@@ -54,7 +53,7 @@ export class Mod {
       max_version: this.maxVersion,
       src: this.src,
       weight: this.weight,
-      autorId: this.author.id,
+      autorId: this.author?.id,
       images: this.images ?? [],
       versionType: this.versionType,
       conflicts: this.conflicts ?? [],

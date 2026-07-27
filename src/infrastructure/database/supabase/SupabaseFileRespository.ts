@@ -10,137 +10,164 @@ export class SupabaseFileRepository implements FileRepository {
   );
 
   getBaseUrl(): string {
-    // Debe apuntar a la base de tu bucket público, ej:
-    // https://[PROYECTO].supabase.co/storage/v1/object/public/tu-bucket-name
     return process.env.SUPABASE_BASE_PATH!;
   }
 
-  // --- MÉTODOS ESPECÍFICOS DE DOMINIO ---
+  private async deleteFolder(folderPath: string): Promise<void> {
+    const { data, error } = await this.supabase.storage.from(this.bucketName).list(folderPath);
+    if (error) {
+      console.warn(`Error listing folder ${folderPath} in Supabase:`, error.message);
+      return;
+    }
+    if (data && data.length > 0) {
+      // Supabase list solo lista un nivel por defecto. Para subcarpetas habría que hacer recursión.
+      // Aquí hacemos un borrado simple de los archivos en ese nivel por simplicidad.
+      const filesToRemove = data.map((file) => `${folderPath}/${file.name}`);
+      await this.supabase.storage.from(this.bucketName).remove(filesToRemove);
+    }
+  }
 
-  async saveProfileImage(name: string, file: File): Promise<string> {
-    const folder = "profiles";
+  async deleteUserData(userId: bigint): Promise<void> {
+    await this.deleteFolder(`users/${userId}`);
+  }
+
+  async saveProfileImage(userId: bigint, name: string, file: File): Promise<string> {
+    const folder = `users/${userId}/profiles`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${fileName}`;
   }
 
-  async deleteProfileImage(fileUrl: string): Promise<void> {
+  async deleteProfileImage(userId: bigint, fileUrl: string): Promise<void> {
     const fileName = this.extractFileName(fileUrl);
-    if (fileName) await this.delete("profiles", fileName);
+    if (fileName) await this.delete(`users/${userId}/profiles`, fileName);
   }
 
-  async saveShaderImage(name: string, file: File): Promise<string> {
-    const folder = "shaders/images";
+  async deleteShaderData(shaderId: bigint): Promise<void> {
+    // Intentamos borrar el contenido de subcarpetas conocidas
+    await this.deleteFolder(`shaders/${shaderId}/images`);
+    await this.deleteFolder(`shaders/${shaderId}/files`);
+    await this.deleteFolder(`shaders/${shaderId}/principal`);
+  }
+
+  async saveShaderImage(shaderId: bigint, name: string, file: File): Promise<string> {
+    const folder = `shaders/${shaderId}/images`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
-  async deleteShaderImage(fileUrl: string): Promise<void> {
+  async deleteShaderImage(shaderId: bigint, fileUrl: string): Promise<void> {
     const fileName = this.extractFileName(fileUrl);
-    if (fileName) await this.delete("shaders/images", fileName);
+    if (fileName) await this.delete(`shaders/${shaderId}/images`, fileName);
   }
 
-  async saveShaderFile(name: string, file: File): Promise<string> {
-    const folder = "shaders/files";
+  async saveShaderFile(shaderId: bigint, name: string, file: File): Promise<string> {
+    const folder = `shaders/${shaderId}/files`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
-  async deleteShaderFile(fileUrl: string): Promise<void> {
+  async deleteShaderFile(shaderId: bigint, fileUrl: string): Promise<void> {
     const fileName = this.extractFileName(fileUrl);
-    if (fileName) await this.delete("shaders/files", fileName);
+    if (fileName) await this.delete(`shaders/${shaderId}/files`, fileName);
   }
 
-  async saveShaderPrincipalFile(name: string, file: File): Promise<string> {
-    const folder = "shaders/principal";
+  async saveShaderPrincipalFile(shaderId: bigint, name: string, file: File): Promise<string> {
+    const folder = `shaders/${shaderId}/principal`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
-  async deleteShaderPrincipalFile(fileUrl: string): Promise<void> {
+  async deleteShaderPrincipalFile(shaderId: bigint, fileUrl: string): Promise<void> {
     const fileName = this.extractFileName(fileUrl);
-    if (fileName) await this.delete("shaders/principal", fileName);
+    if (fileName) await this.delete(`shaders/${shaderId}/principal`, fileName);
   }
 
-  async saveModImage(name: string, file: File): Promise<string> {
-    const folder = "mods/images";
+  async deleteModData(modId: bigint): Promise<void> {
+    await this.deleteFolder(`mods/${modId}/images`);
+    await this.deleteFolder(`mods/${modId}/files`);
+    await this.deleteFolder(`mods/${modId}/principal`);
+  }
+
+  async saveModImage(modId: bigint, name: string, file: File): Promise<string> {
+    const folder = `mods/${modId}/images`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
-  async deleteModImage(fileUrl: string): Promise<void> {
+  async deleteModImage(modId: bigint, fileUrl: string): Promise<void> {
     const fileName = this.extractFileName(fileUrl);
-    if (fileName) await this.delete("mods/images", fileName);
-  }
-  async saveModFile(name: string, file: File): Promise<string> {
-    const folder = "mods/files";
-    const ext = path.extname(file.name);
-    const fileName = `${name}${ext}`;
-    await this.save(folder, fileName, file);
-    return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
-  }
-  async deleteModFile(fileUrl: string): Promise<void> {
-    const fileName = this.extractFileName(fileUrl);
-    if (fileName) await this.delete("mods/files", fileName);
+    if (fileName) await this.delete(`mods/${modId}/images`, fileName);
   }
 
-  async saveModPrincipalFile(name: string, file: File): Promise<string> {
-    const folder = "mods/principal";
+  async saveModFile(modId: bigint, name: string, file: File): Promise<string> {
+    const folder = `mods/${modId}/files`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
-  async deleteModPrincipalFile(fileUrl: string): Promise<void> {
+  async deleteModFile(modId: bigint, fileUrl: string): Promise<void> {
     const fileName = this.extractFileName(fileUrl);
-    if (fileName) await this.delete("mods/principal", fileName);
+    if (fileName) await this.delete(`mods/${modId}/files`, fileName);
   }
 
-  async savePackImage(name: string, file: File): Promise<string> {
-    const folder = "packs/images";
+  async saveModPrincipalFile(modId: bigint, name: string, file: File): Promise<string> {
+    const folder = `mods/${modId}/principal`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
-  async deletePackImage(fileUrl: string): Promise<void> {
+  async deleteModPrincipalFile(modId: bigint, fileUrl: string): Promise<void> {
     const fileName = this.extractFileName(fileUrl);
-    if (fileName) await this.delete("packs/images", fileName);
+    if (fileName) await this.delete(`mods/${modId}/principal`, fileName);
   }
 
-  async savePackPrincipalFile(name: string, file: File): Promise<string> {
-    const folder = "packs/principal";
+  async deletePackData(packId: bigint): Promise<void> {
+    await this.deleteFolder(`packs/${packId}/images`);
+    await this.deleteFolder(`packs/${packId}/principal`);
+  }
+
+  async savePackImage(packId: bigint, name: string, file: File): Promise<string> {
+    const folder = `packs/${packId}/images`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
     await this.save(folder, fileName, file);
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
-  async deletePackPrincipalFile(fileUrl: string): Promise<void> {
+  async deletePackImage(packId: bigint, fileUrl: string): Promise<void> {
     const fileName = this.extractFileName(fileUrl);
-    if (fileName) await this.delete("packs/principal", fileName);
+    if (fileName) await this.delete(`packs/${packId}/images`, fileName);
   }
 
-  // --- UTILERÍA INTERNA ---
+  async savePackPrincipalFile(packId: bigint, name: string, file: File): Promise<string> {
+    const folder = `packs/${packId}/principal`;
+    const ext = path.extname(file.name);
+    const fileName = `${name}${ext}`;
+    await this.save(folder, fileName, file);
+    return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
+  }
 
-  /**
-   * Extrae el nombre del archivo de una URL de Supabase
-   * Ej: "https://.../profiles/123.png?t=456" -> "123.png"
-   */
+  async deletePackPrincipalFile(packId: bigint, fileUrl: string): Promise<void> {
+    const fileName = this.extractFileName(fileUrl);
+    if (fileName) await this.delete(`packs/${packId}/principal`, fileName);
+  }
+
   private extractFileName(url: string): string | undefined {
     try {
-      // Obtenemos la última parte después de '/' y removemos cualquier query param (ej: ?token=...)
       return url.substring(url.lastIndexOf("/") + 1).split("?")[0];
     } catch {
       return undefined;

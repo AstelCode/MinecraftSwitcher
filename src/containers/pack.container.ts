@@ -13,6 +13,7 @@ import { AddPackImageUseCase } from "../application/usecases/pack/AddPackImageUs
 import { UpdatePackPrincipalImageUseCase } from "../application/usecases/pack/UpdatePackPrincipalImageUseCase";
 import { DeletePackImageUseCase } from "../application/usecases/pack/DeletePackImageUseCase";
 import { GetPackUseCase } from "../application/usecases/pack/GetPackUseCase";
+import { AssignPackToAdminUseCase } from "../application/usecases/pack/AssignPackToAdminUseCase";
 import { PackController } from "../presentation/controllers/pack.controller";
 import { packRoutes } from "../presentation/routes/pack.routes";
 
@@ -31,6 +32,7 @@ export function setupPackDependencies(app: FastifyInstance, globalContext: any) 
   const updatePackPrincipalImageUseCase = new UpdatePackPrincipalImageUseCase(globalContext);
   const deletePackImageUseCase = new DeletePackImageUseCase(globalContext);
   const getPackUseCase = new GetPackUseCase(globalContext);
+  const assignPackToAdminUseCase = new AssignPackToAdminUseCase(globalContext);
 
   const packController = new PackController(
     createPackUseCase,
@@ -47,6 +49,7 @@ export function setupPackDependencies(app: FastifyInstance, globalContext: any) 
     updatePackPrincipalImageUseCase,
     deletePackImageUseCase,
     getPackUseCase,
+    assignPackToAdminUseCase,
   );
   app.register(packRoutes, { prefix: "/api/packs", packController });
 }

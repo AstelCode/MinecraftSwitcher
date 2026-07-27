@@ -17,4 +17,5 @@ export async function shaderRoutes(app: FastifyInstance, opts: { shaderControlle
   app.delete("/:shaderId/images/:imageId", (req, reply) => shaderController.deleteImage(req, reply));
   app.put("/:shaderId/principal-image", (req, reply) => shaderController.updatePrincipalImage(req, reply));
   app.put("/:shaderId/file", (req, reply) => shaderController.updateFile(req, reply));
+  app.put("/:shaderId/assign", (req, reply) => shaderController.assign(req, reply));
 }

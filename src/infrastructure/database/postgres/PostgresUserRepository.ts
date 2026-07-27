@@ -4,7 +4,7 @@ import { prisma } from "./prisma";
 
 export class PostgresUserRepository implements UserRepository {
   async save(user: User): Promise<void> {
-    const { nickname, password, email, isAdmin, imageId } =
+    const { nickname, password, email, isAdmin, isSuperadmin, imageId } =
       user.toPersistance();
     const newUser = await prisma.user.create({
       data: {
@@ -12,6 +12,7 @@ export class PostgresUserRepository implements UserRepository {
         password,
         email,
         is_admin: isAdmin,
+        is_superadmin: isSuperadmin,
         image: imageId ? { connect: { id: imageId } } : undefined,
       },
     });
@@ -21,7 +22,7 @@ export class PostgresUserRepository implements UserRepository {
     await prisma.user.delete({ where: { id } });
   }
   async update(user: User): Promise<void> {
-    const { password, nickname, isAdmin, recoveryKey, imageId } =
+    const { password, nickname, isAdmin, isSuperadmin, recoveryKey, imageId } =
       user.toPersistance();
     const id = user.getPersistanceId();
     await prisma.user.update({
@@ -30,6 +31,7 @@ export class PostgresUserRepository implements UserRepository {
         password,
         nickname,
         is_admin: isAdmin,
+        is_superadmin: isSuperadmin,
         recovery_key: recoveryKey,
         image: imageId ? { connect: { id: imageId } } : undefined,
       },

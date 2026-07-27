@@ -127,6 +127,7 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   recovery_key: 'recovery_key',
   is_admin: 'is_admin',
+  is_superadmin: 'is_superadmin',
   imageId: 'imageId'
 };
 

@@ -7,6 +7,8 @@ import { DeleteUserUseCase } from "../../application/usecases/user/DeleteUserUse
 import { ListUsersUseCase } from "../../application/usecases/user/ListUsersUseCase";
 import { ChangeImageUseCase } from "../../application/usecases/user/ChangeImageUseCase";
 import { GetUserUseCase } from "../../application/usecases/user/GetUserUseCase";
+import { DeleteUserByAdminUseCase } from "../../application/usecases/user/DeleteUserByAdminUseCase";
+import { DeleteUserBySuperAdminUseCase } from "../../application/usecases/user/DeleteUserBySuperAdminUseCase";
 import { CreateUserSchema, ChangePasswordSchema } from "../schemas/user.schema";
 
 export class UserController {
@@ -19,6 +21,8 @@ export class UserController {
     private listUsersUseCase: ListUsersUseCase,
     private changeImageUseCase: ChangeImageUseCase,
     private getUserUseCase: GetUserUseCase,
+    private deleteUserByAdminUseCase: DeleteUserByAdminUseCase,
+    private deleteUserBySuperAdminUseCase: DeleteUserBySuperAdminUseCase,
   ) {}
 
   async create(req: FastifyRequest, reply: FastifyReply) {
@@ -59,8 +63,22 @@ export class UserController {
 
   async delete(req: FastifyRequest, reply: FastifyReply) {
     const token = req.headers.authorization?.split(" ")[1] || "";
-    await this.deleteUserUseCase.executeByToken(token);
+    await this.deleteUserUseCase.execute(token);
     return reply.status(200).send({ message: "User deleted successfully" });
+  }
+
+  async deleteByAdmin(req: FastifyRequest, reply: FastifyReply) {
+    const token = req.headers.authorization?.split(" ")[1] || "";
+    const { id } = req.params as { id: string };
+    await this.deleteUserByAdminUseCase.execute(token, BigInt(id));
+    return reply.status(200).send({ message: "User deleted successfully by admin" });
+  }
+
+  async deleteBySuperAdmin(req: FastifyRequest, reply: FastifyReply) {
+    const token = req.headers.authorization?.split(" ")[1] || "";
+    const { id } = req.params as { id: string };
+    await this.deleteUserBySuperAdminUseCase.execute(token, BigInt(id));
+    return reply.status(200).send({ message: "User deleted successfully by superadmin" });
   }
 
   async list(req: FastifyRequest, reply: FastifyReply) {

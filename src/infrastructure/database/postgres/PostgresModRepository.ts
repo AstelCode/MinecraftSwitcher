@@ -41,7 +41,7 @@ export class PostgresModRepository implements ModRepository {
         max_version,
         src,
         weight,
-        author: { connect: { id: autorId } },
+        author: autorId ? { connect: { id: autorId } } : undefined,
         versionType,
       },
     });
@@ -123,7 +123,7 @@ export class PostgresModRepository implements ModRepository {
     return data.map((item) => new Mod().fromData(item));
   }
 
-  async listByAdmin(admin_id: bigint): Promise<Mod[]> {
+  async listByAuthor(admin_id: bigint): Promise<Mod[]> {
     const data = await prisma.mod.findMany({
       where: { authorId: admin_id },
       include: { images: true, author: true },
@@ -158,5 +158,12 @@ export class PostgresModRepository implements ModRepository {
       include: { images: true, author: true },
     });
     return data.map((item) => new Mod().fromData(item));
+  }
+
+  async assignAuthor(id: bigint, authorId: bigint): Promise<void> {
+    await prisma.mod.update({
+      where: { id },
+      data: { author: { connect: { id: authorId } } },
+    });
   }
 }

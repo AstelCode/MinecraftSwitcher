@@ -34,7 +34,7 @@ export class DeleteShaderImageUseCase {
       throw new Error("Shader not found.");
     }
 
-    if (shader.author.id !== user.id) {
+    if (!user.isSuperadmin && shader.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
@@ -48,7 +48,7 @@ export class DeleteShaderImageUseCase {
       throw new Error("Image does not belong to shader.");
     }
 
-    await this.deps.fileRepository.deleteShaderImage(image.src);
+    await this.deps.fileRepository.deleteShaderImage(shader.id, image.src);
 
     await this.deps.imageRepository.delete(image.id);
   }

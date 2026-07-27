@@ -34,7 +34,7 @@ export class DeleteModImageUseCase {
       throw new Error("Mod not found.");
     }
 
-    if (mod.author.id !== user.id) {
+    if (!user.isSuperadmin && mod.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
@@ -48,7 +48,7 @@ export class DeleteModImageUseCase {
       throw new Error("Image does not belong to mod.");
     }
 
-    await this.deps.fileRepository.deleteModImage(image.src);
+    await this.deps.fileRepository.deleteModImage(mod.id, image.src);
 
     await this.deps.imageRepository.delete(image.id);
   }

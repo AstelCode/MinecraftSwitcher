@@ -12,6 +12,7 @@ import { DeleteModImageUseCase } from "../application/usecases/mod/DeleteModImag
 import { UpdateModPrincipalImageUseCase } from "../application/usecases/mod/UpdateModPrincipalImageUseCase";
 import { UpdateModFileUseCase } from "../application/usecases/mod/UpdateModFileUseCase";
 import { GetModUseCase } from "../application/usecases/mod/GetModUseCase";
+import { AssignModToAdminUseCase } from "../application/usecases/mod/AssignModToAdminUseCase";
 import { ModController } from "../presentation/controllers/mod.controller";
 import { modRoutes } from "../presentation/routes/mod.routes";
 
@@ -29,6 +30,7 @@ export function setupModDependencies(app: FastifyInstance, globalContext: any) {
   const updateModPrincipalImageUseCase = new UpdateModPrincipalImageUseCase(globalContext);
   const updateModFileUseCase = new UpdateModFileUseCase(globalContext);
   const getModUseCase = new GetModUseCase(globalContext);
+  const assignModToAdminUseCase = new AssignModToAdminUseCase(globalContext);
 
   const modController = new ModController(
     createModUseCase,
@@ -44,6 +46,7 @@ export function setupModDependencies(app: FastifyInstance, globalContext: any) {
     updateModPrincipalImageUseCase,
     updateModFileUseCase,
     getModUseCase,
+    assignModToAdminUseCase,
   );
   app.register(modRoutes, { prefix: "/api/mods", modController });
 }

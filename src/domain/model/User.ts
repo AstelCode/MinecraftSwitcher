@@ -12,6 +12,7 @@ export interface UserData {
   email: string;
   password: string;
   is_admin: boolean;
+  is_superadmin?: boolean;
   image?: ImageData | null;
   recoveryKey?: string | null;
   comments?: CommentData[];
@@ -23,6 +24,7 @@ export class User {
   password!: Password;
   email!: Email;
   isAdmin: boolean = false;
+  isSuperadmin: boolean = false;
   image?: Image | null;
   recoveryKey?: string | null;
   packs: Pack[] = [];
@@ -49,6 +51,11 @@ export class User {
     return this;
   }
 
+  setIsSuperadmin(value: boolean) {
+    this.isSuperadmin = value;
+    return this;
+  }
+
   setId(id: bigint) {
     this.id = id;
     return this;
@@ -59,6 +66,7 @@ export class User {
     this.password = new Password(data.password);
     this.email = new Email(data.email);
     this.isAdmin = data.is_admin;
+    this.isSuperadmin = data.is_superadmin ?? false;
     this.nickname = data.nickname;
     this.recoveryKey = data.recoveryKey;
     if (data.image) {
@@ -84,6 +92,7 @@ export class User {
       password: this.password?.password,
       email: this.email?.email,
       isAdmin: this.isAdmin,
+      isSuperadmin: this.isSuperadmin,
       recoveryKey: this.recoveryKey,
       imageId: this.image?.id,
     };

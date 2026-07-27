@@ -31,7 +31,7 @@ export class CreateShaderDependencyUseCase {
       throw new Error("Shader not found.");
     }
 
-    if (shader.author.id !== user.id) {
+    if (!user.isSuperadmin && shader.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 

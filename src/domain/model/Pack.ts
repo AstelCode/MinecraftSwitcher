@@ -28,7 +28,7 @@ export class Pack {
   shaders: Shader[] = [];
   mods: Mod[] = [];
   images: Image[] = [];
-  author!: User;
+  author?: User | null;
   versionType: VersionType = "JAVA";
   principalImage?: Image;
 
@@ -54,7 +54,6 @@ export class Pack {
 
   toPersistance() {
     if (!isValidText(this.name)) throw new Error("pack name is empty");
-    if (!this.author) throw new Error("pack author not assigned");
     if (!this.minVersion) throw new Error("pack minVersion is empty");
     if (!this.maxVersion) throw new Error("pack maxVersion is empty");
 
@@ -64,7 +63,7 @@ export class Pack {
       versionType: this.versionType,
       name: this.name,
       description: this.description ?? "",
-      authorId: this.author.id,
+      authorId: this.author?.id,
       images: this.images,
       shaders: this.shaders,
       mods: this.mods,

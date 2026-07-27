@@ -33,13 +33,14 @@ export class UpdateModPrincipalImageUseCase {
       throw new Error("Mod not found.");
     }
 
-    if (mod.author.id !== user.id) {
+    if (!user.isSuperadmin && mod.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
     const oldImage = mod.principalImage;
 
     const src = await this.deps.fileRepository.saveModPrincipalFile(
+      mod.id,
       `${mod.id}_${this.deps.uuidService.generate()}`,
       file,
     );
@@ -54,10 +55,10 @@ export class UpdateModPrincipalImageUseCase {
         await this.deps.modRepository.setPrincipalImage(mod.id, image.id);
       }
       if (oldImage) {
-        await this.deps.fileRepository.deleteModPrincipalFile(oldImage.src);
+        await this.deps.fileRepository.deleteModPrincipalFile(mod.id, oldImage.src);
       }
     } catch (error) {
-      await this.deps.fileRepository.deleteModPrincipalFile(src);
+      await this.deps.fileRepository.deleteModPrincipalFile(mod.id, src);
       throw error;
     }
   }

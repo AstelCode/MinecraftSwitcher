@@ -39,7 +39,7 @@ export class UpdatePackUseCase {
       throw new Error("Pack not found.");
     }
 
-    if (pack.author.id !== user.id) {
+    if (!user.isSuperadmin && pack.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 

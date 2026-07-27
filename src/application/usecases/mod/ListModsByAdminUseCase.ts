@@ -5,7 +5,7 @@ import { ModDTO } from "../dto/ModDTO";
 
 export interface ListModsByAdminUseCaseDependencies {
   userRepository: Pick<UserRepository, "findById">;
-  modRepository: Pick<ModRepository, "listByAdmin">;
+  modRepository: Pick<ModRepository, "listByAuthor">;
   tokenService: Pick<TokenService, "verify">;
 }
 
@@ -18,9 +18,9 @@ export class ListModsByAdminUseCase {
 
     if (!user) throw new Error("User not found.");
 
-    const data = await this.deps.modRepository.listByAdmin(user.id);
+    const data = await this.deps.modRepository.listByAuthor(user.id);
 
-    return data.map((item) => ({
+    return data.map((item: any) => ({
       id: item.id.toString(),
       name: item.name,
       imageUrl: item.principalImage?.src,

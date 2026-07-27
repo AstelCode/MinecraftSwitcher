@@ -33,7 +33,7 @@ export class AddModImageUseCase {
       throw new Error("Mod not found.");
     }
 
-    if (mod.author.id !== user.id) {
+    if (!user.isSuperadmin && mod.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
@@ -44,7 +44,7 @@ export class AddModImageUseCase {
     let image: Image | undefined;
 
     try {
-      filePath = await this.deps.fileRepository.saveModImage(fileName, file);
+      filePath = await this.deps.fileRepository.saveModImage(mod.id, fileName, file);
 
       image = new Image();
       image.src = filePath;
@@ -57,7 +57,7 @@ export class AddModImageUseCase {
       }
 
       if (filePath) {
-        await this.deps.fileRepository.deleteModImage(filePath);
+        await this.deps.fileRepository.deleteModImage(mod.id, filePath);
       }
 
       throw error;

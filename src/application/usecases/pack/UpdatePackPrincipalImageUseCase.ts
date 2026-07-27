@@ -31,13 +31,14 @@ export class UpdatePackPrincipalImageUseCase {
       throw new Error("Pack not found.");
     }
 
-    if (pack.author.id !== user.id) {
+    if (!user.isSuperadmin && pack.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
     const oldImage = pack.principalImage;
 
     const src = await this.deps.fileRepository.savePackPrincipalFile(
+      pack.id,
       pack.id.toString(),
       file,
     );
@@ -53,10 +54,10 @@ export class UpdatePackPrincipalImageUseCase {
       if (oldImage) {
         await this.deps.imageRepository.delete(oldImage.id);
 
-        await this.deps.fileRepository.deletePackPrincipalFile(oldImage.src);
+        await this.deps.fileRepository.deletePackPrincipalFile(pack.id, oldImage.src);
       }
     } catch (error) {
-      await this.deps.fileRepository.deletePackPrincipalFile(src);
+      await this.deps.fileRepository.deletePackPrincipalFile(pack.id, src);
       throw error;
     }
   }

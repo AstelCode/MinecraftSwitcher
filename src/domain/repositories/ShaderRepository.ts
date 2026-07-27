@@ -14,4 +14,5 @@ export interface ShaderRepository {
   listByAuthor(admin_id: bigint): Promise<Shader[]>;
   listByPack(pack_id: bigint): Promise<Shader[]>;
   listByQuery(name: string): Promise<Shader[]>;
+  assignAuthor(id: bigint, authorId: bigint): Promise<void>;
 }

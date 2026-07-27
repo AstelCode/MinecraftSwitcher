@@ -28,7 +28,7 @@ export class UpdateModFileUseCase {
       throw new Error("Mod not found.");
     }
 
-    if (mod.author.id !== user.id) {
+    if (!user.isSuperadmin && mod.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
@@ -37,14 +37,14 @@ export class UpdateModFileUseCase {
 
     try {
       const fileName = `mod_${mod.id}`;
-      newSrc = await this.deps.fileRepository.saveModFile(fileName, file);
+      newSrc = await this.deps.fileRepository.saveModFile(mod.id, fileName, file);
       await this.deps.modRepository.updateSrc(mod.id, newSrc);
       if (oldSrc) {
-        await this.deps.fileRepository.deleteModFile(oldSrc);
+        await this.deps.fileRepository.deleteModFile(mod.id, oldSrc);
       }
     } catch (error) {
       if (newSrc) {
-        await this.deps.fileRepository.deleteModFile(newSrc);
+        await this.deps.fileRepository.deleteModFile(mod.id, newSrc);
       }
       throw error;
     }

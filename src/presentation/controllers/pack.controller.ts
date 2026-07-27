@@ -13,6 +13,7 @@ import { AddPackImageUseCase } from "../../application/usecases/pack/AddPackImag
 import { UpdatePackPrincipalImageUseCase } from "../../application/usecases/pack/UpdatePackPrincipalImageUseCase";
 import { DeletePackImageUseCase } from "../../application/usecases/pack/DeletePackImageUseCase";
 import { GetPackUseCase } from "../../application/usecases/pack/GetPackUseCase";
+import { AssignPackToAdminUseCase } from "../../application/usecases/pack/AssignPackToAdminUseCase";
 import {
   CreatePackSchema,
   UpdatePackSchema,
@@ -41,6 +42,7 @@ export class PackController {
     private updatePackPrincipalImageUseCase: UpdatePackPrincipalImageUseCase,
     private deletePackImageUseCase: DeletePackImageUseCase,
     private getPackUseCase: GetPackUseCase,
+    private assignPackToAdminUseCase: AssignPackToAdminUseCase,
   ) {}
 
   async create(req: FastifyRequest, reply: FastifyReply) {
@@ -174,5 +176,13 @@ export class PackController {
       BigInt(imageId),
     );
     return reply.status(200).send({ message: "Image deleted from pack" });
+  }
+
+  async assign(req: FastifyRequest, reply: FastifyReply) {
+    const { packId } = PackIdParamsSchema.parse(req.params);
+    const { adminId } = req.body as { adminId: string };
+    const token = req.headers.authorization?.split(" ")[1] || "";
+    await this.assignPackToAdminUseCase.execute(token, BigInt(packId), BigInt(adminId));
+    return reply.status(200).send({ message: "Pack assigned successfully" });
   }
 }

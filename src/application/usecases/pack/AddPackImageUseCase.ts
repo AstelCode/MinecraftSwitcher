@@ -33,7 +33,7 @@ export class AddPackImageUseCase {
       throw new Error("Pack not found.");
     }
 
-    if (pack.author.id !== user.id) {
+    if (!user.isSuperadmin && pack.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
@@ -45,7 +45,7 @@ export class AddPackImageUseCase {
     let image: Image | undefined;
 
     try {
-      filePath = await this.deps.fileRepository.savePackImage(fileName, file);
+      filePath = await this.deps.fileRepository.savePackImage(pack.id, fileName, file);
 
       image = new Image();
       image.src = filePath;
@@ -58,7 +58,7 @@ export class AddPackImageUseCase {
       }
 
       if (filePath) {
-        await this.deps.fileRepository.deletePackImage(filePath);
+        await this.deps.fileRepository.deletePackImage(pack.id, filePath);
       }
 
       throw error;

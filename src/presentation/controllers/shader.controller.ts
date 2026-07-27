@@ -11,6 +11,7 @@ import { DeleteShaderImageUseCase } from "../../application/usecases/shader/Dele
 import { UpdateShaderPrincipalImageUseCase } from "../../application/usecases/shader/UpdateShaderPrincipalImageUseCase";
 import { UpdateShaderFileUseCase } from "../../application/usecases/shader/UpdateShaderFileUseCase";
 import { GetShaderUseCase } from "../../application/usecases/shader/GetShaderUseCase";
+import { AssignShaderToAdminUseCase } from "../../application/usecases/shader/AssignShaderToAdminUseCase";
 import {
   UpdateShaderSchema,
   ShaderIdParamsSchema,
@@ -33,6 +34,7 @@ export class ShaderController {
     private updateShaderPrincipalImageUseCase: UpdateShaderPrincipalImageUseCase,
     private updateShaderFileUseCase: UpdateShaderFileUseCase,
     private getShaderUseCase: GetShaderUseCase,
+    private assignShaderToAdminUseCase: AssignShaderToAdminUseCase,
   ) {}
 
   async create(req: FastifyRequest, reply: FastifyReply) {
@@ -165,5 +167,13 @@ export class ShaderController {
     return reply
       .status(200)
       .send({ message: "Shader file updated successfully" });
+  }
+
+  async assign(req: FastifyRequest, reply: FastifyReply) {
+    const { shaderId } = ShaderIdParamsSchema.parse(req.params);
+    const { adminId } = req.body as { adminId: string };
+    const token = req.headers.authorization?.split(" ")[1] || "";
+    await this.assignShaderToAdminUseCase.execute(token, BigInt(shaderId), BigInt(adminId));
+    return reply.status(200).send({ message: "Shader assigned successfully" });
   }
 }

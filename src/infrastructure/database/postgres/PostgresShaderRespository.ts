@@ -30,7 +30,7 @@ export class PostgresShaderRepository implements ShaderRepository {
         name,
         description,
         weight,
-        author: { connect: { id: authorId } },
+        author: authorId ? { connect: { id: authorId } } : undefined,
         versionType,
         src,
       },
@@ -127,5 +127,12 @@ export class PostgresShaderRepository implements ShaderRepository {
       include: { images: true },
     });
     return data.map((item) => new Shader().fromData(item));
+  }
+  
+  async assignAuthor(id: bigint, authorId: bigint): Promise<void> {
+    await prisma.shader.update({
+      where: { id },
+      data: { author: { connect: { id: authorId } } },
+    });
   }
 }

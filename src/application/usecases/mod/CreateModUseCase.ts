@@ -18,9 +18,9 @@ export interface CreateModArgs {
 
 export interface CreateModUseCaseDependencies {
   userRepository: Pick<UserRepository, "findById">;
-  modRepository: Pick<ModRepository, "save" | "delete">;
+  modRepository: Pick<ModRepository, "save" | "delete" | "updateSrc">;
   tokenService: Pick<TokenService, "verify">;
-  fileRepository: Pick<FileRepository, "saveModFile" | "deleteModFile">;
+  fileRepository: Pick<FileRepository, "saveModFile" | "deleteModFile" | "deleteModData">;
   uuidService: Pick<UuidService, "generate">;
 }
 
@@ -42,9 +42,6 @@ export class CreateModUseCase {
     let filePath: string | undefined;
 
     try {
-      const fileName = `mod_${this.deps.uuidService.generate()}`;
-      // Asumiendo la existencia de un método análogo en FileRepository
-      filePath = await this.deps.fileRepository.saveModFile(fileName, data.file);
       mod = new Mod();
       mod.name = data.name;
       mod.description = data.description ?? "";
@@ -52,17 +49,22 @@ export class CreateModUseCase {
       mod.maxVersion = data.maxVersion;
       mod.versionType = data.versionType;
       mod.weight = data.file.size;
-      mod.src = filePath;
+      mod.src = "";
       mod.author = user;
 
       await this.deps.modRepository.save(mod);
-    } catch (error) {
-      if (filePath) {
-        // Asumiendo la existencia de deleteModFile
-        await this.deps.fileRepository.deleteModFile(filePath);
-      }
 
+      const fileName = `mod_${this.deps.uuidService.generate()}`;
+      filePath = await this.deps.fileRepository.saveModFile(mod.id, fileName, data.file);
+      
+      mod.src = filePath;
+      await this.deps.modRepository.updateSrc(mod.id, filePath);
+
+    } catch (error) {
       if (mod?.id !== undefined) {
+        if (filePath) {
+          await this.deps.fileRepository.deleteModFile(mod.id, filePath);
+        }
         await this.deps.modRepository.delete(mod.id);
       }
 

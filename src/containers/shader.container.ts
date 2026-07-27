@@ -11,6 +11,7 @@ import { DeleteShaderImageUseCase } from "../application/usecases/shader/DeleteS
 import { UpdateShaderPrincipalImageUseCase } from "../application/usecases/shader/UpdateShaderPrincipalImageUseCase";
 import { UpdateShaderFileUseCase } from "../application/usecases/shader/UpdateShaderFileUseCase";
 import { GetShaderUseCase } from "../application/usecases/shader/GetShaderUseCase";
+import { AssignShaderToAdminUseCase } from "../application/usecases/shader/AssignShaderToAdminUseCase";
 import { ShaderController } from "../presentation/controllers/shader.controller";
 import { shaderRoutes } from "../presentation/routes/shader.routes";
 
@@ -27,6 +28,7 @@ export function setupShaderDependencies(app: FastifyInstance, globalContext: any
   const updateShaderPrincipalImageUseCase = new UpdateShaderPrincipalImageUseCase(globalContext);
   const updateShaderFileUseCase = new UpdateShaderFileUseCase(globalContext);
   const getShaderUseCase = new GetShaderUseCase(globalContext);
+  const assignShaderToAdminUseCase = new AssignShaderToAdminUseCase(globalContext);
 
   const shaderController = new ShaderController(
     createShaderUseCase,
@@ -41,6 +43,7 @@ export function setupShaderDependencies(app: FastifyInstance, globalContext: any
     updateShaderPrincipalImageUseCase,
     updateShaderFileUseCase,
     getShaderUseCase,
+    assignShaderToAdminUseCase,
   );
   app.register(shaderRoutes, { prefix: "/api/shaders", shaderController });
 }

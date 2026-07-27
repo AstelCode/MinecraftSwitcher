@@ -20,7 +20,7 @@ export class PostgresPackRepository implements PackRepository {
         max_version,
         min_version,
         versionType,
-        author: { connect: { id: authorId } },
+        author: authorId ? { connect: { id: authorId } } : undefined,
       },
     });
 
@@ -165,5 +165,12 @@ export class PostgresPackRepository implements PackRepository {
       include: { author: true },
     });
     return data.map((item) => new Pack().fromData(item as any));
+  }
+
+  async assignAuthor(id: bigint, authorId: bigint): Promise<void> {
+    await prisma.pack.update({
+      where: { id },
+      data: { author: { connect: { id: authorId } } },
+    });
   }
 }

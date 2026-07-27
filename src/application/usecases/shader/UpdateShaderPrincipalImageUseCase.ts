@@ -31,13 +31,14 @@ export class UpdateShaderPrincipalImageUseCase {
       throw new Error("Shader not found.");
     }
 
-    if (shader.author.id !== user.id) {
+    if (!user.isSuperadmin && shader.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
     const oldImage = shader.principalImage;
 
     const src = await this.deps.fileRepository.saveShaderPrincipalFile(
+      shader.id,
       shader.id.toString(),
       file,
     );
@@ -53,10 +54,10 @@ export class UpdateShaderPrincipalImageUseCase {
       if (oldImage) {
         await this.deps.imageRepository.delete(oldImage.id);
 
-        await this.deps.fileRepository.deleteShaderPrincipalFile(oldImage.src);
+        await this.deps.fileRepository.deleteShaderPrincipalFile(shader.id, oldImage.src);
       }
     } catch (error) {
-      await this.deps.fileRepository.deleteShaderPrincipalFile(src);
+      await this.deps.fileRepository.deleteShaderPrincipalFile(shader.id, src);
       throw error;
     }
   }

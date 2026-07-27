@@ -1,21 +1,30 @@
+import { FileRepository } from "@/domain/repositories/FileRepository";
+import { ImageRepository } from "@/domain/repositories/ImageRepository";
+import { ModRepository } from "@/domain/repositories/ModRepository";
+import { ShaderRepository } from "@/domain/repositories/ShaderRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
 import { TokenService } from "@/domain/services/TokenService";
 
 export interface DeleteUserUseCaseDependencies {
-  userRepository: Pick<UserRepository, "delete">;
+  userRepository: Pick<UserRepository, "delete" | "findById">;
+  imageRespository: Pick<ImageRepository, "delete">;
+  fileRespository: Pick<FileRepository, "deleteUserData">;
+  shaderRepository: Pick<ShaderRepository, "listByAuthor">;
+  modRepository: Pick<ModRepository, "listByAuthor">;
   tokenService: Pick<TokenService, "verify">;
 }
 
 export class DeleteUserUseCase {
   constructor(private readonly deps: DeleteUserUseCaseDependencies) {}
 
-  async executeByToken(token: string): Promise<void> {
+  async execute(token: string): Promise<void> {
     const payload = await this.deps.tokenService.verify(token);
-
-    await this.execute(payload.id);
-  }
-
-  async execute(id: bigint): Promise<void> {
-    await this.deps.userRepository.delete(id);
+    const user = await this.deps.userRepository.findById(payload.id);
+    if (!user) throw new Error("User not found.");
+    if (user.image) {
+      await this.deps.imageRespository.delete(user.image.id);
+      await this.deps.fileRespository.deleteUserData(user.id);
+    }
+    await this.deps.userRepository.delete(payload.id);
   }
 }

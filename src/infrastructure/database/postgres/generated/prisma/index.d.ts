@@ -2003,6 +2003,7 @@ export namespace Prisma {
     password: string | null
     recovery_key: string | null
     is_admin: boolean | null
+    is_superadmin: boolean | null
     imageId: bigint | null
   }
 
@@ -2013,6 +2014,7 @@ export namespace Prisma {
     password: string | null
     recovery_key: string | null
     is_admin: boolean | null
+    is_superadmin: boolean | null
     imageId: bigint | null
   }
 
@@ -2023,6 +2025,7 @@ export namespace Prisma {
     password: number
     recovery_key: number
     is_admin: number
+    is_superadmin: number
     imageId: number
     _all: number
   }
@@ -2045,6 +2048,7 @@ export namespace Prisma {
     password?: true
     recovery_key?: true
     is_admin?: true
+    is_superadmin?: true
     imageId?: true
   }
 
@@ -2055,6 +2059,7 @@ export namespace Prisma {
     password?: true
     recovery_key?: true
     is_admin?: true
+    is_superadmin?: true
     imageId?: true
   }
 
@@ -2065,6 +2070,7 @@ export namespace Prisma {
     password?: true
     recovery_key?: true
     is_admin?: true
+    is_superadmin?: true
     imageId?: true
     _all?: true
   }
@@ -2162,6 +2168,7 @@ export namespace Prisma {
     password: string
     recovery_key: string | null
     is_admin: boolean
+    is_superadmin: boolean
     imageId: bigint | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -2191,6 +2198,7 @@ export namespace Prisma {
     password?: boolean
     recovery_key?: boolean
     is_admin?: boolean
+    is_superadmin?: boolean
     imageId?: boolean
     packs?: boolean | User$packsArgs<ExtArgs>
     shaders?: boolean | User$shadersArgs<ExtArgs>
@@ -2207,6 +2215,7 @@ export namespace Prisma {
     password?: boolean
     recovery_key?: boolean
     is_admin?: boolean
+    is_superadmin?: boolean
     imageId?: boolean
     image?: boolean | User$imageArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -2218,6 +2227,7 @@ export namespace Prisma {
     password?: boolean
     recovery_key?: boolean
     is_admin?: boolean
+    is_superadmin?: boolean
     imageId?: boolean
     image?: boolean | User$imageArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -2229,10 +2239,11 @@ export namespace Prisma {
     password?: boolean
     recovery_key?: boolean
     is_admin?: boolean
+    is_superadmin?: boolean
     imageId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "nickname" | "password" | "recovery_key" | "is_admin" | "imageId", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "nickname" | "password" | "recovery_key" | "is_admin" | "is_superadmin" | "imageId", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     packs?: boolean | User$packsArgs<ExtArgs>
     shaders?: boolean | User$shadersArgs<ExtArgs>
@@ -2264,6 +2275,7 @@ export namespace Prisma {
       password: string
       recovery_key: string | null
       is_admin: boolean
+      is_superadmin: boolean
       imageId: bigint | null
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -2699,6 +2711,7 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly recovery_key: FieldRef<"User", 'String'>
     readonly is_admin: FieldRef<"User", 'Boolean'>
+    readonly is_superadmin: FieldRef<"User", 'Boolean'>
     readonly imageId: FieldRef<"User", 'BigInt'>
   }
     
@@ -3440,7 +3453,7 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description: string | null
-    authorId: bigint
+    authorId: bigint | null
     principalImageId: bigint | null
     _count: PackCountAggregateOutputType | null
     _avg: PackAvgAggregateOutputType | null
@@ -3474,7 +3487,7 @@ export namespace Prisma {
     principalImageId?: boolean
     shaders?: boolean | Pack$shadersArgs<ExtArgs>
     mods?: boolean | Pack$modsArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Pack$authorArgs<ExtArgs>
     comments?: boolean | Pack$commentsArgs<ExtArgs>
     images?: boolean | Pack$imagesArgs<ExtArgs>
     principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
@@ -3490,7 +3503,7 @@ export namespace Prisma {
     description?: boolean
     authorId?: boolean
     principalImageId?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Pack$authorArgs<ExtArgs>
     principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["pack"]>
 
@@ -3503,7 +3516,7 @@ export namespace Prisma {
     description?: boolean
     authorId?: boolean
     principalImageId?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Pack$authorArgs<ExtArgs>
     principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["pack"]>
 
@@ -3522,18 +3535,18 @@ export namespace Prisma {
   export type PackInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     shaders?: boolean | Pack$shadersArgs<ExtArgs>
     mods?: boolean | Pack$modsArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Pack$authorArgs<ExtArgs>
     comments?: boolean | Pack$commentsArgs<ExtArgs>
     images?: boolean | Pack$imagesArgs<ExtArgs>
     principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
     _count?: boolean | PackCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PackIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Pack$authorArgs<ExtArgs>
     principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
   }
   export type PackIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Pack$authorArgs<ExtArgs>
     principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
   }
 
@@ -3542,7 +3555,7 @@ export namespace Prisma {
     objects: {
       shaders: Prisma.$ShaderPayload<ExtArgs>[]
       mods: Prisma.$ModPayload<ExtArgs>[]
-      author: Prisma.$UserPayload<ExtArgs>
+      author: Prisma.$UserPayload<ExtArgs> | null
       comments: Prisma.$CommentPayload<ExtArgs>[]
       images: Prisma.$ImagePayload<ExtArgs>[]
       principalImage: Prisma.$ImagePayload<ExtArgs> | null
@@ -3554,7 +3567,7 @@ export namespace Prisma {
       versionType: $Enums.VersionType
       name: string
       description: string | null
-      authorId: bigint
+      authorId: bigint | null
       principalImageId: bigint | null
     }, ExtArgs["result"]["pack"]>
     composites: {}
@@ -3952,7 +3965,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     shaders<T extends Pack$shadersArgs<ExtArgs> = {}>(args?: Subset<T, Pack$shadersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShaderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mods<T extends Pack$modsArgs<ExtArgs> = {}>(args?: Subset<T, Pack$modsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    author<T extends Pack$authorArgs<ExtArgs> = {}>(args?: Subset<T, Pack$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     comments<T extends Pack$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Pack$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     images<T extends Pack$imagesArgs<ExtArgs> = {}>(args?: Subset<T, Pack$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     principalImage<T extends Pack$principalImageArgs<ExtArgs> = {}>(args?: Subset<T, Pack$principalImageArgs<ExtArgs>>): Prisma__ImageClient<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -4442,6 +4455,25 @@ export namespace Prisma {
   }
 
   /**
+   * Pack.author
+   */
+  export type Pack$authorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Pack.comments
    */
   export type Pack$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4728,7 +4760,7 @@ export namespace Prisma {
     description: string
     weight: number
     src: string
-    authorId: bigint
+    authorId: bigint | null
     versionType: $Enums.VersionType
     principalImageId: bigint | null
     _count: ShaderCountAggregateOutputType | null
@@ -4762,7 +4794,7 @@ export namespace Prisma {
     versionType?: boolean
     principalImageId?: boolean
     packs?: boolean | Shader$packsArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Shader$authorArgs<ExtArgs>
     comments?: boolean | Shader$commentsArgs<ExtArgs>
     images?: boolean | Shader$imagesArgs<ExtArgs>
     conflicts?: boolean | Shader$conflictsArgs<ExtArgs>
@@ -4780,7 +4812,7 @@ export namespace Prisma {
     authorId?: boolean
     versionType?: boolean
     principalImageId?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Shader$authorArgs<ExtArgs>
     principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["shader"]>
 
@@ -4793,7 +4825,7 @@ export namespace Prisma {
     authorId?: boolean
     versionType?: boolean
     principalImageId?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Shader$authorArgs<ExtArgs>
     principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["shader"]>
 
@@ -4811,7 +4843,7 @@ export namespace Prisma {
   export type ShaderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "weight" | "src" | "authorId" | "versionType" | "principalImageId", ExtArgs["result"]["shader"]>
   export type ShaderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     packs?: boolean | Shader$packsArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Shader$authorArgs<ExtArgs>
     comments?: boolean | Shader$commentsArgs<ExtArgs>
     images?: boolean | Shader$imagesArgs<ExtArgs>
     conflicts?: boolean | Shader$conflictsArgs<ExtArgs>
@@ -4820,11 +4852,11 @@ export namespace Prisma {
     _count?: boolean | ShaderCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ShaderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Shader$authorArgs<ExtArgs>
     principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
   }
   export type ShaderIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Shader$authorArgs<ExtArgs>
     principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
   }
 
@@ -4832,7 +4864,7 @@ export namespace Prisma {
     name: "Shader"
     objects: {
       packs: Prisma.$PackPayload<ExtArgs>[]
-      author: Prisma.$UserPayload<ExtArgs>
+      author: Prisma.$UserPayload<ExtArgs> | null
       comments: Prisma.$CommentPayload<ExtArgs>[]
       images: Prisma.$ImagePayload<ExtArgs>[]
       conflicts: Prisma.$ConflictPayload<ExtArgs>[]
@@ -4845,7 +4877,7 @@ export namespace Prisma {
       description: string
       weight: number
       src: string
-      authorId: bigint
+      authorId: bigint | null
       versionType: $Enums.VersionType
       principalImageId: bigint | null
     }, ExtArgs["result"]["shader"]>
@@ -5243,7 +5275,7 @@ export namespace Prisma {
   export interface Prisma__ShaderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     packs<T extends Shader$packsArgs<ExtArgs> = {}>(args?: Subset<T, Shader$packsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    author<T extends Shader$authorArgs<ExtArgs> = {}>(args?: Subset<T, Shader$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     comments<T extends Shader$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Shader$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     images<T extends Shader$imagesArgs<ExtArgs> = {}>(args?: Subset<T, Shader$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     conflicts<T extends Shader$conflictsArgs<ExtArgs> = {}>(args?: Subset<T, Shader$conflictsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConflictPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5711,6 +5743,25 @@ export namespace Prisma {
   }
 
   /**
+   * Shader.author
+   */
+  export type Shader$authorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Shader.comments
    */
   export type Shader$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6067,7 +6118,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint
+    authorId: bigint | null
     versionType: $Enums.VersionType
     principalImageId: bigint | null
     _count: ModCountAggregateOutputType | null
@@ -6103,7 +6154,7 @@ export namespace Prisma {
     versionType?: boolean
     principalImageId?: boolean
     packs?: boolean | Mod$packsArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Mod$authorArgs<ExtArgs>
     comments?: boolean | Mod$commentsArgs<ExtArgs>
     images?: boolean | Mod$imagesArgs<ExtArgs>
     conflictsFrom?: boolean | Mod$conflictsFromArgs<ExtArgs>
@@ -6126,7 +6177,7 @@ export namespace Prisma {
     authorId?: boolean
     versionType?: boolean
     principalImageId?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Mod$authorArgs<ExtArgs>
     principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["mod"]>
 
@@ -6141,7 +6192,7 @@ export namespace Prisma {
     authorId?: boolean
     versionType?: boolean
     principalImageId?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Mod$authorArgs<ExtArgs>
     principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
   }, ExtArgs["result"]["mod"]>
 
@@ -6161,7 +6212,7 @@ export namespace Prisma {
   export type ModOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "min_version" | "max_version" | "src" | "weight" | "authorId" | "versionType" | "principalImageId", ExtArgs["result"]["mod"]>
   export type ModInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     packs?: boolean | Mod$packsArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Mod$authorArgs<ExtArgs>
     comments?: boolean | Mod$commentsArgs<ExtArgs>
     images?: boolean | Mod$imagesArgs<ExtArgs>
     conflictsFrom?: boolean | Mod$conflictsFromArgs<ExtArgs>
@@ -6173,11 +6224,11 @@ export namespace Prisma {
     _count?: boolean | ModCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ModIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Mod$authorArgs<ExtArgs>
     principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
   }
   export type ModIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    author?: boolean | Mod$authorArgs<ExtArgs>
     principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
   }
 
@@ -6185,7 +6236,7 @@ export namespace Prisma {
     name: "Mod"
     objects: {
       packs: Prisma.$PackPayload<ExtArgs>[]
-      author: Prisma.$UserPayload<ExtArgs>
+      author: Prisma.$UserPayload<ExtArgs> | null
       comments: Prisma.$CommentPayload<ExtArgs>[]
       images: Prisma.$ImagePayload<ExtArgs>[]
       conflictsFrom: Prisma.$ConflictPayload<ExtArgs>[]
@@ -6203,7 +6254,7 @@ export namespace Prisma {
       max_version: number
       src: string
       weight: number
-      authorId: bigint
+      authorId: bigint | null
       versionType: $Enums.VersionType
       principalImageId: bigint | null
     }, ExtArgs["result"]["mod"]>
@@ -6601,7 +6652,7 @@ export namespace Prisma {
   export interface Prisma__ModClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     packs<T extends Mod$packsArgs<ExtArgs> = {}>(args?: Subset<T, Mod$packsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    author<T extends Mod$authorArgs<ExtArgs> = {}>(args?: Subset<T, Mod$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     comments<T extends Mod$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Mod$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     images<T extends Mod$imagesArgs<ExtArgs> = {}>(args?: Subset<T, Mod$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     conflictsFrom<T extends Mod$conflictsFromArgs<ExtArgs> = {}>(args?: Subset<T, Mod$conflictsFromArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConflictPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -7071,6 +7122,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PackScalarFieldEnum | PackScalarFieldEnum[]
+  }
+
+  /**
+   * Mod.author
+   */
+  export type Mod$authorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -13093,6 +13163,7 @@ export namespace Prisma {
     password: 'password',
     recovery_key: 'recovery_key',
     is_admin: 'is_admin',
+    is_superadmin: 'is_superadmin',
     imageId: 'imageId'
   };
 
@@ -13361,6 +13432,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     recovery_key?: StringNullableFilter<"User"> | string | null
     is_admin?: BoolFilter<"User"> | boolean
+    is_superadmin?: BoolFilter<"User"> | boolean
     imageId?: BigIntNullableFilter<"User"> | bigint | number | null
     packs?: PackListRelationFilter
     shaders?: ShaderListRelationFilter
@@ -13376,6 +13448,7 @@ export namespace Prisma {
     password?: SortOrder
     recovery_key?: SortOrderInput | SortOrder
     is_admin?: SortOrder
+    is_superadmin?: SortOrder
     imageId?: SortOrderInput | SortOrder
     packs?: PackOrderByRelationAggregateInput
     shaders?: ShaderOrderByRelationAggregateInput
@@ -13395,6 +13468,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     recovery_key?: StringNullableFilter<"User"> | string | null
     is_admin?: BoolFilter<"User"> | boolean
+    is_superadmin?: BoolFilter<"User"> | boolean
     imageId?: BigIntNullableFilter<"User"> | bigint | number | null
     packs?: PackListRelationFilter
     shaders?: ShaderListRelationFilter
@@ -13410,6 +13484,7 @@ export namespace Prisma {
     password?: SortOrder
     recovery_key?: SortOrderInput | SortOrder
     is_admin?: SortOrder
+    is_superadmin?: SortOrder
     imageId?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
@@ -13428,6 +13503,7 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     recovery_key?: StringNullableWithAggregatesFilter<"User"> | string | null
     is_admin?: BoolWithAggregatesFilter<"User"> | boolean
+    is_superadmin?: BoolWithAggregatesFilter<"User"> | boolean
     imageId?: BigIntNullableWithAggregatesFilter<"User"> | bigint | number | null
   }
 
@@ -13441,11 +13517,11 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFilter<"Pack"> | $Enums.VersionType
     name?: StringFilter<"Pack"> | string
     description?: StringNullableFilter<"Pack"> | string | null
-    authorId?: BigIntFilter<"Pack"> | bigint | number
+    authorId?: BigIntNullableFilter<"Pack"> | bigint | number | null
     principalImageId?: BigIntNullableFilter<"Pack"> | bigint | number | null
     shaders?: ShaderListRelationFilter
     mods?: ModListRelationFilter
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
     principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
@@ -13458,7 +13534,7 @@ export namespace Prisma {
     versionType?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
-    authorId?: SortOrder
+    authorId?: SortOrderInput | SortOrder
     principalImageId?: SortOrderInput | SortOrder
     shaders?: ShaderOrderByRelationAggregateInput
     mods?: ModOrderByRelationAggregateInput
@@ -13479,11 +13555,11 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFilter<"Pack"> | $Enums.VersionType
     name?: StringFilter<"Pack"> | string
     description?: StringNullableFilter<"Pack"> | string | null
-    authorId?: BigIntFilter<"Pack"> | bigint | number
+    authorId?: BigIntNullableFilter<"Pack"> | bigint | number | null
     principalImageId?: BigIntNullableFilter<"Pack"> | bigint | number | null
     shaders?: ShaderListRelationFilter
     mods?: ModListRelationFilter
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
     principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
@@ -13496,7 +13572,7 @@ export namespace Prisma {
     versionType?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
-    authorId?: SortOrder
+    authorId?: SortOrderInput | SortOrder
     principalImageId?: SortOrderInput | SortOrder
     _count?: PackCountOrderByAggregateInput
     _avg?: PackAvgOrderByAggregateInput
@@ -13515,7 +13591,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeWithAggregatesFilter<"Pack"> | $Enums.VersionType
     name?: StringWithAggregatesFilter<"Pack"> | string
     description?: StringNullableWithAggregatesFilter<"Pack"> | string | null
-    authorId?: BigIntWithAggregatesFilter<"Pack"> | bigint | number
+    authorId?: BigIntNullableWithAggregatesFilter<"Pack"> | bigint | number | null
     principalImageId?: BigIntNullableWithAggregatesFilter<"Pack"> | bigint | number | null
   }
 
@@ -13528,11 +13604,11 @@ export namespace Prisma {
     description?: StringFilter<"Shader"> | string
     weight?: IntFilter<"Shader"> | number
     src?: StringFilter<"Shader"> | string
-    authorId?: BigIntFilter<"Shader"> | bigint | number
+    authorId?: BigIntNullableFilter<"Shader"> | bigint | number | null
     versionType?: EnumVersionTypeFilter<"Shader"> | $Enums.VersionType
     principalImageId?: BigIntNullableFilter<"Shader"> | bigint | number | null
     packs?: PackListRelationFilter
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
     conflicts?: ConflictListRelationFilter
@@ -13546,7 +13622,7 @@ export namespace Prisma {
     description?: SortOrder
     weight?: SortOrder
     src?: SortOrder
-    authorId?: SortOrder
+    authorId?: SortOrderInput | SortOrder
     versionType?: SortOrder
     principalImageId?: SortOrderInput | SortOrder
     packs?: PackOrderByRelationAggregateInput
@@ -13568,11 +13644,11 @@ export namespace Prisma {
     description?: StringFilter<"Shader"> | string
     weight?: IntFilter<"Shader"> | number
     src?: StringFilter<"Shader"> | string
-    authorId?: BigIntFilter<"Shader"> | bigint | number
+    authorId?: BigIntNullableFilter<"Shader"> | bigint | number | null
     versionType?: EnumVersionTypeFilter<"Shader"> | $Enums.VersionType
     principalImageId?: BigIntNullableFilter<"Shader"> | bigint | number | null
     packs?: PackListRelationFilter
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
     conflicts?: ConflictListRelationFilter
@@ -13586,7 +13662,7 @@ export namespace Prisma {
     description?: SortOrder
     weight?: SortOrder
     src?: SortOrder
-    authorId?: SortOrder
+    authorId?: SortOrderInput | SortOrder
     versionType?: SortOrder
     principalImageId?: SortOrderInput | SortOrder
     _count?: ShaderCountOrderByAggregateInput
@@ -13605,7 +13681,7 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"Shader"> | string
     weight?: IntWithAggregatesFilter<"Shader"> | number
     src?: StringWithAggregatesFilter<"Shader"> | string
-    authorId?: BigIntWithAggregatesFilter<"Shader"> | bigint | number
+    authorId?: BigIntNullableWithAggregatesFilter<"Shader"> | bigint | number | null
     versionType?: EnumVersionTypeWithAggregatesFilter<"Shader"> | $Enums.VersionType
     principalImageId?: BigIntNullableWithAggregatesFilter<"Shader"> | bigint | number | null
   }
@@ -13621,11 +13697,11 @@ export namespace Prisma {
     max_version?: IntFilter<"Mod"> | number
     src?: StringFilter<"Mod"> | string
     weight?: IntFilter<"Mod"> | number
-    authorId?: BigIntFilter<"Mod"> | bigint | number
+    authorId?: BigIntNullableFilter<"Mod"> | bigint | number | null
     versionType?: EnumVersionTypeFilter<"Mod"> | $Enums.VersionType
     principalImageId?: BigIntNullableFilter<"Mod"> | bigint | number | null
     packs?: PackListRelationFilter
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
     conflictsFrom?: ConflictListRelationFilter
@@ -13644,7 +13720,7 @@ export namespace Prisma {
     max_version?: SortOrder
     src?: SortOrder
     weight?: SortOrder
-    authorId?: SortOrder
+    authorId?: SortOrderInput | SortOrder
     versionType?: SortOrder
     principalImageId?: SortOrderInput | SortOrder
     packs?: PackOrderByRelationAggregateInput
@@ -13671,11 +13747,11 @@ export namespace Prisma {
     max_version?: IntFilter<"Mod"> | number
     src?: StringFilter<"Mod"> | string
     weight?: IntFilter<"Mod"> | number
-    authorId?: BigIntFilter<"Mod"> | bigint | number
+    authorId?: BigIntNullableFilter<"Mod"> | bigint | number | null
     versionType?: EnumVersionTypeFilter<"Mod"> | $Enums.VersionType
     principalImageId?: BigIntNullableFilter<"Mod"> | bigint | number | null
     packs?: PackListRelationFilter
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
     conflictsFrom?: ConflictListRelationFilter
@@ -13694,7 +13770,7 @@ export namespace Prisma {
     max_version?: SortOrder
     src?: SortOrder
     weight?: SortOrder
-    authorId?: SortOrder
+    authorId?: SortOrderInput | SortOrder
     versionType?: SortOrder
     principalImageId?: SortOrderInput | SortOrder
     _count?: ModCountOrderByAggregateInput
@@ -13715,7 +13791,7 @@ export namespace Prisma {
     max_version?: IntWithAggregatesFilter<"Mod"> | number
     src?: StringWithAggregatesFilter<"Mod"> | string
     weight?: IntWithAggregatesFilter<"Mod"> | number
-    authorId?: BigIntWithAggregatesFilter<"Mod"> | bigint | number
+    authorId?: BigIntNullableWithAggregatesFilter<"Mod"> | bigint | number | null
     versionType?: EnumVersionTypeWithAggregatesFilter<"Mod"> | $Enums.VersionType
     principalImageId?: BigIntNullableWithAggregatesFilter<"Mod"> | bigint | number | null
   }
@@ -14025,6 +14101,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     packs?: PackCreateNestedManyWithoutAuthorInput
     shaders?: ShaderCreateNestedManyWithoutAuthorInput
     mods?: ModCreateNestedManyWithoutAuthorInput
@@ -14039,6 +14116,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     imageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutAuthorInput
     shaders?: ShaderUncheckedCreateNestedManyWithoutAuthorInput
@@ -14053,6 +14131,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     packs?: PackUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUpdateManyWithoutAuthorNestedInput
     mods?: ModUpdateManyWithoutAuthorNestedInput
@@ -14067,6 +14146,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUncheckedUpdateManyWithoutAuthorNestedInput
@@ -14081,6 +14161,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     imageId?: bigint | number | null
   }
 
@@ -14091,6 +14172,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -14100,6 +14182,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
@@ -14112,7 +14195,7 @@ export namespace Prisma {
     description?: string | null
     shaders?: ShaderCreateNestedManyWithoutPacksInput
     mods?: ModCreateNestedManyWithoutPacksInput
-    author: UserCreateNestedOneWithoutPacksInput
+    author?: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
     principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
@@ -14125,7 +14208,7 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    authorId: bigint | number
+    authorId?: bigint | number | null
     principalImageId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
@@ -14142,7 +14225,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     shaders?: ShaderUpdateManyWithoutPacksNestedInput
     mods?: ModUpdateManyWithoutPacksNestedInput
-    author?: UserUpdateOneRequiredWithoutPacksNestedInput
+    author?: UserUpdateOneWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
     principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
@@ -14155,7 +14238,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
@@ -14170,7 +14253,7 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    authorId: bigint | number
+    authorId?: bigint | number | null
     principalImageId?: bigint | number | null
   }
 
@@ -14190,7 +14273,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
@@ -14202,7 +14285,7 @@ export namespace Prisma {
     src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
-    author: UserCreateNestedOneWithoutShadersInput
+    author?: UserCreateNestedOneWithoutShadersInput
     comments?: CommentCreateNestedManyWithoutShaderInput
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
@@ -14216,7 +14299,7 @@ export namespace Prisma {
     description?: string
     weight: number
     src: string
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
@@ -14234,7 +14317,7 @@ export namespace Prisma {
     src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
-    author?: UserUpdateOneRequiredWithoutShadersNestedInput
+    author?: UserUpdateOneWithoutShadersNestedInput
     comments?: CommentUpdateManyWithoutShaderNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
@@ -14248,7 +14331,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
@@ -14264,7 +14347,7 @@ export namespace Prisma {
     description?: string
     weight: number
     src: string
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
   }
@@ -14284,7 +14367,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -14299,7 +14382,7 @@ export namespace Prisma {
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
-    author: UserCreateNestedOneWithoutModsInput
+    author?: UserCreateNestedOneWithoutModsInput
     comments?: CommentCreateNestedManyWithoutModInput
     images?: ImageCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictCreateNestedManyWithoutModInput
@@ -14318,7 +14401,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
@@ -14341,7 +14424,7 @@ export namespace Prisma {
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
-    author?: UserUpdateOneRequiredWithoutModsNestedInput
+    author?: UserUpdateOneWithoutModsNestedInput
     comments?: CommentUpdateManyWithoutModNestedInput
     images?: ImageUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUpdateManyWithoutModNestedInput
@@ -14360,7 +14443,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
@@ -14381,7 +14464,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
   }
@@ -14405,7 +14488,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -14774,6 +14857,7 @@ export namespace Prisma {
     password?: SortOrder
     recovery_key?: SortOrder
     is_admin?: SortOrder
+    is_superadmin?: SortOrder
     imageId?: SortOrder
   }
 
@@ -14789,6 +14873,7 @@ export namespace Prisma {
     password?: SortOrder
     recovery_key?: SortOrder
     is_admin?: SortOrder
+    is_superadmin?: SortOrder
     imageId?: SortOrder
   }
 
@@ -14799,6 +14884,7 @@ export namespace Prisma {
     password?: SortOrder
     recovery_key?: SortOrder
     is_admin?: SortOrder
+    is_superadmin?: SortOrder
     imageId?: SortOrder
   }
 
@@ -14903,9 +14989,9 @@ export namespace Prisma {
     not?: NestedEnumVersionTypeFilter<$PrismaModel> | $Enums.VersionType
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
   }
 
   export type ImageListRelationFilter = {
@@ -15143,6 +15229,11 @@ export namespace Prisma {
     weight?: SortOrder
     authorId?: SortOrder
     principalImageId?: SortOrder
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
   export type PackNullableScalarRelationFilter = {
@@ -15682,10 +15773,12 @@ export namespace Prisma {
     deleteMany?: ModScalarWhereInput | ModScalarWhereInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutPacksNestedInput = {
+  export type UserUpdateOneWithoutPacksNestedInput = {
     create?: XOR<UserCreateWithoutPacksInput, UserUncheckedCreateWithoutPacksInput>
     connectOrCreate?: UserCreateOrConnectWithoutPacksInput
     upsert?: UserUpsertWithoutPacksInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPacksInput, UserUpdateWithoutPacksInput>, UserUncheckedUpdateWithoutPacksInput>
   }
@@ -15875,10 +15968,12 @@ export namespace Prisma {
     deleteMany?: PackScalarWhereInput | PackScalarWhereInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutShadersNestedInput = {
+  export type UserUpdateOneWithoutShadersNestedInput = {
     create?: XOR<UserCreateWithoutShadersInput, UserUncheckedCreateWithoutShadersInput>
     connectOrCreate?: UserCreateOrConnectWithoutShadersInput
     upsert?: UserUpsertWithoutShadersInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutShadersInput, UserUpdateWithoutShadersInput>, UserUncheckedUpdateWithoutShadersInput>
   }
@@ -16153,10 +16248,12 @@ export namespace Prisma {
     deleteMany?: PackScalarWhereInput | PackScalarWhereInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutModsNestedInput = {
+  export type UserUpdateOneWithoutModsNestedInput = {
     create?: XOR<UserCreateWithoutModsInput, UserUncheckedCreateWithoutModsInput>
     connectOrCreate?: UserCreateOrConnectWithoutModsInput
     upsert?: UserUpsertWithoutModsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutModsInput, UserUpdateWithoutModsInput>, UserUncheckedUpdateWithoutModsInput>
   }
@@ -17177,7 +17274,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFilter<"Pack"> | $Enums.VersionType
     name?: StringFilter<"Pack"> | string
     description?: StringNullableFilter<"Pack"> | string | null
-    authorId?: BigIntFilter<"Pack"> | bigint | number
+    authorId?: BigIntNullableFilter<"Pack"> | bigint | number | null
     principalImageId?: BigIntNullableFilter<"Pack"> | bigint | number | null
   }
 
@@ -17206,7 +17303,7 @@ export namespace Prisma {
     description?: StringFilter<"Shader"> | string
     weight?: IntFilter<"Shader"> | number
     src?: StringFilter<"Shader"> | string
-    authorId?: BigIntFilter<"Shader"> | bigint | number
+    authorId?: BigIntNullableFilter<"Shader"> | bigint | number | null
     versionType?: EnumVersionTypeFilter<"Shader"> | $Enums.VersionType
     principalImageId?: BigIntNullableFilter<"Shader"> | bigint | number | null
   }
@@ -17238,7 +17335,7 @@ export namespace Prisma {
     max_version?: IntFilter<"Mod"> | number
     src?: StringFilter<"Mod"> | string
     weight?: IntFilter<"Mod"> | number
-    authorId?: BigIntFilter<"Mod"> | bigint | number
+    authorId?: BigIntNullableFilter<"Mod"> | bigint | number | null
     versionType?: EnumVersionTypeFilter<"Mod"> | $Enums.VersionType
     principalImageId?: BigIntNullableFilter<"Mod"> | bigint | number | null
   }
@@ -17311,7 +17408,7 @@ export namespace Prisma {
     weight: number
     src: string
     versionType: $Enums.VersionType
-    author: UserCreateNestedOneWithoutShadersInput
+    author?: UserCreateNestedOneWithoutShadersInput
     comments?: CommentCreateNestedManyWithoutShaderInput
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
@@ -17325,7 +17422,7 @@ export namespace Prisma {
     description?: string
     weight: number
     src: string
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
@@ -17348,7 +17445,7 @@ export namespace Prisma {
     src: string
     weight: number
     versionType: $Enums.VersionType
-    author: UserCreateNestedOneWithoutModsInput
+    author?: UserCreateNestedOneWithoutModsInput
     comments?: CommentCreateNestedManyWithoutModInput
     images?: ImageCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictCreateNestedManyWithoutModInput
@@ -17367,7 +17464,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     comments?: CommentUncheckedCreateNestedManyWithoutModInput
@@ -17391,6 +17488,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     shaders?: ShaderCreateNestedManyWithoutAuthorInput
     mods?: ModCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -17404,6 +17502,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     imageId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutAuthorInput
     mods?: ModUncheckedCreateNestedManyWithoutAuthorInput
@@ -17550,6 +17649,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     shaders?: ShaderUpdateManyWithoutAuthorNestedInput
     mods?: ModUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -17563,6 +17663,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutAuthorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAuthorNestedInput
@@ -17653,7 +17754,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     mods?: ModCreateNestedManyWithoutPacksInput
-    author: UserCreateNestedOneWithoutPacksInput
+    author?: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
     principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
@@ -17666,7 +17767,7 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    authorId: bigint | number
+    authorId?: bigint | number | null
     principalImageId?: bigint | number | null
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
@@ -17685,6 +17786,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     packs?: PackCreateNestedManyWithoutAuthorInput
     mods?: ModCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -17698,6 +17800,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     imageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutAuthorInput
     mods?: ModUncheckedCreateNestedManyWithoutAuthorInput
@@ -17868,6 +17971,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     packs?: PackUpdateManyWithoutAuthorNestedInput
     mods?: ModUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -17881,6 +17985,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutAuthorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAuthorNestedInput
@@ -18010,7 +18115,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     shaders?: ShaderCreateNestedManyWithoutPacksInput
-    author: UserCreateNestedOneWithoutPacksInput
+    author?: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
     principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
@@ -18023,7 +18128,7 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    authorId: bigint | number
+    authorId?: bigint | number | null
     principalImageId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
@@ -18042,6 +18147,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     packs?: PackCreateNestedManyWithoutAuthorInput
     shaders?: ShaderCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -18055,6 +18161,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     imageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutAuthorInput
     shaders?: ShaderUncheckedCreateNestedManyWithoutAuthorInput
@@ -18283,6 +18390,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     packs?: PackUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -18296,6 +18404,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUncheckedUpdateManyWithoutAuthorNestedInput
@@ -18462,6 +18571,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     packs?: PackCreateNestedManyWithoutAuthorInput
     shaders?: ShaderCreateNestedManyWithoutAuthorInput
     mods?: ModCreateNestedManyWithoutAuthorInput
@@ -18475,6 +18585,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     imageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutAuthorInput
     shaders?: ShaderUncheckedCreateNestedManyWithoutAuthorInput
@@ -18495,7 +18606,7 @@ export namespace Prisma {
     description?: string | null
     shaders?: ShaderCreateNestedManyWithoutPacksInput
     mods?: ModCreateNestedManyWithoutPacksInput
-    author: UserCreateNestedOneWithoutPacksInput
+    author?: UserCreateNestedOneWithoutPacksInput
     images?: ImageCreateNestedManyWithoutPackInput
     principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
@@ -18507,7 +18618,7 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    authorId: bigint | number
+    authorId?: bigint | number | null
     principalImageId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
@@ -18527,7 +18638,7 @@ export namespace Prisma {
     src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
-    author: UserCreateNestedOneWithoutShadersInput
+    author?: UserCreateNestedOneWithoutShadersInput
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
@@ -18540,7 +18651,7 @@ export namespace Prisma {
     description?: string
     weight: number
     src: string
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
@@ -18564,7 +18675,7 @@ export namespace Prisma {
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
-    author: UserCreateNestedOneWithoutModsInput
+    author?: UserCreateNestedOneWithoutModsInput
     images?: ImageCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictCreateNestedManyWithoutModInput
     conflictsTo?: ConflictCreateNestedManyWithoutConflictModInput
@@ -18582,7 +18693,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
@@ -18617,6 +18728,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     packs?: PackUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUpdateManyWithoutAuthorNestedInput
     mods?: ModUpdateManyWithoutAuthorNestedInput
@@ -18630,6 +18742,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUncheckedUpdateManyWithoutAuthorNestedInput
@@ -18656,7 +18769,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     shaders?: ShaderUpdateManyWithoutPacksNestedInput
     mods?: ModUpdateManyWithoutPacksNestedInput
-    author?: UserUpdateOneRequiredWithoutPacksNestedInput
+    author?: UserUpdateOneWithoutPacksNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
     principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
@@ -18668,7 +18781,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
@@ -18694,7 +18807,7 @@ export namespace Prisma {
     src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
-    author?: UserUpdateOneRequiredWithoutShadersNestedInput
+    author?: UserUpdateOneWithoutShadersNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
@@ -18707,7 +18820,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
@@ -18737,7 +18850,7 @@ export namespace Prisma {
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
-    author?: UserUpdateOneRequiredWithoutModsNestedInput
+    author?: UserUpdateOneWithoutModsNestedInput
     images?: ImageUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUpdateManyWithoutModNestedInput
     conflictsTo?: ConflictUpdateManyWithoutConflictModNestedInput
@@ -18755,7 +18868,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
@@ -18777,7 +18890,7 @@ export namespace Prisma {
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
-    author: UserCreateNestedOneWithoutModsInput
+    author?: UserCreateNestedOneWithoutModsInput
     comments?: CommentCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictCreateNestedManyWithoutModInput
     conflictsTo?: ConflictCreateNestedManyWithoutConflictModInput
@@ -18795,7 +18908,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
@@ -18820,7 +18933,7 @@ export namespace Prisma {
     src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
-    author: UserCreateNestedOneWithoutShadersInput
+    author?: UserCreateNestedOneWithoutShadersInput
     comments?: CommentCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
@@ -18833,7 +18946,7 @@ export namespace Prisma {
     description?: string
     weight: number
     src: string
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
@@ -18856,7 +18969,7 @@ export namespace Prisma {
     description?: string | null
     shaders?: ShaderCreateNestedManyWithoutPacksInput
     mods?: ModCreateNestedManyWithoutPacksInput
-    author: UserCreateNestedOneWithoutPacksInput
+    author?: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
@@ -18868,7 +18981,7 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    authorId: bigint | number
+    authorId?: bigint | number | null
     principalImageId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
@@ -18887,6 +19000,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     packs?: PackCreateNestedManyWithoutAuthorInput
     shaders?: ShaderCreateNestedManyWithoutAuthorInput
     mods?: ModCreateNestedManyWithoutAuthorInput
@@ -18900,6 +19014,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
     packs?: PackUncheckedCreateNestedManyWithoutAuthorInput
     shaders?: ShaderUncheckedCreateNestedManyWithoutAuthorInput
     mods?: ModUncheckedCreateNestedManyWithoutAuthorInput
@@ -18925,7 +19040,7 @@ export namespace Prisma {
     description?: string | null
     shaders?: ShaderCreateNestedManyWithoutPacksInput
     mods?: ModCreateNestedManyWithoutPacksInput
-    author: UserCreateNestedOneWithoutPacksInput
+    author?: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
   }
@@ -18937,7 +19052,7 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    authorId: bigint | number
+    authorId?: bigint | number | null
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
@@ -18962,7 +19077,7 @@ export namespace Prisma {
     src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
-    author: UserCreateNestedOneWithoutShadersInput
+    author?: UserCreateNestedOneWithoutShadersInput
     comments?: CommentCreateNestedManyWithoutShaderInput
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
@@ -18975,7 +19090,7 @@ export namespace Prisma {
     description?: string
     weight: number
     src: string
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
     comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
@@ -19004,7 +19119,7 @@ export namespace Prisma {
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
-    author: UserCreateNestedOneWithoutModsInput
+    author?: UserCreateNestedOneWithoutModsInput
     comments?: CommentCreateNestedManyWithoutModInput
     images?: ImageCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictCreateNestedManyWithoutModInput
@@ -19022,7 +19137,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
     comments?: CommentUncheckedCreateNestedManyWithoutModInput
@@ -19065,7 +19180,7 @@ export namespace Prisma {
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
-    author?: UserUpdateOneRequiredWithoutModsNestedInput
+    author?: UserUpdateOneWithoutModsNestedInput
     comments?: CommentUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUpdateManyWithoutModNestedInput
     conflictsTo?: ConflictUpdateManyWithoutConflictModNestedInput
@@ -19083,7 +19198,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
@@ -19114,7 +19229,7 @@ export namespace Prisma {
     src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
-    author?: UserUpdateOneRequiredWithoutShadersNestedInput
+    author?: UserUpdateOneWithoutShadersNestedInput
     comments?: CommentUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
@@ -19127,7 +19242,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
@@ -19156,7 +19271,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     shaders?: ShaderUpdateManyWithoutPacksNestedInput
     mods?: ModUpdateManyWithoutPacksNestedInput
-    author?: UserUpdateOneRequiredWithoutPacksNestedInput
+    author?: UserUpdateOneWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
@@ -19168,7 +19283,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
@@ -19201,6 +19316,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     recovery_key?: StringNullableFilter<"User"> | string | null
     is_admin?: BoolFilter<"User"> | boolean
+    is_superadmin?: BoolFilter<"User"> | boolean
     imageId?: BigIntNullableFilter<"User"> | bigint | number | null
   }
 
@@ -19260,7 +19376,7 @@ export namespace Prisma {
     src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
-    author: UserCreateNestedOneWithoutShadersInput
+    author?: UserCreateNestedOneWithoutShadersInput
     comments?: CommentCreateNestedManyWithoutShaderInput
     images?: ImageCreateNestedManyWithoutShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
@@ -19273,7 +19389,7 @@ export namespace Prisma {
     description?: string
     weight: number
     src: string
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
@@ -19297,7 +19413,7 @@ export namespace Prisma {
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
-    author: UserCreateNestedOneWithoutModsInput
+    author?: UserCreateNestedOneWithoutModsInput
     comments?: CommentCreateNestedManyWithoutModInput
     images?: ImageCreateNestedManyWithoutModInput
     conflictsTo?: ConflictCreateNestedManyWithoutConflictModInput
@@ -19315,7 +19431,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
@@ -19342,7 +19458,7 @@ export namespace Prisma {
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
-    author: UserCreateNestedOneWithoutModsInput
+    author?: UserCreateNestedOneWithoutModsInput
     comments?: CommentCreateNestedManyWithoutModInput
     images?: ImageCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictCreateNestedManyWithoutModInput
@@ -19360,7 +19476,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
@@ -19396,7 +19512,7 @@ export namespace Prisma {
     src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
-    author?: UserUpdateOneRequiredWithoutShadersNestedInput
+    author?: UserUpdateOneWithoutShadersNestedInput
     comments?: CommentUpdateManyWithoutShaderNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
@@ -19409,7 +19525,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
@@ -19439,7 +19555,7 @@ export namespace Prisma {
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
-    author?: UserUpdateOneRequiredWithoutModsNestedInput
+    author?: UserUpdateOneWithoutModsNestedInput
     comments?: CommentUpdateManyWithoutModNestedInput
     images?: ImageUpdateManyWithoutModNestedInput
     conflictsTo?: ConflictUpdateManyWithoutConflictModNestedInput
@@ -19457,7 +19573,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
@@ -19490,7 +19606,7 @@ export namespace Prisma {
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
-    author?: UserUpdateOneRequiredWithoutModsNestedInput
+    author?: UserUpdateOneWithoutModsNestedInput
     comments?: CommentUpdateManyWithoutModNestedInput
     images?: ImageUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUpdateManyWithoutModNestedInput
@@ -19508,7 +19624,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
@@ -19530,7 +19646,7 @@ export namespace Prisma {
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
-    author: UserCreateNestedOneWithoutModsInput
+    author?: UserCreateNestedOneWithoutModsInput
     comments?: CommentCreateNestedManyWithoutModInput
     images?: ImageCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictCreateNestedManyWithoutModInput
@@ -19548,7 +19664,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
@@ -19575,7 +19691,7 @@ export namespace Prisma {
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
-    author: UserCreateNestedOneWithoutModsInput
+    author?: UserCreateNestedOneWithoutModsInput
     comments?: CommentCreateNestedManyWithoutModInput
     images?: ImageCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictCreateNestedManyWithoutModInput
@@ -19593,7 +19709,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
@@ -19631,7 +19747,7 @@ export namespace Prisma {
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
-    author?: UserUpdateOneRequiredWithoutModsNestedInput
+    author?: UserUpdateOneWithoutModsNestedInput
     comments?: CommentUpdateManyWithoutModNestedInput
     images?: ImageUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUpdateManyWithoutModNestedInput
@@ -19649,7 +19765,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
@@ -19682,7 +19798,7 @@ export namespace Prisma {
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
-    author?: UserUpdateOneRequiredWithoutModsNestedInput
+    author?: UserUpdateOneWithoutModsNestedInput
     comments?: CommentUpdateManyWithoutModNestedInput
     images?: ImageUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUpdateManyWithoutModNestedInput
@@ -19700,7 +19816,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
@@ -19720,7 +19836,7 @@ export namespace Prisma {
     src: string
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutShadersInput
-    author: UserCreateNestedOneWithoutShadersInput
+    author?: UserCreateNestedOneWithoutShadersInput
     comments?: CommentCreateNestedManyWithoutShaderInput
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
@@ -19733,7 +19849,7 @@ export namespace Prisma {
     description?: string
     weight: number
     src: string
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutShadersInput
@@ -19757,7 +19873,7 @@ export namespace Prisma {
     weight: number
     versionType: $Enums.VersionType
     packs?: PackCreateNestedManyWithoutModsInput
-    author: UserCreateNestedOneWithoutModsInput
+    author?: UserCreateNestedOneWithoutModsInput
     comments?: CommentCreateNestedManyWithoutModInput
     images?: ImageCreateNestedManyWithoutModInput
     conflictsFrom?: ConflictCreateNestedManyWithoutModInput
@@ -19775,7 +19891,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
     principalImageId?: bigint | number | null
     packs?: PackUncheckedCreateNestedManyWithoutModsInput
@@ -19811,7 +19927,7 @@ export namespace Prisma {
     src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
-    author?: UserUpdateOneRequiredWithoutShadersNestedInput
+    author?: UserUpdateOneWithoutShadersNestedInput
     comments?: CommentUpdateManyWithoutShaderNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
@@ -19824,7 +19940,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
@@ -19854,7 +19970,7 @@ export namespace Prisma {
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
-    author?: UserUpdateOneRequiredWithoutModsNestedInput
+    author?: UserUpdateOneWithoutModsNestedInput
     comments?: CommentUpdateManyWithoutModNestedInput
     images?: ImageUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUpdateManyWithoutModNestedInput
@@ -19872,7 +19988,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
@@ -20100,7 +20216,7 @@ export namespace Prisma {
     weight?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
-    author?: UserUpdateOneRequiredWithoutShadersNestedInput
+    author?: UserUpdateOneWithoutShadersNestedInput
     comments?: CommentUpdateManyWithoutShaderNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
@@ -20114,7 +20230,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
@@ -20129,7 +20245,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -20143,7 +20259,7 @@ export namespace Prisma {
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
-    author?: UserUpdateOneRequiredWithoutModsNestedInput
+    author?: UserUpdateOneWithoutModsNestedInput
     comments?: CommentUpdateManyWithoutModNestedInput
     images?: ImageUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUpdateManyWithoutModNestedInput
@@ -20162,7 +20278,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     comments?: CommentUncheckedUpdateManyWithoutModNestedInput
@@ -20182,7 +20298,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -20273,7 +20389,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     mods?: ModUpdateManyWithoutPacksNestedInput
-    author?: UserUpdateOneRequiredWithoutPacksNestedInput
+    author?: UserUpdateOneWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
     principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
@@ -20286,7 +20402,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
@@ -20300,7 +20416,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
@@ -20434,7 +20550,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     shaders?: ShaderUpdateManyWithoutPacksNestedInput
-    author?: UserUpdateOneRequiredWithoutPacksNestedInput
+    author?: UserUpdateOneWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
     principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
@@ -20447,7 +20563,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
@@ -20461,7 +20577,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
@@ -20597,6 +20713,7 @@ export namespace Prisma {
     password: string
     recovery_key?: string | null
     is_admin?: boolean
+    is_superadmin?: boolean
   }
 
   export type PackCreateManyPrincipalImageInput = {
@@ -20606,7 +20723,7 @@ export namespace Prisma {
     versionType: $Enums.VersionType
     name: string
     description?: string | null
-    authorId: bigint | number
+    authorId?: bigint | number | null
   }
 
   export type ShaderCreateManyPrincipalImageInput = {
@@ -20615,7 +20732,7 @@ export namespace Prisma {
     description?: string
     weight: number
     src: string
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
   }
 
@@ -20627,7 +20744,7 @@ export namespace Prisma {
     max_version: number
     src: string
     weight: number
-    authorId: bigint | number
+    authorId?: bigint | number | null
     versionType: $Enums.VersionType
   }
 
@@ -20638,6 +20755,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     packs?: PackUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUpdateManyWithoutAuthorNestedInput
     mods?: ModUpdateManyWithoutAuthorNestedInput
@@ -20651,6 +20769,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
     packs?: PackUncheckedUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUncheckedUpdateManyWithoutAuthorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAuthorNestedInput
@@ -20664,6 +20783,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
     is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PackUpdateWithoutPrincipalImageInput = {
@@ -20675,7 +20795,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     shaders?: ShaderUpdateManyWithoutPacksNestedInput
     mods?: ModUpdateManyWithoutPacksNestedInput
-    author?: UserUpdateOneRequiredWithoutPacksNestedInput
+    author?: UserUpdateOneWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
   }
@@ -20687,7 +20807,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
@@ -20701,7 +20821,7 @@ export namespace Prisma {
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
   export type ShaderUpdateWithoutPrincipalImageInput = {
@@ -20712,7 +20832,7 @@ export namespace Prisma {
     src?: StringFieldUpdateOperationsInput | string
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutShadersNestedInput
-    author?: UserUpdateOneRequiredWithoutShadersNestedInput
+    author?: UserUpdateOneWithoutShadersNestedInput
     comments?: CommentUpdateManyWithoutShaderNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
@@ -20725,7 +20845,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
     comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
@@ -20740,7 +20860,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
   }
 
@@ -20754,7 +20874,7 @@ export namespace Prisma {
     weight?: IntFieldUpdateOperationsInput | number
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUpdateManyWithoutModsNestedInput
-    author?: UserUpdateOneRequiredWithoutModsNestedInput
+    author?: UserUpdateOneWithoutModsNestedInput
     comments?: CommentUpdateManyWithoutModNestedInput
     images?: ImageUpdateManyWithoutModNestedInput
     conflictsFrom?: ConflictUpdateManyWithoutModNestedInput
@@ -20772,7 +20892,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
     packs?: PackUncheckedUpdateManyWithoutModsNestedInput
     comments?: CommentUncheckedUpdateManyWithoutModNestedInput
@@ -20792,7 +20912,7 @@ export namespace Prisma {
     max_version?: IntFieldUpdateOperationsInput | number
     src?: StringFieldUpdateOperationsInput | string
     weight?: IntFieldUpdateOperationsInput | number
-    authorId?: BigIntFieldUpdateOperationsInput | bigint | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
   }
 

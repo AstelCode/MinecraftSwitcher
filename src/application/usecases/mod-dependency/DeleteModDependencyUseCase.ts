@@ -26,7 +26,7 @@ export class DeleteModDependencyUseCase {
       throw new Error("Mod dependency not found.");
     }
 
-    if (modDep.mod.author.id !== user.id) {
+    if (!user.isSuperadmin && modDep.mod.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 

@@ -18,6 +18,7 @@ export class CreateSuperAdminUseCase {
     const hashedPassword = await this.deps.hashService.hashPassword(password);
     newAdmin.setHashedPassword(hashedPassword);
     newAdmin.isAdmin = true;
+    newAdmin.isSuperadmin = true;
     await this.deps.userRepository.save(newAdmin);
     return this.deps.tokenService.generate({
       id: newAdmin.id,

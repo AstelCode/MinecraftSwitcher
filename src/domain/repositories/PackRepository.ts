@@ -17,4 +17,5 @@ export interface PackRepository {
   listAll(): Promise<Pack[]>;
   listByName(name: string): Promise<Pack[]>;
   listByAdmin(admin_id: bigint): Promise<Pack[]>;
+  assignAuthor(id: bigint, authorId: bigint): Promise<void>;
 }

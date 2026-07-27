@@ -34,7 +34,7 @@ export class DeletePackImageUseCase {
       throw new Error("Pack not found.");
     }
 
-    if (pack.author.id !== user.id) {
+    if (!user.isSuperadmin && pack.author?.id !== user.id) {
       throw new Error("Unauthorized.");
     }
 
@@ -48,7 +48,7 @@ export class DeletePackImageUseCase {
       throw new Error("Image does not belong to pack.");
     }
 
-    await this.deps.fileRepository.deletePackImage(image.src);
+    await this.deps.fileRepository.deletePackImage(pack.id, image.src);
 
     await this.deps.imageRepository.delete(image.id);
   }

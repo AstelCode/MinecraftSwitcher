@@ -8,8 +8,9 @@ export interface ModRepository {
   addImage(modId: bigint, imageId: bigint): Promise<void>;
   setPrincipalImage(modId: bigint, imageId: bigint): Promise<void>;
 
-  listByAdmin(admin_id: bigint): Promise<Mod[]>;
+  listByAuthor(admin_id: bigint): Promise<Mod[]>;
   listByPack(pack_id: bigint): Promise<Mod[]>;
   listByQuery(name: string): Promise<Mod[]>;
   listAll(): Promise<Mod[]>;
+  assignAuthor(id: bigint, authorId: bigint): Promise<void>;
 }

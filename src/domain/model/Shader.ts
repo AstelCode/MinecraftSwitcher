@@ -14,7 +14,7 @@ export interface ShaderData {
   versionType: VersionType;
   src: string;
   images?: ImageData[];
-  author?: UserData;
+  author?: UserData | null;
   shaderDependencies?: ShaderDependencyData[];
   conflictsFrom?: ConflictData[];
   comments?: CommentData[];
@@ -28,7 +28,7 @@ export class Shader {
   src!: string;
   weight!: number;
   images: Image[] = [];
-  author!: User;
+  author?: User | null;
   versionType: VersionType = "JAVA";
   conflicts: Conflict[] = [];
   shaderDependencies: ShaderDependency[] = [];
@@ -48,7 +48,6 @@ export class Shader {
 
     if (!isValidText(this.src)) throw new Error("shader url is empty");
     if (!this.weight) throw new Error("shader weight is empty or zero");
-    if (!this.author) throw new Error("shader author is empty");
 
     return {
       id: this.id,
@@ -56,7 +55,7 @@ export class Shader {
       description: this.description ?? "",
       src: this.src,
       weight: this.weight,
-      authorId: this.author.id,
+      authorId: this.author?.id,
       images: this.images ?? [],
       versionType: this.versionType,
       conflicts: this.conflicts ?? [],

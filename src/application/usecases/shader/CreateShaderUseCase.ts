@@ -15,7 +15,7 @@ export interface CreateShaderUseCaseDependencies {
   userRepository: Pick<UserRepository, "findById">;
   shaderRepository: Pick<ShaderRepository, "save" | "updateSrc" | "delete">;
   tokenService: Pick<TokenService, "verify">;
-  fileRepository: Pick<FileRepository, "saveShaderFile" | "deleteShaderFile">;
+  fileRepository: Pick<FileRepository, "saveShaderFile" | "deleteShaderFile" | "deleteShaderData">;
 }
 
 export class CreateShaderUseCase {
@@ -47,15 +47,15 @@ export class CreateShaderUseCase {
 
       const fileName = `shader_${shader.id}`;
 
-      filePath = await this.deps.fileRepository.saveShaderFile(fileName, data.file);
-
+      filePath = await this.deps.fileRepository.saveShaderFile(shader.id, fileName, data.file);
+      
+      shader.src = filePath;
       await this.deps.shaderRepository.updateSrc(shader.id, filePath);
     } catch (error) {
-      if (filePath) {
-        await this.deps.fileRepository.deleteShaderFile(filePath);
-      }
-
       if (shader?.id !== undefined) {
+        if (filePath) {
+          await this.deps.fileRepository.deleteShaderFile(shader.id, filePath);
+        }
         await this.deps.shaderRepository.delete(shader.id);
       }
 
