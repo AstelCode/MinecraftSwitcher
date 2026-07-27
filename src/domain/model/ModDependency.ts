@@ -29,8 +29,4 @@ export class ModDependency {
       dependencyId: this.dependency.id,
     };
   }
-  // getPersistanceId() {
-  //   if (!this.id) throw new Error("mod id no assigned");
-  //   return this.id;
-  // }
 }

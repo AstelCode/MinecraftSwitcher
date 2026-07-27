@@ -200,6 +200,15 @@ exports.Prisma.ShaderDependecyScalarFieldEnum = {
   modId: 'modId'
 };
 
+exports.Prisma.FavoriteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  modId: 'modId',
+  packId: 'packId',
+  shaderId: 'shaderId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -261,7 +270,8 @@ exports.Prisma.ModelName = {
   Image: 'Image',
   Conflict: 'Conflict',
   ModDependency: 'ModDependency',
-  ShaderDependecy: 'ShaderDependecy'
+  ShaderDependecy: 'ShaderDependecy',
+  Favorite: 'Favorite'
 };
 
 /**

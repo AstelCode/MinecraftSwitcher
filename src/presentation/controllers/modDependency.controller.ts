@@ -1,4 +1,5 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+﻿import { FastifyReply, FastifyRequest } from "fastify";
+import { extractToken } from "../helpers/auth.helper";
 import { CreateModDependencyUseCase } from "../../application/usecases/mod-dependency/CreateModDependencyUseCase";
 import { DeleteModDependencyUseCase } from "../../application/usecases/mod-dependency/DeleteModDependencyUseCase";
 import { ListModDependenciesUseCase } from "../../application/usecases/mod-dependency/ListModDependenciesUseCase";
@@ -17,14 +18,14 @@ export class ModDependencyController {
 
   async create(req: FastifyRequest, reply: FastifyReply) {
     const data = CreateModDependencySchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.createModDependencyUseCase.execute(token, BigInt(data.modId), BigInt(data.dependencyId));
     return reply.status(201).send({ message: "Mod dependency created successfully" });
   }
 
   async delete(req: FastifyRequest, reply: FastifyReply) {
     const { modId, dependencyId } = ModDependencyParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deleteModDependencyUseCase.execute(token, BigInt(modId), BigInt(dependencyId));
     return reply.status(200).send({ message: "Mod dependency deleted successfully" });
   }
@@ -46,3 +47,4 @@ export class ModDependencyController {
     return reply.status(200).send(data);
   }
 }
+

@@ -10,6 +10,7 @@ import { GetUserUseCase } from "../../application/usecases/user/GetUserUseCase";
 import { DeleteUserByAdminUseCase } from "../../application/usecases/user/DeleteUserByAdminUseCase";
 import { DeleteUserBySuperAdminUseCase } from "../../application/usecases/user/DeleteUserBySuperAdminUseCase";
 import { CreateUserSchema, ChangePasswordSchema } from "../schemas/user.schema";
+import { extractToken } from "../helpers/auth.helper";
 
 export class UserController {
   constructor(
@@ -36,7 +37,7 @@ export class UserController {
 
   async createAdmin(req: FastifyRequest, reply: FastifyReply) {
     const data = CreateUserSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.createAdminUseCase.execute(token, data.email, data.password);
     return reply.status(201).send({ token });
   }
@@ -52,7 +53,7 @@ export class UserController {
 
   async changePassword(req: FastifyRequest, reply: FastifyReply) {
     const data = ChangePasswordSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.changePasswordUseCase.execute(
       token,
       data.lastPassword,
@@ -62,39 +63,39 @@ export class UserController {
   }
 
   async delete(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deleteUserUseCase.execute(token);
     return reply.status(200).send({ message: "User deleted successfully" });
   }
 
   async deleteByAdmin(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const { id } = req.params as { id: string };
     await this.deleteUserByAdminUseCase.execute(token, BigInt(id));
     return reply.status(200).send({ message: "User deleted successfully by admin" });
   }
 
   async deleteBySuperAdmin(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const { id } = req.params as { id: string };
     await this.deleteUserBySuperAdminUseCase.execute(token, BigInt(id));
     return reply.status(200).send({ message: "User deleted successfully by superadmin" });
   }
 
   async list(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const users = await this.listUsersUseCase.execute(token);
     return reply.status(200).send(users);
   }
 
   async get(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const user = await this.getUserUseCase.execute(token);
     return reply.status(200).send(user);
   }
 
   async changeImage(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const data = await req.file();
     if (!data) return reply.status(400).send({ message: "No file provided" });
 
@@ -109,3 +110,4 @@ export class UserController {
       .send({ message: "Profile image updated successfully" });
   }
 }
+

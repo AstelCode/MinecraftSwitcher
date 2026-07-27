@@ -15,8 +15,9 @@ import { GetModUseCase } from "../application/usecases/mod/GetModUseCase";
 import { AssignModToAdminUseCase } from "../application/usecases/mod/AssignModToAdminUseCase";
 import { ModController } from "../presentation/controllers/mod.controller";
 import { modRoutes } from "../presentation/routes/mod.routes";
+import { GlobalContext } from "../container.types";
 
-export function setupModDependencies(app: FastifyInstance, globalContext: any) {
+export function setupModDependencies(app: FastifyInstance, globalContext: GlobalContext) {
   const createModUseCase = new CreateModUseCase(globalContext);
   const updateModUseCase = new UpdateModUseCase(globalContext);
   const deleteModUseCase = new DeleteModUseCase(globalContext);

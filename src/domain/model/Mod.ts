@@ -65,7 +65,7 @@ export class Mod {
     this.id = data.id;
     this.name = data.name;
     this.description = data.description ?? "";
-    this.maxVersion = data.min_version;
+    this.maxVersion = data.max_version;
     this.minVersion = data.min_version;
     this.src = data.src;
     this.weight = data.weight;

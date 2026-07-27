@@ -30,8 +30,8 @@ export class Conflict {
 
   toPersistance() {
     if (!this.conflictShader && !this.conflictMod)
-      throw new Error("conflig conflict_shader or conflict_mod don't asigned");
-    if (!this.mod) throw new Error("config mod not asigned");
+      throw new Error("conflict: conflict_shader or conflict_mod not assigned");
+    if (!this.mod) throw new Error("conflict: mod not assigned");
 
     return {
       modId: this.mod.id,

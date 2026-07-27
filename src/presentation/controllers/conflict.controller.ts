@@ -1,4 +1,5 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+﻿import { FastifyReply, FastifyRequest } from "fastify";
+import { extractToken } from "../helpers/auth.helper";
 import { CreateConflictUseCase } from "../../application/usecases/conflict/CreateConflictUseCase";
 import { DeleteConflictUseCase } from "../../application/usecases/conflict/DeleteConflictUseCase";
 import { ListConflictsUseCase } from "../../application/usecases/conflict/ListConflictsUseCase";
@@ -19,7 +20,7 @@ export class ConflictController {
 
   async create(req: FastifyRequest, reply: FastifyReply) {
     const data = CreateConflictSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.createConflictUseCase.execute(token, {
       modId: BigInt(data.modId),
       conflictModId: data.conflictModId ? BigInt(data.conflictModId) : undefined,
@@ -30,7 +31,7 @@ export class ConflictController {
 
   async delete(req: FastifyRequest, reply: FastifyReply) {
     const { conflictId } = ConflictIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deleteConflictUseCase.execute(token, BigInt(conflictId));
     return reply.status(200).send({ message: "Conflict deleted successfully" });
   }
@@ -58,3 +59,4 @@ export class ConflictController {
     return reply.status(200).send(conflicts);
   }
 }
+

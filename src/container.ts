@@ -12,6 +12,7 @@ import { LocalFileRepository } from "./infrastructure/database/local/LocalFileRe
 import { ArgonHashService } from "./infrastructure/services/hash/ArgonHashService";
 import { FastifyJwtService } from "./infrastructure/services/auth/FastifyJwtService";
 import { NodeUuidService } from "./infrastructure/services/random/RandomService";
+import { PostgresFavoriteRepository } from "./infrastructure/database/postgres/PostgresFavoriteRepository";
 
 import { setupAuthDependencies } from "./containers/auth.container";
 import { setupUserDependencies } from "./containers/user.container";
@@ -22,6 +23,7 @@ import { setupConflictDependencies } from "./containers/conflict.container";
 import { setupModDependencyDependencies } from "./containers/modDependency.container";
 import { setupShaderDependencyDependencies } from "./containers/shaderDependency.container";
 import { setupCommentDependencies } from "./containers/comment.container";
+import { setupFavoriteDependencies } from "./containers/favorite.container";
 
 export async function setupDependencies(app: FastifyInstance) {
   // --- Infrastructure ---
@@ -36,6 +38,7 @@ export async function setupDependencies(app: FastifyInstance) {
   const commentRepository = new PostgresCommentRepository();
   const uuidService = new NodeUuidService();
   const fileRepository = new LocalFileRepository();
+  const favoriteRepository = new PostgresFavoriteRepository();
 
   const hashService = new ArgonHashService();
   const tokenService = new FastifyJwtService(app);
@@ -54,6 +57,7 @@ export async function setupDependencies(app: FastifyInstance) {
     fileRepository,
     hashService,
     tokenService,
+    favoriteRepository,
   };
 
   setupAuthDependencies(app, globalContext);
@@ -65,4 +69,5 @@ export async function setupDependencies(app: FastifyInstance) {
   setupModDependencyDependencies(app, globalContext);
   setupShaderDependencyDependencies(app, globalContext);
   setupCommentDependencies(app, globalContext);
+  setupFavoriteDependencies(app, globalContext);
 }

@@ -11,8 +11,9 @@ import { DeleteUserByAdminUseCase } from "../application/usecases/user/DeleteUse
 import { DeleteUserBySuperAdminUseCase } from "../application/usecases/user/DeleteUserBySuperAdminUseCase";
 import { UserController } from "../presentation/controllers/user.controller";
 import { userRoutes } from "../presentation/routes/user.routes";
+import { GlobalContext } from "../container.types";
 
-export function setupUserDependencies(app: FastifyInstance, globalContext: any) {
+export function setupUserDependencies(app: FastifyInstance, globalContext: GlobalContext) {
   const createUserUseCase = new CreateUserUseCase(globalContext);
   const createAdminUseCase = new CreateAdminUseCase(globalContext);
   const createSuperAdminUseCase = new CreateSuperAdminUseCase(globalContext);

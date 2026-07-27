@@ -32,6 +32,7 @@ model User {
   shaders  Shader[]
   mods     Mod[]
   comments Comment[]
+  favorites Favorite[]
 
   // Nota: Al borrar el User, esta fila se elimina. La imagen en la base de datos quedará huérfana. 
   // Para que la imagen se borre, tendrías que pasar userId al modelo Image.
@@ -55,6 +56,7 @@ model Pack {
 
   comments Comment[]
   images   Image[]   @relation("packImage")
+  favorites Favorite[]
 
   // Nota: Igual que con User, si se borra el Pack, la imagen "Principal" no se borra automáticamente de la tabla Image.
   principalImage   Image?  @relation("PrincipalImage", fields: [principalImageId], references: [id])
@@ -77,6 +79,7 @@ model Shader {
   conflicts         Conflict[]
   versionType       VersionType
   shaderDependecies ShaderDependecy[]
+  favorites         Favorite[]
 
   principalImage   Image?  @relation("PrincipalImage", fields: [principalImageId], references: [id])
   principalImageId BigInt?
@@ -105,6 +108,7 @@ model Mod {
   modDependencies   ModDependency[]   @relation("ModDependencies")
   versionType       VersionType
   shaderDependecies ShaderDependecy[]
+  favorites         Favorite[]
 
   principalImage   Image?  @relation("PrincipalImage", fields: [principalImageId], references: [id])
   principalImageId BigInt?
@@ -182,4 +186,26 @@ model ShaderDependecy {
   mod    Mod    @relation(fields: [modId], references: [id], onDelete: Cascade)
 
   @@id([shaderId, modId])
+}
+
+model Favorite {
+  id     BigInt @id @default(autoincrement())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId BigInt
+
+  // Solo uno de los tres será no-null
+  mod      Mod?    @relation(fields: [modId], references: [id], onDelete: Cascade)
+  modId    BigInt?
+  pack     Pack?   @relation(fields: [packId], references: [id], onDelete: Cascade)
+  packId   BigInt?
+  shader   Shader? @relation(fields: [shaderId], references: [id], onDelete: Cascade)
+  shaderId BigInt?
+
+  createdAt DateTime @default(now())
+
+  // Un usuario no puede tener el mismo item favorito dos veces
+  @@unique([userId, modId])
+  @@unique([userId, packId])
+  @@unique([userId, shaderId])
 }

@@ -16,8 +16,9 @@ import { GetPackUseCase } from "../application/usecases/pack/GetPackUseCase";
 import { AssignPackToAdminUseCase } from "../application/usecases/pack/AssignPackToAdminUseCase";
 import { PackController } from "../presentation/controllers/pack.controller";
 import { packRoutes } from "../presentation/routes/pack.routes";
+import { GlobalContext } from "../container.types";
 
-export function setupPackDependencies(app: FastifyInstance, globalContext: any) {
+export function setupPackDependencies(app: FastifyInstance, globalContext: GlobalContext) {
   const createPackUseCase = new CreatePackUseCase(globalContext);
   const updatePackUseCase = new UpdatePackUseCase(globalContext);
   const deletePackUseCase = new DeletePackUseCase(globalContext);

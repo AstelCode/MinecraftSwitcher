@@ -1,4 +1,5 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+﻿import { FastifyReply, FastifyRequest } from "fastify";
+import { extractToken } from "../helpers/auth.helper";
 import { CreatePackUseCase } from "../../application/usecases/pack/CreatePackUseCase";
 import { UpdatePackUseCase } from "../../application/usecases/pack/UpdatePackUseCase";
 import { DeletePackUseCase } from "../../application/usecases/pack/DeletePackUseCase";
@@ -47,7 +48,7 @@ export class PackController {
 
   async create(req: FastifyRequest, reply: FastifyReply) {
     const data = CreatePackSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.createPackUseCase.execute(token, data);
     return reply.status(201).send({ message: "Pack created successfully" });
   }
@@ -55,14 +56,14 @@ export class PackController {
   async update(req: FastifyRequest, reply: FastifyReply) {
     const { packId } = PackIdParamsSchema.parse(req.params);
     const data = UpdatePackSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.updatePackUseCase.execute(token, BigInt(packId), data);
     return reply.status(200).send({ message: "Pack updated successfully" });
   }
 
   async delete(req: FastifyRequest, reply: FastifyReply) {
     const { packId } = PackIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deletePackUseCase.execute(token, BigInt(packId));
     return reply.status(200).send({ message: "Pack deleted successfully" });
   }
@@ -79,7 +80,7 @@ export class PackController {
   }
 
   async listByAdmin(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const packs = await this.listPacksByAdminUseCase.execute(token);
     return reply.status(200).send(packs);
   }
@@ -93,14 +94,14 @@ export class PackController {
   async addMod(req: FastifyRequest, reply: FastifyReply) {
     const { packId } = PackIdParamsSchema.parse(req.params);
     const { modId } = ModIdParamsSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.addPackModUseCase.execute(token, BigInt(packId), BigInt(modId));
     return reply.status(200).send({ message: "Mod added to pack" });
   }
 
   async removeMod(req: FastifyRequest, reply: FastifyReply) {
     const { packId, modId } = PackAndModIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deletePackModUseCase.execute(
       token,
       BigInt(packId),
@@ -112,7 +113,7 @@ export class PackController {
   async addShader(req: FastifyRequest, reply: FastifyReply) {
     const { packId } = PackIdParamsSchema.parse(req.params);
     const { shaderId } = ShaderIdParamsSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.addPackShaderUseCase.execute(
       token,
       BigInt(packId),
@@ -123,7 +124,7 @@ export class PackController {
 
   async removeShader(req: FastifyRequest, reply: FastifyReply) {
     const { packId, shaderId } = PackAndShaderIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deletePackShaderUseCase.execute(
       token,
       BigInt(packId),
@@ -134,7 +135,7 @@ export class PackController {
 
   async addImage(req: FastifyRequest, reply: FastifyReply) {
     const { packId } = PackIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const data = await req.file();
     if (!data) return reply.status(400).send({ message: "No file provided" });
 
@@ -149,7 +150,7 @@ export class PackController {
 
   async updatePrincipalImage(req: FastifyRequest, reply: FastifyReply) {
     const { packId } = PackIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const data = await req.file();
     if (!data) return reply.status(400).send({ message: "No file provided" });
 
@@ -168,7 +169,7 @@ export class PackController {
 
   async deleteImage(req: FastifyRequest, reply: FastifyReply) {
     const { packId, imageId } = PackAndImageIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
 
     await this.deletePackImageUseCase.execute(
       token,
@@ -181,8 +182,9 @@ export class PackController {
   async assign(req: FastifyRequest, reply: FastifyReply) {
     const { packId } = PackIdParamsSchema.parse(req.params);
     const { adminId } = req.body as { adminId: string };
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.assignPackToAdminUseCase.execute(token, BigInt(packId), BigInt(adminId));
     return reply.status(200).send({ message: "Pack assigned successfully" });
   }
 }
+

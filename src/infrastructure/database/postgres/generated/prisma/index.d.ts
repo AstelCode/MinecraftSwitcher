@@ -58,6 +58,11 @@ export type ModDependency = $Result.DefaultSelection<Prisma.$ModDependencyPayloa
  * 
  */
 export type ShaderDependecy = $Result.DefaultSelection<Prisma.$ShaderDependecyPayload>
+/**
+ * Model Favorite
+ * 
+ */
+export type Favorite = $Result.DefaultSelection<Prisma.$FavoritePayload>
 
 /**
  * Enums
@@ -287,6 +292,16 @@ export class PrismaClient<
     * ```
     */
   get shaderDependecy(): Prisma.ShaderDependecyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.favorite`: Exposes CRUD operations for the **Favorite** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Favorites
+    * const favorites = await prisma.favorite.findMany()
+    * ```
+    */
+  get favorite(): Prisma.FavoriteDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -742,7 +757,8 @@ export namespace Prisma {
     Image: 'Image',
     Conflict: 'Conflict',
     ModDependency: 'ModDependency',
-    ShaderDependecy: 'ShaderDependecy'
+    ShaderDependecy: 'ShaderDependecy',
+    Favorite: 'Favorite'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -758,7 +774,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "pack" | "shader" | "mod" | "comment" | "image" | "conflict" | "modDependency" | "shaderDependecy"
+      modelProps: "user" | "pack" | "shader" | "mod" | "comment" | "image" | "conflict" | "modDependency" | "shaderDependecy" | "favorite"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1428,6 +1444,80 @@ export namespace Prisma {
           }
         }
       }
+      Favorite: {
+        payload: Prisma.$FavoritePayload<ExtArgs>
+        fields: Prisma.FavoriteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FavoriteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FavoriteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          findFirst: {
+            args: Prisma.FavoriteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FavoriteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          findMany: {
+            args: Prisma.FavoriteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>[]
+          }
+          create: {
+            args: Prisma.FavoriteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          createMany: {
+            args: Prisma.FavoriteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FavoriteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>[]
+          }
+          delete: {
+            args: Prisma.FavoriteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          update: {
+            args: Prisma.FavoriteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          deleteMany: {
+            args: Prisma.FavoriteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FavoriteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FavoriteUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>[]
+          }
+          upsert: {
+            args: Prisma.FavoriteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavoritePayload>
+          }
+          aggregate: {
+            args: Prisma.FavoriteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFavorite>
+          }
+          groupBy: {
+            args: Prisma.FavoriteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FavoriteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FavoriteCountArgs<ExtArgs>
+            result: $Utils.Optional<FavoriteCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1560,6 +1650,7 @@ export namespace Prisma {
     conflict?: ConflictOmit
     modDependency?: ModDependencyOmit
     shaderDependecy?: ShaderDependecyOmit
+    favorite?: FavoriteOmit
   }
 
   /* Types for Logging */
@@ -1644,6 +1735,7 @@ export namespace Prisma {
     shaders: number
     mods: number
     comments: number
+    favorites: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1651,6 +1743,7 @@ export namespace Prisma {
     shaders?: boolean | UserCountOutputTypeCountShadersArgs
     mods?: boolean | UserCountOutputTypeCountModsArgs
     comments?: boolean | UserCountOutputTypeCountCommentsArgs
+    favorites?: boolean | UserCountOutputTypeCountFavoritesArgs
   }
 
   // Custom InputTypes
@@ -1692,6 +1785,13 @@ export namespace Prisma {
     where?: CommentWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFavoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoriteWhereInput
+  }
+
 
   /**
    * Count Type PackCountOutputType
@@ -1702,6 +1802,7 @@ export namespace Prisma {
     mods: number
     comments: number
     images: number
+    favorites: number
   }
 
   export type PackCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1709,6 +1810,7 @@ export namespace Prisma {
     mods?: boolean | PackCountOutputTypeCountModsArgs
     comments?: boolean | PackCountOutputTypeCountCommentsArgs
     images?: boolean | PackCountOutputTypeCountImagesArgs
+    favorites?: boolean | PackCountOutputTypeCountFavoritesArgs
   }
 
   // Custom InputTypes
@@ -1750,6 +1852,13 @@ export namespace Prisma {
     where?: ImageWhereInput
   }
 
+  /**
+   * PackCountOutputType without action
+   */
+  export type PackCountOutputTypeCountFavoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoriteWhereInput
+  }
+
 
   /**
    * Count Type ShaderCountOutputType
@@ -1761,6 +1870,7 @@ export namespace Prisma {
     images: number
     conflicts: number
     shaderDependecies: number
+    favorites: number
   }
 
   export type ShaderCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1769,6 +1879,7 @@ export namespace Prisma {
     images?: boolean | ShaderCountOutputTypeCountImagesArgs
     conflicts?: boolean | ShaderCountOutputTypeCountConflictsArgs
     shaderDependecies?: boolean | ShaderCountOutputTypeCountShaderDependeciesArgs
+    favorites?: boolean | ShaderCountOutputTypeCountFavoritesArgs
   }
 
   // Custom InputTypes
@@ -1817,6 +1928,13 @@ export namespace Prisma {
     where?: ShaderDependecyWhereInput
   }
 
+  /**
+   * ShaderCountOutputType without action
+   */
+  export type ShaderCountOutputTypeCountFavoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoriteWhereInput
+  }
+
 
   /**
    * Count Type ModCountOutputType
@@ -1831,6 +1949,7 @@ export namespace Prisma {
     requiredBy: number
     modDependencies: number
     shaderDependecies: number
+    favorites: number
   }
 
   export type ModCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1842,6 +1961,7 @@ export namespace Prisma {
     requiredBy?: boolean | ModCountOutputTypeCountRequiredByArgs
     modDependencies?: boolean | ModCountOutputTypeCountModDependenciesArgs
     shaderDependecies?: boolean | ModCountOutputTypeCountShaderDependeciesArgs
+    favorites?: boolean | ModCountOutputTypeCountFavoritesArgs
   }
 
   // Custom InputTypes
@@ -1909,6 +2029,13 @@ export namespace Prisma {
    */
   export type ModCountOutputTypeCountShaderDependeciesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ShaderDependecyWhereInput
+  }
+
+  /**
+   * ModCountOutputType without action
+   */
+  export type ModCountOutputTypeCountFavoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoriteWhereInput
   }
 
 
@@ -2204,6 +2331,7 @@ export namespace Prisma {
     shaders?: boolean | User$shadersArgs<ExtArgs>
     mods?: boolean | User$modsArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
+    favorites?: boolean | User$favoritesArgs<ExtArgs>
     image?: boolean | User$imageArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -2249,6 +2377,7 @@ export namespace Prisma {
     shaders?: boolean | User$shadersArgs<ExtArgs>
     mods?: boolean | User$modsArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
+    favorites?: boolean | User$favoritesArgs<ExtArgs>
     image?: boolean | User$imageArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -2266,6 +2395,7 @@ export namespace Prisma {
       shaders: Prisma.$ShaderPayload<ExtArgs>[]
       mods: Prisma.$ModPayload<ExtArgs>[]
       comments: Prisma.$CommentPayload<ExtArgs>[]
+      favorites: Prisma.$FavoritePayload<ExtArgs>[]
       image: Prisma.$ImagePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -2675,6 +2805,7 @@ export namespace Prisma {
     shaders<T extends User$shadersArgs<ExtArgs> = {}>(args?: Subset<T, User$shadersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShaderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mods<T extends User$modsArgs<ExtArgs> = {}>(args?: Subset<T, User$modsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends User$commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    favorites<T extends User$favoritesArgs<ExtArgs> = {}>(args?: Subset<T, User$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     image<T extends User$imageArgs<ExtArgs> = {}>(args?: Subset<T, User$imageArgs<ExtArgs>>): Prisma__ImageClient<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3210,6 +3341,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.favorites
+   */
+  export type User$favoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    where?: FavoriteWhereInput
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    cursor?: FavoriteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
    * User.image
    */
   export type User$imageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3490,6 +3645,7 @@ export namespace Prisma {
     author?: boolean | Pack$authorArgs<ExtArgs>
     comments?: boolean | Pack$commentsArgs<ExtArgs>
     images?: boolean | Pack$imagesArgs<ExtArgs>
+    favorites?: boolean | Pack$favoritesArgs<ExtArgs>
     principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
     _count?: boolean | PackCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["pack"]>
@@ -3538,6 +3694,7 @@ export namespace Prisma {
     author?: boolean | Pack$authorArgs<ExtArgs>
     comments?: boolean | Pack$commentsArgs<ExtArgs>
     images?: boolean | Pack$imagesArgs<ExtArgs>
+    favorites?: boolean | Pack$favoritesArgs<ExtArgs>
     principalImage?: boolean | Pack$principalImageArgs<ExtArgs>
     _count?: boolean | PackCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -3558,6 +3715,7 @@ export namespace Prisma {
       author: Prisma.$UserPayload<ExtArgs> | null
       comments: Prisma.$CommentPayload<ExtArgs>[]
       images: Prisma.$ImagePayload<ExtArgs>[]
+      favorites: Prisma.$FavoritePayload<ExtArgs>[]
       principalImage: Prisma.$ImagePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -3968,6 +4126,7 @@ export namespace Prisma {
     author<T extends Pack$authorArgs<ExtArgs> = {}>(args?: Subset<T, Pack$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     comments<T extends Pack$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Pack$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     images<T extends Pack$imagesArgs<ExtArgs> = {}>(args?: Subset<T, Pack$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    favorites<T extends Pack$favoritesArgs<ExtArgs> = {}>(args?: Subset<T, Pack$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     principalImage<T extends Pack$principalImageArgs<ExtArgs> = {}>(args?: Subset<T, Pack$principalImageArgs<ExtArgs>>): Prisma__ImageClient<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4522,6 +4681,30 @@ export namespace Prisma {
   }
 
   /**
+   * Pack.favorites
+   */
+  export type Pack$favoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    where?: FavoriteWhereInput
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    cursor?: FavoriteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
    * Pack.principalImage
    */
   export type Pack$principalImageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4799,6 +4982,7 @@ export namespace Prisma {
     images?: boolean | Shader$imagesArgs<ExtArgs>
     conflicts?: boolean | Shader$conflictsArgs<ExtArgs>
     shaderDependecies?: boolean | Shader$shaderDependeciesArgs<ExtArgs>
+    favorites?: boolean | Shader$favoritesArgs<ExtArgs>
     principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
     _count?: boolean | ShaderCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["shader"]>
@@ -4848,6 +5032,7 @@ export namespace Prisma {
     images?: boolean | Shader$imagesArgs<ExtArgs>
     conflicts?: boolean | Shader$conflictsArgs<ExtArgs>
     shaderDependecies?: boolean | Shader$shaderDependeciesArgs<ExtArgs>
+    favorites?: boolean | Shader$favoritesArgs<ExtArgs>
     principalImage?: boolean | Shader$principalImageArgs<ExtArgs>
     _count?: boolean | ShaderCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -4869,6 +5054,7 @@ export namespace Prisma {
       images: Prisma.$ImagePayload<ExtArgs>[]
       conflicts: Prisma.$ConflictPayload<ExtArgs>[]
       shaderDependecies: Prisma.$ShaderDependecyPayload<ExtArgs>[]
+      favorites: Prisma.$FavoritePayload<ExtArgs>[]
       principalImage: Prisma.$ImagePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5280,6 +5466,7 @@ export namespace Prisma {
     images<T extends Shader$imagesArgs<ExtArgs> = {}>(args?: Subset<T, Shader$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     conflicts<T extends Shader$conflictsArgs<ExtArgs> = {}>(args?: Subset<T, Shader$conflictsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConflictPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shaderDependecies<T extends Shader$shaderDependeciesArgs<ExtArgs> = {}>(args?: Subset<T, Shader$shaderDependeciesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShaderDependecyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    favorites<T extends Shader$favoritesArgs<ExtArgs> = {}>(args?: Subset<T, Shader$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     principalImage<T extends Shader$principalImageArgs<ExtArgs> = {}>(args?: Subset<T, Shader$principalImageArgs<ExtArgs>>): Prisma__ImageClient<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5858,6 +6045,30 @@ export namespace Prisma {
   }
 
   /**
+   * Shader.favorites
+   */
+  export type Shader$favoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    where?: FavoriteWhereInput
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    cursor?: FavoriteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
    * Shader.principalImage
    */
   export type Shader$principalImageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6162,6 +6373,7 @@ export namespace Prisma {
     requiredBy?: boolean | Mod$requiredByArgs<ExtArgs>
     modDependencies?: boolean | Mod$modDependenciesArgs<ExtArgs>
     shaderDependecies?: boolean | Mod$shaderDependeciesArgs<ExtArgs>
+    favorites?: boolean | Mod$favoritesArgs<ExtArgs>
     principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
     _count?: boolean | ModCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mod"]>
@@ -6220,6 +6432,7 @@ export namespace Prisma {
     requiredBy?: boolean | Mod$requiredByArgs<ExtArgs>
     modDependencies?: boolean | Mod$modDependenciesArgs<ExtArgs>
     shaderDependecies?: boolean | Mod$shaderDependeciesArgs<ExtArgs>
+    favorites?: boolean | Mod$favoritesArgs<ExtArgs>
     principalImage?: boolean | Mod$principalImageArgs<ExtArgs>
     _count?: boolean | ModCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -6244,6 +6457,7 @@ export namespace Prisma {
       requiredBy: Prisma.$ModDependencyPayload<ExtArgs>[]
       modDependencies: Prisma.$ModDependencyPayload<ExtArgs>[]
       shaderDependecies: Prisma.$ShaderDependecyPayload<ExtArgs>[]
+      favorites: Prisma.$FavoritePayload<ExtArgs>[]
       principalImage: Prisma.$ImagePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -6660,6 +6874,7 @@ export namespace Prisma {
     requiredBy<T extends Mod$requiredByArgs<ExtArgs> = {}>(args?: Subset<T, Mod$requiredByArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModDependencyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     modDependencies<T extends Mod$modDependenciesArgs<ExtArgs> = {}>(args?: Subset<T, Mod$modDependenciesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModDependencyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shaderDependecies<T extends Mod$shaderDependeciesArgs<ExtArgs> = {}>(args?: Subset<T, Mod$shaderDependeciesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShaderDependecyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    favorites<T extends Mod$favoritesArgs<ExtArgs> = {}>(args?: Subset<T, Mod$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     principalImage<T extends Mod$principalImageArgs<ExtArgs> = {}>(args?: Subset<T, Mod$principalImageArgs<ExtArgs>>): Prisma__ImageClient<$Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -7309,6 +7524,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ShaderDependecyScalarFieldEnum | ShaderDependecyScalarFieldEnum[]
+  }
+
+  /**
+   * Mod.favorites
+   */
+  export type Mod$favoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    where?: FavoriteWhereInput
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    cursor?: FavoriteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
   }
 
   /**
@@ -13143,6 +13382,1213 @@ export namespace Prisma {
 
 
   /**
+   * Model Favorite
+   */
+
+  export type AggregateFavorite = {
+    _count: FavoriteCountAggregateOutputType | null
+    _avg: FavoriteAvgAggregateOutputType | null
+    _sum: FavoriteSumAggregateOutputType | null
+    _min: FavoriteMinAggregateOutputType | null
+    _max: FavoriteMaxAggregateOutputType | null
+  }
+
+  export type FavoriteAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    modId: number | null
+    packId: number | null
+    shaderId: number | null
+  }
+
+  export type FavoriteSumAggregateOutputType = {
+    id: bigint | null
+    userId: bigint | null
+    modId: bigint | null
+    packId: bigint | null
+    shaderId: bigint | null
+  }
+
+  export type FavoriteMinAggregateOutputType = {
+    id: bigint | null
+    userId: bigint | null
+    modId: bigint | null
+    packId: bigint | null
+    shaderId: bigint | null
+    createdAt: Date | null
+  }
+
+  export type FavoriteMaxAggregateOutputType = {
+    id: bigint | null
+    userId: bigint | null
+    modId: bigint | null
+    packId: bigint | null
+    shaderId: bigint | null
+    createdAt: Date | null
+  }
+
+  export type FavoriteCountAggregateOutputType = {
+    id: number
+    userId: number
+    modId: number
+    packId: number
+    shaderId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type FavoriteAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    modId?: true
+    packId?: true
+    shaderId?: true
+  }
+
+  export type FavoriteSumAggregateInputType = {
+    id?: true
+    userId?: true
+    modId?: true
+    packId?: true
+    shaderId?: true
+  }
+
+  export type FavoriteMinAggregateInputType = {
+    id?: true
+    userId?: true
+    modId?: true
+    packId?: true
+    shaderId?: true
+    createdAt?: true
+  }
+
+  export type FavoriteMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    modId?: true
+    packId?: true
+    shaderId?: true
+    createdAt?: true
+  }
+
+  export type FavoriteCountAggregateInputType = {
+    id?: true
+    userId?: true
+    modId?: true
+    packId?: true
+    shaderId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type FavoriteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Favorite to aggregate.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Favorites
+    **/
+    _count?: true | FavoriteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FavoriteAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FavoriteSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FavoriteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FavoriteMaxAggregateInputType
+  }
+
+  export type GetFavoriteAggregateType<T extends FavoriteAggregateArgs> = {
+        [P in keyof T & keyof AggregateFavorite]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFavorite[P]>
+      : GetScalarType<T[P], AggregateFavorite[P]>
+  }
+
+
+
+
+  export type FavoriteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavoriteWhereInput
+    orderBy?: FavoriteOrderByWithAggregationInput | FavoriteOrderByWithAggregationInput[]
+    by: FavoriteScalarFieldEnum[] | FavoriteScalarFieldEnum
+    having?: FavoriteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FavoriteCountAggregateInputType | true
+    _avg?: FavoriteAvgAggregateInputType
+    _sum?: FavoriteSumAggregateInputType
+    _min?: FavoriteMinAggregateInputType
+    _max?: FavoriteMaxAggregateInputType
+  }
+
+  export type FavoriteGroupByOutputType = {
+    id: bigint
+    userId: bigint
+    modId: bigint | null
+    packId: bigint | null
+    shaderId: bigint | null
+    createdAt: Date
+    _count: FavoriteCountAggregateOutputType | null
+    _avg: FavoriteAvgAggregateOutputType | null
+    _sum: FavoriteSumAggregateOutputType | null
+    _min: FavoriteMinAggregateOutputType | null
+    _max: FavoriteMaxAggregateOutputType | null
+  }
+
+  type GetFavoriteGroupByPayload<T extends FavoriteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FavoriteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FavoriteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FavoriteGroupByOutputType[P]>
+            : GetScalarType<T[P], FavoriteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FavoriteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    modId?: boolean
+    packId?: boolean
+    shaderId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    mod?: boolean | Favorite$modArgs<ExtArgs>
+    pack?: boolean | Favorite$packArgs<ExtArgs>
+    shader?: boolean | Favorite$shaderArgs<ExtArgs>
+  }, ExtArgs["result"]["favorite"]>
+
+  export type FavoriteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    modId?: boolean
+    packId?: boolean
+    shaderId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    mod?: boolean | Favorite$modArgs<ExtArgs>
+    pack?: boolean | Favorite$packArgs<ExtArgs>
+    shader?: boolean | Favorite$shaderArgs<ExtArgs>
+  }, ExtArgs["result"]["favorite"]>
+
+  export type FavoriteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    modId?: boolean
+    packId?: boolean
+    shaderId?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    mod?: boolean | Favorite$modArgs<ExtArgs>
+    pack?: boolean | Favorite$packArgs<ExtArgs>
+    shader?: boolean | Favorite$shaderArgs<ExtArgs>
+  }, ExtArgs["result"]["favorite"]>
+
+  export type FavoriteSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    modId?: boolean
+    packId?: boolean
+    shaderId?: boolean
+    createdAt?: boolean
+  }
+
+  export type FavoriteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "modId" | "packId" | "shaderId" | "createdAt", ExtArgs["result"]["favorite"]>
+  export type FavoriteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    mod?: boolean | Favorite$modArgs<ExtArgs>
+    pack?: boolean | Favorite$packArgs<ExtArgs>
+    shader?: boolean | Favorite$shaderArgs<ExtArgs>
+  }
+  export type FavoriteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    mod?: boolean | Favorite$modArgs<ExtArgs>
+    pack?: boolean | Favorite$packArgs<ExtArgs>
+    shader?: boolean | Favorite$shaderArgs<ExtArgs>
+  }
+  export type FavoriteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    mod?: boolean | Favorite$modArgs<ExtArgs>
+    pack?: boolean | Favorite$packArgs<ExtArgs>
+    shader?: boolean | Favorite$shaderArgs<ExtArgs>
+  }
+
+  export type $FavoritePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Favorite"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      mod: Prisma.$ModPayload<ExtArgs> | null
+      pack: Prisma.$PackPayload<ExtArgs> | null
+      shader: Prisma.$ShaderPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      userId: bigint
+      modId: bigint | null
+      packId: bigint | null
+      shaderId: bigint | null
+      createdAt: Date
+    }, ExtArgs["result"]["favorite"]>
+    composites: {}
+  }
+
+  type FavoriteGetPayload<S extends boolean | null | undefined | FavoriteDefaultArgs> = $Result.GetResult<Prisma.$FavoritePayload, S>
+
+  type FavoriteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FavoriteFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FavoriteCountAggregateInputType | true
+    }
+
+  export interface FavoriteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Favorite'], meta: { name: 'Favorite' } }
+    /**
+     * Find zero or one Favorite that matches the filter.
+     * @param {FavoriteFindUniqueArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FavoriteFindUniqueArgs>(args: SelectSubset<T, FavoriteFindUniqueArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Favorite that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FavoriteFindUniqueOrThrowArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FavoriteFindUniqueOrThrowArgs>(args: SelectSubset<T, FavoriteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Favorite that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteFindFirstArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FavoriteFindFirstArgs>(args?: SelectSubset<T, FavoriteFindFirstArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Favorite that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteFindFirstOrThrowArgs} args - Arguments to find a Favorite
+     * @example
+     * // Get one Favorite
+     * const favorite = await prisma.favorite.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FavoriteFindFirstOrThrowArgs>(args?: SelectSubset<T, FavoriteFindFirstOrThrowArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Favorites that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Favorites
+     * const favorites = await prisma.favorite.findMany()
+     * 
+     * // Get first 10 Favorites
+     * const favorites = await prisma.favorite.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const favoriteWithIdOnly = await prisma.favorite.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FavoriteFindManyArgs>(args?: SelectSubset<T, FavoriteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Favorite.
+     * @param {FavoriteCreateArgs} args - Arguments to create a Favorite.
+     * @example
+     * // Create one Favorite
+     * const Favorite = await prisma.favorite.create({
+     *   data: {
+     *     // ... data to create a Favorite
+     *   }
+     * })
+     * 
+     */
+    create<T extends FavoriteCreateArgs>(args: SelectSubset<T, FavoriteCreateArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Favorites.
+     * @param {FavoriteCreateManyArgs} args - Arguments to create many Favorites.
+     * @example
+     * // Create many Favorites
+     * const favorite = await prisma.favorite.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FavoriteCreateManyArgs>(args?: SelectSubset<T, FavoriteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Favorites and returns the data saved in the database.
+     * @param {FavoriteCreateManyAndReturnArgs} args - Arguments to create many Favorites.
+     * @example
+     * // Create many Favorites
+     * const favorite = await prisma.favorite.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Favorites and only return the `id`
+     * const favoriteWithIdOnly = await prisma.favorite.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FavoriteCreateManyAndReturnArgs>(args?: SelectSubset<T, FavoriteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Favorite.
+     * @param {FavoriteDeleteArgs} args - Arguments to delete one Favorite.
+     * @example
+     * // Delete one Favorite
+     * const Favorite = await prisma.favorite.delete({
+     *   where: {
+     *     // ... filter to delete one Favorite
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FavoriteDeleteArgs>(args: SelectSubset<T, FavoriteDeleteArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Favorite.
+     * @param {FavoriteUpdateArgs} args - Arguments to update one Favorite.
+     * @example
+     * // Update one Favorite
+     * const favorite = await prisma.favorite.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FavoriteUpdateArgs>(args: SelectSubset<T, FavoriteUpdateArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Favorites.
+     * @param {FavoriteDeleteManyArgs} args - Arguments to filter Favorites to delete.
+     * @example
+     * // Delete a few Favorites
+     * const { count } = await prisma.favorite.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FavoriteDeleteManyArgs>(args?: SelectSubset<T, FavoriteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Favorites.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Favorites
+     * const favorite = await prisma.favorite.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FavoriteUpdateManyArgs>(args: SelectSubset<T, FavoriteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Favorites and returns the data updated in the database.
+     * @param {FavoriteUpdateManyAndReturnArgs} args - Arguments to update many Favorites.
+     * @example
+     * // Update many Favorites
+     * const favorite = await prisma.favorite.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Favorites and only return the `id`
+     * const favoriteWithIdOnly = await prisma.favorite.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FavoriteUpdateManyAndReturnArgs>(args: SelectSubset<T, FavoriteUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Favorite.
+     * @param {FavoriteUpsertArgs} args - Arguments to update or create a Favorite.
+     * @example
+     * // Update or create a Favorite
+     * const favorite = await prisma.favorite.upsert({
+     *   create: {
+     *     // ... data to create a Favorite
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Favorite we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FavoriteUpsertArgs>(args: SelectSubset<T, FavoriteUpsertArgs<ExtArgs>>): Prisma__FavoriteClient<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Favorites.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteCountArgs} args - Arguments to filter Favorites to count.
+     * @example
+     * // Count the number of Favorites
+     * const count = await prisma.favorite.count({
+     *   where: {
+     *     // ... the filter for the Favorites we want to count
+     *   }
+     * })
+    **/
+    count<T extends FavoriteCountArgs>(
+      args?: Subset<T, FavoriteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FavoriteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Favorite.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FavoriteAggregateArgs>(args: Subset<T, FavoriteAggregateArgs>): Prisma.PrismaPromise<GetFavoriteAggregateType<T>>
+
+    /**
+     * Group by Favorite.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavoriteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FavoriteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FavoriteGroupByArgs['orderBy'] }
+        : { orderBy?: FavoriteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FavoriteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFavoriteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Favorite model
+   */
+  readonly fields: FavoriteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Favorite.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FavoriteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    mod<T extends Favorite$modArgs<ExtArgs> = {}>(args?: Subset<T, Favorite$modArgs<ExtArgs>>): Prisma__ModClient<$Result.GetResult<Prisma.$ModPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    pack<T extends Favorite$packArgs<ExtArgs> = {}>(args?: Subset<T, Favorite$packArgs<ExtArgs>>): Prisma__PackClient<$Result.GetResult<Prisma.$PackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    shader<T extends Favorite$shaderArgs<ExtArgs> = {}>(args?: Subset<T, Favorite$shaderArgs<ExtArgs>>): Prisma__ShaderClient<$Result.GetResult<Prisma.$ShaderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Favorite model
+   */
+  interface FavoriteFieldRefs {
+    readonly id: FieldRef<"Favorite", 'BigInt'>
+    readonly userId: FieldRef<"Favorite", 'BigInt'>
+    readonly modId: FieldRef<"Favorite", 'BigInt'>
+    readonly packId: FieldRef<"Favorite", 'BigInt'>
+    readonly shaderId: FieldRef<"Favorite", 'BigInt'>
+    readonly createdAt: FieldRef<"Favorite", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Favorite findUnique
+   */
+  export type FavoriteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+  /**
+   * Favorite findUniqueOrThrow
+   */
+  export type FavoriteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+  /**
+   * Favorite findFirst
+   */
+  export type FavoriteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Favorites.
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Favorites.
+     */
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
+   * Favorite findFirstOrThrow
+   */
+  export type FavoriteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorite to fetch.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Favorites.
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Favorites.
+     */
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
+   * Favorite findMany
+   */
+  export type FavoriteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter, which Favorites to fetch.
+     */
+    where?: FavoriteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Favorites to fetch.
+     */
+    orderBy?: FavoriteOrderByWithRelationInput | FavoriteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Favorites.
+     */
+    cursor?: FavoriteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Favorites from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Favorites.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Favorites.
+     */
+    distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
+   * Favorite create
+   */
+  export type FavoriteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Favorite.
+     */
+    data: XOR<FavoriteCreateInput, FavoriteUncheckedCreateInput>
+  }
+
+  /**
+   * Favorite createMany
+   */
+  export type FavoriteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Favorites.
+     */
+    data: FavoriteCreateManyInput | FavoriteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Favorite createManyAndReturn
+   */
+  export type FavoriteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * The data used to create many Favorites.
+     */
+    data: FavoriteCreateManyInput | FavoriteCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Favorite update
+   */
+  export type FavoriteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Favorite.
+     */
+    data: XOR<FavoriteUpdateInput, FavoriteUncheckedUpdateInput>
+    /**
+     * Choose, which Favorite to update.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+  /**
+   * Favorite updateMany
+   */
+  export type FavoriteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Favorites.
+     */
+    data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyInput>
+    /**
+     * Filter which Favorites to update
+     */
+    where?: FavoriteWhereInput
+    /**
+     * Limit how many Favorites to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Favorite updateManyAndReturn
+   */
+  export type FavoriteUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * The data used to update Favorites.
+     */
+    data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyInput>
+    /**
+     * Filter which Favorites to update
+     */
+    where?: FavoriteWhereInput
+    /**
+     * Limit how many Favorites to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Favorite upsert
+   */
+  export type FavoriteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Favorite to update in case it exists.
+     */
+    where: FavoriteWhereUniqueInput
+    /**
+     * In case the Favorite found by the `where` argument doesn't exist, create a new Favorite with this data.
+     */
+    create: XOR<FavoriteCreateInput, FavoriteUncheckedCreateInput>
+    /**
+     * In case the Favorite was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FavoriteUpdateInput, FavoriteUncheckedUpdateInput>
+  }
+
+  /**
+   * Favorite delete
+   */
+  export type FavoriteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+    /**
+     * Filter which Favorite to delete.
+     */
+    where: FavoriteWhereUniqueInput
+  }
+
+  /**
+   * Favorite deleteMany
+   */
+  export type FavoriteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Favorites to delete
+     */
+    where?: FavoriteWhereInput
+    /**
+     * Limit how many Favorites to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Favorite.mod
+   */
+  export type Favorite$modArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mod
+     */
+    select?: ModSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mod
+     */
+    omit?: ModOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModInclude<ExtArgs> | null
+    where?: ModWhereInput
+  }
+
+  /**
+   * Favorite.pack
+   */
+  export type Favorite$packArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pack
+     */
+    select?: PackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pack
+     */
+    omit?: PackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PackInclude<ExtArgs> | null
+    where?: PackWhereInput
+  }
+
+  /**
+   * Favorite.shader
+   */
+  export type Favorite$shaderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shader
+     */
+    select?: ShaderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shader
+     */
+    omit?: ShaderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShaderInclude<ExtArgs> | null
+    where?: ShaderWhereInput
+  }
+
+  /**
+   * Favorite without action
+   */
+  export type FavoriteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Favorite
+     */
+    select?: FavoriteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Favorite
+     */
+    omit?: FavoriteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavoriteInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -13261,6 +14707,18 @@ export namespace Prisma {
   };
 
   export type ShaderDependecyScalarFieldEnum = (typeof ShaderDependecyScalarFieldEnum)[keyof typeof ShaderDependecyScalarFieldEnum]
+
+
+  export const FavoriteScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    modId: 'modId',
+    packId: 'packId',
+    shaderId: 'shaderId',
+    createdAt: 'createdAt'
+  };
+
+  export type FavoriteScalarFieldEnum = (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -13406,6 +14864,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -13438,6 +14910,7 @@ export namespace Prisma {
     shaders?: ShaderListRelationFilter
     mods?: ModListRelationFilter
     comments?: CommentListRelationFilter
+    favorites?: FavoriteListRelationFilter
     image?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }
 
@@ -13454,6 +14927,7 @@ export namespace Prisma {
     shaders?: ShaderOrderByRelationAggregateInput
     mods?: ModOrderByRelationAggregateInput
     comments?: CommentOrderByRelationAggregateInput
+    favorites?: FavoriteOrderByRelationAggregateInput
     image?: ImageOrderByWithRelationInput
     _relevance?: UserOrderByRelevanceInput
   }
@@ -13474,6 +14948,7 @@ export namespace Prisma {
     shaders?: ShaderListRelationFilter
     mods?: ModListRelationFilter
     comments?: CommentListRelationFilter
+    favorites?: FavoriteListRelationFilter
     image?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }, "id" | "email">
 
@@ -13524,6 +14999,7 @@ export namespace Prisma {
     author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
+    favorites?: FavoriteListRelationFilter
     principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }
 
@@ -13541,6 +15017,7 @@ export namespace Prisma {
     author?: UserOrderByWithRelationInput
     comments?: CommentOrderByRelationAggregateInput
     images?: ImageOrderByRelationAggregateInput
+    favorites?: FavoriteOrderByRelationAggregateInput
     principalImage?: ImageOrderByWithRelationInput
     _relevance?: PackOrderByRelevanceInput
   }
@@ -13562,6 +15039,7 @@ export namespace Prisma {
     author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     comments?: CommentListRelationFilter
     images?: ImageListRelationFilter
+    favorites?: FavoriteListRelationFilter
     principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }, "id">
 
@@ -13613,6 +15091,7 @@ export namespace Prisma {
     images?: ImageListRelationFilter
     conflicts?: ConflictListRelationFilter
     shaderDependecies?: ShaderDependecyListRelationFilter
+    favorites?: FavoriteListRelationFilter
     principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }
 
@@ -13631,6 +15110,7 @@ export namespace Prisma {
     images?: ImageOrderByRelationAggregateInput
     conflicts?: ConflictOrderByRelationAggregateInput
     shaderDependecies?: ShaderDependecyOrderByRelationAggregateInput
+    favorites?: FavoriteOrderByRelationAggregateInput
     principalImage?: ImageOrderByWithRelationInput
     _relevance?: ShaderOrderByRelevanceInput
   }
@@ -13653,6 +15133,7 @@ export namespace Prisma {
     images?: ImageListRelationFilter
     conflicts?: ConflictListRelationFilter
     shaderDependecies?: ShaderDependecyListRelationFilter
+    favorites?: FavoriteListRelationFilter
     principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }, "id">
 
@@ -13709,6 +15190,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyListRelationFilter
     modDependencies?: ModDependencyListRelationFilter
     shaderDependecies?: ShaderDependecyListRelationFilter
+    favorites?: FavoriteListRelationFilter
     principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }
 
@@ -13732,6 +15214,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyOrderByRelationAggregateInput
     modDependencies?: ModDependencyOrderByRelationAggregateInput
     shaderDependecies?: ShaderDependecyOrderByRelationAggregateInput
+    favorites?: FavoriteOrderByRelationAggregateInput
     principalImage?: ImageOrderByWithRelationInput
     _relevance?: ModOrderByRelevanceInput
   }
@@ -13759,6 +15242,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyListRelationFilter
     modDependencies?: ModDependencyListRelationFilter
     shaderDependecies?: ShaderDependecyListRelationFilter
+    favorites?: FavoriteListRelationFilter
     principalImage?: XOR<ImageNullableScalarRelationFilter, ImageWhereInput> | null
   }, "id">
 
@@ -14094,6 +15578,80 @@ export namespace Prisma {
     modId?: BigIntWithAggregatesFilter<"ShaderDependecy"> | bigint | number
   }
 
+  export type FavoriteWhereInput = {
+    AND?: FavoriteWhereInput | FavoriteWhereInput[]
+    OR?: FavoriteWhereInput[]
+    NOT?: FavoriteWhereInput | FavoriteWhereInput[]
+    id?: BigIntFilter<"Favorite"> | bigint | number
+    userId?: BigIntFilter<"Favorite"> | bigint | number
+    modId?: BigIntNullableFilter<"Favorite"> | bigint | number | null
+    packId?: BigIntNullableFilter<"Favorite"> | bigint | number | null
+    shaderId?: BigIntNullableFilter<"Favorite"> | bigint | number | null
+    createdAt?: DateTimeFilter<"Favorite"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    mod?: XOR<ModNullableScalarRelationFilter, ModWhereInput> | null
+    pack?: XOR<PackNullableScalarRelationFilter, PackWhereInput> | null
+    shader?: XOR<ShaderNullableScalarRelationFilter, ShaderWhereInput> | null
+  }
+
+  export type FavoriteOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modId?: SortOrderInput | SortOrder
+    packId?: SortOrderInput | SortOrder
+    shaderId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    mod?: ModOrderByWithRelationInput
+    pack?: PackOrderByWithRelationInput
+    shader?: ShaderOrderByWithRelationInput
+  }
+
+  export type FavoriteWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    userId_modId?: FavoriteUserIdModIdCompoundUniqueInput
+    userId_packId?: FavoriteUserIdPackIdCompoundUniqueInput
+    userId_shaderId?: FavoriteUserIdShaderIdCompoundUniqueInput
+    AND?: FavoriteWhereInput | FavoriteWhereInput[]
+    OR?: FavoriteWhereInput[]
+    NOT?: FavoriteWhereInput | FavoriteWhereInput[]
+    userId?: BigIntFilter<"Favorite"> | bigint | number
+    modId?: BigIntNullableFilter<"Favorite"> | bigint | number | null
+    packId?: BigIntNullableFilter<"Favorite"> | bigint | number | null
+    shaderId?: BigIntNullableFilter<"Favorite"> | bigint | number | null
+    createdAt?: DateTimeFilter<"Favorite"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    mod?: XOR<ModNullableScalarRelationFilter, ModWhereInput> | null
+    pack?: XOR<PackNullableScalarRelationFilter, PackWhereInput> | null
+    shader?: XOR<ShaderNullableScalarRelationFilter, ShaderWhereInput> | null
+  }, "id" | "userId_modId" | "userId_packId" | "userId_shaderId">
+
+  export type FavoriteOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modId?: SortOrderInput | SortOrder
+    packId?: SortOrderInput | SortOrder
+    shaderId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: FavoriteCountOrderByAggregateInput
+    _avg?: FavoriteAvgOrderByAggregateInput
+    _max?: FavoriteMaxOrderByAggregateInput
+    _min?: FavoriteMinOrderByAggregateInput
+    _sum?: FavoriteSumOrderByAggregateInput
+  }
+
+  export type FavoriteScalarWhereWithAggregatesInput = {
+    AND?: FavoriteScalarWhereWithAggregatesInput | FavoriteScalarWhereWithAggregatesInput[]
+    OR?: FavoriteScalarWhereWithAggregatesInput[]
+    NOT?: FavoriteScalarWhereWithAggregatesInput | FavoriteScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"Favorite"> | bigint | number
+    userId?: BigIntWithAggregatesFilter<"Favorite"> | bigint | number
+    modId?: BigIntNullableWithAggregatesFilter<"Favorite"> | bigint | number | null
+    packId?: BigIntNullableWithAggregatesFilter<"Favorite"> | bigint | number | null
+    shaderId?: BigIntNullableWithAggregatesFilter<"Favorite"> | bigint | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"Favorite"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: bigint | number
     email: string
@@ -14106,6 +15664,7 @@ export namespace Prisma {
     shaders?: ShaderCreateNestedManyWithoutAuthorInput
     mods?: ModCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
     image?: ImageCreateNestedOneWithoutUsersInput
   }
 
@@ -14122,6 +15681,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedCreateNestedManyWithoutAuthorInput
     mods?: ModUncheckedCreateNestedManyWithoutAuthorInput
     comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -14136,6 +15696,7 @@ export namespace Prisma {
     shaders?: ShaderUpdateManyWithoutAuthorNestedInput
     mods?: ModUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
     image?: ImageUpdateOneWithoutUsersNestedInput
   }
 
@@ -14152,6 +15713,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedUpdateManyWithoutAuthorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAuthorNestedInput
     comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -14198,6 +15760,7 @@ export namespace Prisma {
     author?: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
+    favorites?: FavoriteCreateNestedManyWithoutPackInput
     principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
@@ -14214,6 +15777,7 @@ export namespace Prisma {
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
     images?: ImageUncheckedCreateNestedManyWithoutPackInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutPackInput
   }
 
   export type PackUpdateInput = {
@@ -14228,6 +15792,7 @@ export namespace Prisma {
     author?: UserUpdateOneWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUpdateManyWithoutPackNestedInput
     principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
@@ -14244,6 +15809,7 @@ export namespace Prisma {
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
     images?: ImageUncheckedUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutPackNestedInput
   }
 
   export type PackCreateManyInput = {
@@ -14290,6 +15856,7 @@ export namespace Prisma {
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteCreateNestedManyWithoutShaderInput
     principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
@@ -14307,6 +15874,7 @@ export namespace Prisma {
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
     conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutShaderInput
   }
 
   export type ShaderUpdateInput = {
@@ -14322,6 +15890,7 @@ export namespace Prisma {
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUpdateManyWithoutShaderNestedInput
     principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
@@ -14339,6 +15908,7 @@ export namespace Prisma {
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutShaderNestedInput
   }
 
   export type ShaderCreateManyInput = {
@@ -14390,6 +15960,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    favorites?: FavoriteCreateNestedManyWithoutModInput
     principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
@@ -14412,6 +15983,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutModInput
   }
 
   export type ModUpdateInput = {
@@ -14432,6 +16004,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUpdateManyWithoutModNestedInput
     principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
@@ -14454,6 +16027,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutModNestedInput
   }
 
   export type ModCreateManyInput = {
@@ -14735,6 +16309,65 @@ export namespace Prisma {
     modId?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
+  export type FavoriteCreateInput = {
+    id?: bigint | number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutFavoritesInput
+    mod?: ModCreateNestedOneWithoutFavoritesInput
+    pack?: PackCreateNestedOneWithoutFavoritesInput
+    shader?: ShaderCreateNestedOneWithoutFavoritesInput
+  }
+
+  export type FavoriteUncheckedCreateInput = {
+    id?: bigint | number
+    userId: bigint | number
+    modId?: bigint | number | null
+    packId?: bigint | number | null
+    shaderId?: bigint | number | null
+    createdAt?: Date | string
+  }
+
+  export type FavoriteUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFavoritesNestedInput
+    mod?: ModUpdateOneWithoutFavoritesNestedInput
+    pack?: PackUpdateOneWithoutFavoritesNestedInput
+    shader?: ShaderUpdateOneWithoutFavoritesNestedInput
+  }
+
+  export type FavoriteUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteCreateManyInput = {
+    id?: bigint | number
+    userId: bigint | number
+    modId?: bigint | number | null
+    packId?: bigint | number | null
+    shaderId?: bigint | number | null
+    createdAt?: Date | string
+  }
+
+  export type FavoriteUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type BigIntFilter<$PrismaModel = never> = {
     equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
@@ -14818,6 +16451,12 @@ export namespace Prisma {
     none?: CommentWhereInput
   }
 
+  export type FavoriteListRelationFilter = {
+    every?: FavoriteWhereInput
+    some?: FavoriteWhereInput
+    none?: FavoriteWhereInput
+  }
+
   export type ImageNullableScalarRelationFilter = {
     is?: ImageWhereInput | null
     isNot?: ImageWhereInput | null
@@ -14841,6 +16480,10 @@ export namespace Prisma {
   }
 
   export type CommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FavoriteOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15459,6 +17102,89 @@ export namespace Prisma {
     modId?: SortOrder
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type FavoriteUserIdModIdCompoundUniqueInput = {
+    userId: bigint | number
+    modId: bigint | number
+  }
+
+  export type FavoriteUserIdPackIdCompoundUniqueInput = {
+    userId: bigint | number
+    packId: bigint | number
+  }
+
+  export type FavoriteUserIdShaderIdCompoundUniqueInput = {
+    userId: bigint | number
+    shaderId: bigint | number
+  }
+
+  export type FavoriteCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modId?: SortOrder
+    packId?: SortOrder
+    shaderId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FavoriteAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modId?: SortOrder
+    packId?: SortOrder
+    shaderId?: SortOrder
+  }
+
+  export type FavoriteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modId?: SortOrder
+    packId?: SortOrder
+    shaderId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FavoriteMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modId?: SortOrder
+    packId?: SortOrder
+    shaderId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FavoriteSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modId?: SortOrder
+    packId?: SortOrder
+    shaderId?: SortOrder
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type PackCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PackCreateWithoutAuthorInput, PackUncheckedCreateWithoutAuthorInput> | PackCreateWithoutAuthorInput[] | PackUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PackCreateOrConnectWithoutAuthorInput | PackCreateOrConnectWithoutAuthorInput[]
@@ -15485,6 +17211,13 @@ export namespace Prisma {
     connectOrCreate?: CommentCreateOrConnectWithoutAuthorInput | CommentCreateOrConnectWithoutAuthorInput[]
     createMany?: CommentCreateManyAuthorInputEnvelope
     connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type FavoriteCreateNestedManyWithoutUserInput = {
+    create?: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput> | FavoriteCreateWithoutUserInput[] | FavoriteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutUserInput | FavoriteCreateOrConnectWithoutUserInput[]
+    createMany?: FavoriteCreateManyUserInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
   }
 
   export type ImageCreateNestedOneWithoutUsersInput = {
@@ -15519,6 +17252,13 @@ export namespace Prisma {
     connectOrCreate?: CommentCreateOrConnectWithoutAuthorInput | CommentCreateOrConnectWithoutAuthorInput[]
     createMany?: CommentCreateManyAuthorInputEnvelope
     connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type FavoriteUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput> | FavoriteCreateWithoutUserInput[] | FavoriteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutUserInput | FavoriteCreateOrConnectWithoutUserInput[]
+    createMany?: FavoriteCreateManyUserInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
   }
 
   export type BigIntFieldUpdateOperationsInput = {
@@ -15597,6 +17337,20 @@ export namespace Prisma {
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
+  export type FavoriteUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput> | FavoriteCreateWithoutUserInput[] | FavoriteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutUserInput | FavoriteCreateOrConnectWithoutUserInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutUserInput | FavoriteUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FavoriteCreateManyUserInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutUserInput | FavoriteUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutUserInput | FavoriteUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+  }
+
   export type ImageUpdateOneWithoutUsersNestedInput = {
     create?: XOR<ImageCreateWithoutUsersInput, ImageUncheckedCreateWithoutUsersInput>
     connectOrCreate?: ImageCreateOrConnectWithoutUsersInput
@@ -15671,6 +17425,20 @@ export namespace Prisma {
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
+  export type FavoriteUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput> | FavoriteCreateWithoutUserInput[] | FavoriteUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutUserInput | FavoriteCreateOrConnectWithoutUserInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutUserInput | FavoriteUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FavoriteCreateManyUserInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutUserInput | FavoriteUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutUserInput | FavoriteUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+  }
+
   export type ShaderCreateNestedManyWithoutPacksInput = {
     create?: XOR<ShaderCreateWithoutPacksInput, ShaderUncheckedCreateWithoutPacksInput> | ShaderCreateWithoutPacksInput[] | ShaderUncheckedCreateWithoutPacksInput[]
     connectOrCreate?: ShaderCreateOrConnectWithoutPacksInput | ShaderCreateOrConnectWithoutPacksInput[]
@@ -15703,6 +17471,13 @@ export namespace Prisma {
     connect?: ImageWhereUniqueInput | ImageWhereUniqueInput[]
   }
 
+  export type FavoriteCreateNestedManyWithoutPackInput = {
+    create?: XOR<FavoriteCreateWithoutPackInput, FavoriteUncheckedCreateWithoutPackInput> | FavoriteCreateWithoutPackInput[] | FavoriteUncheckedCreateWithoutPackInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutPackInput | FavoriteCreateOrConnectWithoutPackInput[]
+    createMany?: FavoriteCreateManyPackInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+  }
+
   export type ImageCreateNestedOneWithoutPacksPrincipalInput = {
     create?: XOR<ImageCreateWithoutPacksPrincipalInput, ImageUncheckedCreateWithoutPacksPrincipalInput>
     connectOrCreate?: ImageCreateOrConnectWithoutPacksPrincipalInput
@@ -15733,6 +17508,13 @@ export namespace Prisma {
     connectOrCreate?: ImageCreateOrConnectWithoutPackInput | ImageCreateOrConnectWithoutPackInput[]
     createMany?: ImageCreateManyPackInputEnvelope
     connect?: ImageWhereUniqueInput | ImageWhereUniqueInput[]
+  }
+
+  export type FavoriteUncheckedCreateNestedManyWithoutPackInput = {
+    create?: XOR<FavoriteCreateWithoutPackInput, FavoriteUncheckedCreateWithoutPackInput> | FavoriteCreateWithoutPackInput[] | FavoriteUncheckedCreateWithoutPackInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutPackInput | FavoriteCreateOrConnectWithoutPackInput[]
+    createMany?: FavoriteCreateManyPackInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -15811,6 +17593,20 @@ export namespace Prisma {
     deleteMany?: ImageScalarWhereInput | ImageScalarWhereInput[]
   }
 
+  export type FavoriteUpdateManyWithoutPackNestedInput = {
+    create?: XOR<FavoriteCreateWithoutPackInput, FavoriteUncheckedCreateWithoutPackInput> | FavoriteCreateWithoutPackInput[] | FavoriteUncheckedCreateWithoutPackInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutPackInput | FavoriteCreateOrConnectWithoutPackInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutPackInput | FavoriteUpsertWithWhereUniqueWithoutPackInput[]
+    createMany?: FavoriteCreateManyPackInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutPackInput | FavoriteUpdateWithWhereUniqueWithoutPackInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutPackInput | FavoriteUpdateManyWithWhereWithoutPackInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+  }
+
   export type ImageUpdateOneWithoutPacksPrincipalNestedInput = {
     create?: XOR<ImageCreateWithoutPacksPrincipalInput, ImageUncheckedCreateWithoutPacksPrincipalInput>
     connectOrCreate?: ImageCreateOrConnectWithoutPacksPrincipalInput
@@ -15875,6 +17671,20 @@ export namespace Prisma {
     deleteMany?: ImageScalarWhereInput | ImageScalarWhereInput[]
   }
 
+  export type FavoriteUncheckedUpdateManyWithoutPackNestedInput = {
+    create?: XOR<FavoriteCreateWithoutPackInput, FavoriteUncheckedCreateWithoutPackInput> | FavoriteCreateWithoutPackInput[] | FavoriteUncheckedCreateWithoutPackInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutPackInput | FavoriteCreateOrConnectWithoutPackInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutPackInput | FavoriteUpsertWithWhereUniqueWithoutPackInput[]
+    createMany?: FavoriteCreateManyPackInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutPackInput | FavoriteUpdateWithWhereUniqueWithoutPackInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutPackInput | FavoriteUpdateManyWithWhereWithoutPackInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+  }
+
   export type PackCreateNestedManyWithoutShadersInput = {
     create?: XOR<PackCreateWithoutShadersInput, PackUncheckedCreateWithoutShadersInput> | PackCreateWithoutShadersInput[] | PackUncheckedCreateWithoutShadersInput[]
     connectOrCreate?: PackCreateOrConnectWithoutShadersInput | PackCreateOrConnectWithoutShadersInput[]
@@ -15915,6 +17725,13 @@ export namespace Prisma {
     connect?: ShaderDependecyWhereUniqueInput | ShaderDependecyWhereUniqueInput[]
   }
 
+  export type FavoriteCreateNestedManyWithoutShaderInput = {
+    create?: XOR<FavoriteCreateWithoutShaderInput, FavoriteUncheckedCreateWithoutShaderInput> | FavoriteCreateWithoutShaderInput[] | FavoriteUncheckedCreateWithoutShaderInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutShaderInput | FavoriteCreateOrConnectWithoutShaderInput[]
+    createMany?: FavoriteCreateManyShaderInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+  }
+
   export type ImageCreateNestedOneWithoutShadersPrincipalInput = {
     create?: XOR<ImageCreateWithoutShadersPrincipalInput, ImageUncheckedCreateWithoutShadersPrincipalInput>
     connectOrCreate?: ImageCreateOrConnectWithoutShadersPrincipalInput
@@ -15953,6 +17770,13 @@ export namespace Prisma {
     connectOrCreate?: ShaderDependecyCreateOrConnectWithoutShaderInput | ShaderDependecyCreateOrConnectWithoutShaderInput[]
     createMany?: ShaderDependecyCreateManyShaderInputEnvelope
     connect?: ShaderDependecyWhereUniqueInput | ShaderDependecyWhereUniqueInput[]
+  }
+
+  export type FavoriteUncheckedCreateNestedManyWithoutShaderInput = {
+    create?: XOR<FavoriteCreateWithoutShaderInput, FavoriteUncheckedCreateWithoutShaderInput> | FavoriteCreateWithoutShaderInput[] | FavoriteUncheckedCreateWithoutShaderInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutShaderInput | FavoriteCreateOrConnectWithoutShaderInput[]
+    createMany?: FavoriteCreateManyShaderInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
   }
 
   export type PackUpdateManyWithoutShadersNestedInput = {
@@ -16034,6 +17858,20 @@ export namespace Prisma {
     deleteMany?: ShaderDependecyScalarWhereInput | ShaderDependecyScalarWhereInput[]
   }
 
+  export type FavoriteUpdateManyWithoutShaderNestedInput = {
+    create?: XOR<FavoriteCreateWithoutShaderInput, FavoriteUncheckedCreateWithoutShaderInput> | FavoriteCreateWithoutShaderInput[] | FavoriteUncheckedCreateWithoutShaderInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutShaderInput | FavoriteCreateOrConnectWithoutShaderInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutShaderInput | FavoriteUpsertWithWhereUniqueWithoutShaderInput[]
+    createMany?: FavoriteCreateManyShaderInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutShaderInput | FavoriteUpdateWithWhereUniqueWithoutShaderInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutShaderInput | FavoriteUpdateManyWithWhereWithoutShaderInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+  }
+
   export type ImageUpdateOneWithoutShadersPrincipalNestedInput = {
     create?: XOR<ImageCreateWithoutShadersPrincipalInput, ImageUncheckedCreateWithoutShadersPrincipalInput>
     connectOrCreate?: ImageCreateOrConnectWithoutShadersPrincipalInput
@@ -16113,6 +17951,20 @@ export namespace Prisma {
     deleteMany?: ShaderDependecyScalarWhereInput | ShaderDependecyScalarWhereInput[]
   }
 
+  export type FavoriteUncheckedUpdateManyWithoutShaderNestedInput = {
+    create?: XOR<FavoriteCreateWithoutShaderInput, FavoriteUncheckedCreateWithoutShaderInput> | FavoriteCreateWithoutShaderInput[] | FavoriteUncheckedCreateWithoutShaderInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutShaderInput | FavoriteCreateOrConnectWithoutShaderInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutShaderInput | FavoriteUpsertWithWhereUniqueWithoutShaderInput[]
+    createMany?: FavoriteCreateManyShaderInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutShaderInput | FavoriteUpdateWithWhereUniqueWithoutShaderInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutShaderInput | FavoriteUpdateManyWithWhereWithoutShaderInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+  }
+
   export type PackCreateNestedManyWithoutModsInput = {
     create?: XOR<PackCreateWithoutModsInput, PackUncheckedCreateWithoutModsInput> | PackCreateWithoutModsInput[] | PackUncheckedCreateWithoutModsInput[]
     connectOrCreate?: PackCreateOrConnectWithoutModsInput | PackCreateOrConnectWithoutModsInput[]
@@ -16174,6 +18026,13 @@ export namespace Prisma {
     connect?: ShaderDependecyWhereUniqueInput | ShaderDependecyWhereUniqueInput[]
   }
 
+  export type FavoriteCreateNestedManyWithoutModInput = {
+    create?: XOR<FavoriteCreateWithoutModInput, FavoriteUncheckedCreateWithoutModInput> | FavoriteCreateWithoutModInput[] | FavoriteUncheckedCreateWithoutModInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutModInput | FavoriteCreateOrConnectWithoutModInput[]
+    createMany?: FavoriteCreateManyModInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+  }
+
   export type ImageCreateNestedOneWithoutModsPrincipalInput = {
     create?: XOR<ImageCreateWithoutModsPrincipalInput, ImageUncheckedCreateWithoutModsPrincipalInput>
     connectOrCreate?: ImageCreateOrConnectWithoutModsPrincipalInput
@@ -16233,6 +18092,13 @@ export namespace Prisma {
     connectOrCreate?: ShaderDependecyCreateOrConnectWithoutModInput | ShaderDependecyCreateOrConnectWithoutModInput[]
     createMany?: ShaderDependecyCreateManyModInputEnvelope
     connect?: ShaderDependecyWhereUniqueInput | ShaderDependecyWhereUniqueInput[]
+  }
+
+  export type FavoriteUncheckedCreateNestedManyWithoutModInput = {
+    create?: XOR<FavoriteCreateWithoutModInput, FavoriteUncheckedCreateWithoutModInput> | FavoriteCreateWithoutModInput[] | FavoriteUncheckedCreateWithoutModInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutModInput | FavoriteCreateOrConnectWithoutModInput[]
+    createMany?: FavoriteCreateManyModInputEnvelope
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
   }
 
   export type PackUpdateManyWithoutModsNestedInput = {
@@ -16356,6 +18222,20 @@ export namespace Prisma {
     deleteMany?: ShaderDependecyScalarWhereInput | ShaderDependecyScalarWhereInput[]
   }
 
+  export type FavoriteUpdateManyWithoutModNestedInput = {
+    create?: XOR<FavoriteCreateWithoutModInput, FavoriteUncheckedCreateWithoutModInput> | FavoriteCreateWithoutModInput[] | FavoriteUncheckedCreateWithoutModInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutModInput | FavoriteCreateOrConnectWithoutModInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutModInput | FavoriteUpsertWithWhereUniqueWithoutModInput[]
+    createMany?: FavoriteCreateManyModInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutModInput | FavoriteUpdateWithWhereUniqueWithoutModInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutModInput | FavoriteUpdateManyWithWhereWithoutModInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+  }
+
   export type ImageUpdateOneWithoutModsPrincipalNestedInput = {
     create?: XOR<ImageCreateWithoutModsPrincipalInput, ImageUncheckedCreateWithoutModsPrincipalInput>
     connectOrCreate?: ImageCreateOrConnectWithoutModsPrincipalInput
@@ -16475,6 +18355,20 @@ export namespace Prisma {
     update?: ShaderDependecyUpdateWithWhereUniqueWithoutModInput | ShaderDependecyUpdateWithWhereUniqueWithoutModInput[]
     updateMany?: ShaderDependecyUpdateManyWithWhereWithoutModInput | ShaderDependecyUpdateManyWithWhereWithoutModInput[]
     deleteMany?: ShaderDependecyScalarWhereInput | ShaderDependecyScalarWhereInput[]
+  }
+
+  export type FavoriteUncheckedUpdateManyWithoutModNestedInput = {
+    create?: XOR<FavoriteCreateWithoutModInput, FavoriteUncheckedCreateWithoutModInput> | FavoriteCreateWithoutModInput[] | FavoriteUncheckedCreateWithoutModInput[]
+    connectOrCreate?: FavoriteCreateOrConnectWithoutModInput | FavoriteCreateOrConnectWithoutModInput[]
+    upsert?: FavoriteUpsertWithWhereUniqueWithoutModInput | FavoriteUpsertWithWhereUniqueWithoutModInput[]
+    createMany?: FavoriteCreateManyModInputEnvelope
+    set?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    disconnect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    delete?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+    update?: FavoriteUpdateWithWhereUniqueWithoutModInput | FavoriteUpdateWithWhereUniqueWithoutModInput[]
+    updateMany?: FavoriteUpdateManyWithWhereWithoutModInput | FavoriteUpdateManyWithWhereWithoutModInput[]
+    deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutCommentsInput = {
@@ -16857,6 +18751,72 @@ export namespace Prisma {
     update?: XOR<XOR<ModUpdateToOneWithWhereWithoutShaderDependeciesInput, ModUpdateWithoutShaderDependeciesInput>, ModUncheckedUpdateWithoutShaderDependeciesInput>
   }
 
+  export type UserCreateNestedOneWithoutFavoritesInput = {
+    create?: XOR<UserCreateWithoutFavoritesInput, UserUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFavoritesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ModCreateNestedOneWithoutFavoritesInput = {
+    create?: XOR<ModCreateWithoutFavoritesInput, ModUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: ModCreateOrConnectWithoutFavoritesInput
+    connect?: ModWhereUniqueInput
+  }
+
+  export type PackCreateNestedOneWithoutFavoritesInput = {
+    create?: XOR<PackCreateWithoutFavoritesInput, PackUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: PackCreateOrConnectWithoutFavoritesInput
+    connect?: PackWhereUniqueInput
+  }
+
+  export type ShaderCreateNestedOneWithoutFavoritesInput = {
+    create?: XOR<ShaderCreateWithoutFavoritesInput, ShaderUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: ShaderCreateOrConnectWithoutFavoritesInput
+    connect?: ShaderWhereUniqueInput
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type UserUpdateOneRequiredWithoutFavoritesNestedInput = {
+    create?: XOR<UserCreateWithoutFavoritesInput, UserUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFavoritesInput
+    upsert?: UserUpsertWithoutFavoritesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFavoritesInput, UserUpdateWithoutFavoritesInput>, UserUncheckedUpdateWithoutFavoritesInput>
+  }
+
+  export type ModUpdateOneWithoutFavoritesNestedInput = {
+    create?: XOR<ModCreateWithoutFavoritesInput, ModUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: ModCreateOrConnectWithoutFavoritesInput
+    upsert?: ModUpsertWithoutFavoritesInput
+    disconnect?: ModWhereInput | boolean
+    delete?: ModWhereInput | boolean
+    connect?: ModWhereUniqueInput
+    update?: XOR<XOR<ModUpdateToOneWithWhereWithoutFavoritesInput, ModUpdateWithoutFavoritesInput>, ModUncheckedUpdateWithoutFavoritesInput>
+  }
+
+  export type PackUpdateOneWithoutFavoritesNestedInput = {
+    create?: XOR<PackCreateWithoutFavoritesInput, PackUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: PackCreateOrConnectWithoutFavoritesInput
+    upsert?: PackUpsertWithoutFavoritesInput
+    disconnect?: PackWhereInput | boolean
+    delete?: PackWhereInput | boolean
+    connect?: PackWhereUniqueInput
+    update?: XOR<XOR<PackUpdateToOneWithWhereWithoutFavoritesInput, PackUpdateWithoutFavoritesInput>, PackUncheckedUpdateWithoutFavoritesInput>
+  }
+
+  export type ShaderUpdateOneWithoutFavoritesNestedInput = {
+    create?: XOR<ShaderCreateWithoutFavoritesInput, ShaderUncheckedCreateWithoutFavoritesInput>
+    connectOrCreate?: ShaderCreateOrConnectWithoutFavoritesInput
+    upsert?: ShaderUpsertWithoutFavoritesInput
+    disconnect?: ShaderWhereInput | boolean
+    delete?: ShaderWhereInput | boolean
+    connect?: ShaderWhereUniqueInput
+    update?: XOR<XOR<ShaderUpdateToOneWithWhereWithoutFavoritesInput, ShaderUpdateWithoutFavoritesInput>, ShaderUncheckedUpdateWithoutFavoritesInput>
+  }
+
   export type NestedBigIntFilter<$PrismaModel = never> = {
     equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
@@ -17067,6 +19027,31 @@ export namespace Prisma {
     _max?: NestedEnumVersionTypeFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type PackCreateWithoutAuthorInput = {
     id?: bigint | number
     max_version: number
@@ -17078,6 +19063,7 @@ export namespace Prisma {
     mods?: ModCreateNestedManyWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
+    favorites?: FavoriteCreateNestedManyWithoutPackInput
     principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
@@ -17093,6 +19079,7 @@ export namespace Prisma {
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
     images?: ImageUncheckedCreateNestedManyWithoutPackInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutPackInput
   }
 
   export type PackCreateOrConnectWithoutAuthorInput = {
@@ -17117,6 +19104,7 @@ export namespace Prisma {
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteCreateNestedManyWithoutShaderInput
     principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
@@ -17133,6 +19121,7 @@ export namespace Prisma {
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
     conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutShaderInput
   }
 
   export type ShaderCreateOrConnectWithoutAuthorInput = {
@@ -17162,6 +19151,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    favorites?: FavoriteCreateNestedManyWithoutModInput
     principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
@@ -17183,6 +19173,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutModInput
   }
 
   export type ModCreateOrConnectWithoutAuthorInput = {
@@ -17218,6 +19209,32 @@ export namespace Prisma {
 
   export type CommentCreateManyAuthorInputEnvelope = {
     data: CommentCreateManyAuthorInput | CommentCreateManyAuthorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FavoriteCreateWithoutUserInput = {
+    id?: bigint | number
+    createdAt?: Date | string
+    mod?: ModCreateNestedOneWithoutFavoritesInput
+    pack?: PackCreateNestedOneWithoutFavoritesInput
+    shader?: ShaderCreateNestedOneWithoutFavoritesInput
+  }
+
+  export type FavoriteUncheckedCreateWithoutUserInput = {
+    id?: bigint | number
+    modId?: bigint | number | null
+    packId?: bigint | number | null
+    shaderId?: bigint | number | null
+    createdAt?: Date | string
+  }
+
+  export type FavoriteCreateOrConnectWithoutUserInput = {
+    where: FavoriteWhereUniqueInput
+    create: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput>
+  }
+
+  export type FavoriteCreateManyUserInputEnvelope = {
+    data: FavoriteCreateManyUserInput | FavoriteCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -17368,6 +19385,34 @@ export namespace Prisma {
     modId?: BigIntNullableFilter<"Comment"> | bigint | number | null
   }
 
+  export type FavoriteUpsertWithWhereUniqueWithoutUserInput = {
+    where: FavoriteWhereUniqueInput
+    update: XOR<FavoriteUpdateWithoutUserInput, FavoriteUncheckedUpdateWithoutUserInput>
+    create: XOR<FavoriteCreateWithoutUserInput, FavoriteUncheckedCreateWithoutUserInput>
+  }
+
+  export type FavoriteUpdateWithWhereUniqueWithoutUserInput = {
+    where: FavoriteWhereUniqueInput
+    data: XOR<FavoriteUpdateWithoutUserInput, FavoriteUncheckedUpdateWithoutUserInput>
+  }
+
+  export type FavoriteUpdateManyWithWhereWithoutUserInput = {
+    where: FavoriteScalarWhereInput
+    data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type FavoriteScalarWhereInput = {
+    AND?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+    OR?: FavoriteScalarWhereInput[]
+    NOT?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+    id?: BigIntFilter<"Favorite"> | bigint | number
+    userId?: BigIntFilter<"Favorite"> | bigint | number
+    modId?: BigIntNullableFilter<"Favorite"> | bigint | number | null
+    packId?: BigIntNullableFilter<"Favorite"> | bigint | number | null
+    shaderId?: BigIntNullableFilter<"Favorite"> | bigint | number | null
+    createdAt?: DateTimeFilter<"Favorite"> | Date | string
+  }
+
   export type ImageUpsertWithoutUsersInput = {
     update: XOR<ImageUpdateWithoutUsersInput, ImageUncheckedUpdateWithoutUsersInput>
     create: XOR<ImageCreateWithoutUsersInput, ImageUncheckedCreateWithoutUsersInput>
@@ -17413,6 +19458,7 @@ export namespace Prisma {
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteCreateNestedManyWithoutShaderInput
     principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
@@ -17429,6 +19475,7 @@ export namespace Prisma {
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
     conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutShaderInput
   }
 
   export type ShaderCreateOrConnectWithoutPacksInput = {
@@ -17453,6 +19500,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    favorites?: FavoriteCreateNestedManyWithoutModInput
     principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
@@ -17474,6 +19522,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutModInput
   }
 
   export type ModCreateOrConnectWithoutPacksInput = {
@@ -17492,6 +19541,7 @@ export namespace Prisma {
     shaders?: ShaderCreateNestedManyWithoutAuthorInput
     mods?: ModCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
     image?: ImageCreateNestedOneWithoutUsersInput
   }
 
@@ -17507,6 +19557,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedCreateNestedManyWithoutAuthorInput
     mods?: ModUncheckedCreateNestedManyWithoutAuthorInput
     comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPacksInput = {
@@ -17569,6 +19620,32 @@ export namespace Prisma {
 
   export type ImageCreateManyPackInputEnvelope = {
     data: ImageCreateManyPackInput | ImageCreateManyPackInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FavoriteCreateWithoutPackInput = {
+    id?: bigint | number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutFavoritesInput
+    mod?: ModCreateNestedOneWithoutFavoritesInput
+    shader?: ShaderCreateNestedOneWithoutFavoritesInput
+  }
+
+  export type FavoriteUncheckedCreateWithoutPackInput = {
+    id?: bigint | number
+    userId: bigint | number
+    modId?: bigint | number | null
+    shaderId?: bigint | number | null
+    createdAt?: Date | string
+  }
+
+  export type FavoriteCreateOrConnectWithoutPackInput = {
+    where: FavoriteWhereUniqueInput
+    create: XOR<FavoriteCreateWithoutPackInput, FavoriteUncheckedCreateWithoutPackInput>
+  }
+
+  export type FavoriteCreateManyPackInputEnvelope = {
+    data: FavoriteCreateManyPackInput | FavoriteCreateManyPackInput[]
     skipDuplicates?: boolean
   }
 
@@ -17653,6 +19730,7 @@ export namespace Prisma {
     shaders?: ShaderUpdateManyWithoutAuthorNestedInput
     mods?: ModUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
     image?: ImageUpdateOneWithoutUsersNestedInput
   }
 
@@ -17668,6 +19746,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedUpdateManyWithoutAuthorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAuthorNestedInput
     comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CommentUpsertWithWhereUniqueWithoutPackInput = {
@@ -17711,6 +19790,22 @@ export namespace Prisma {
     modId?: BigIntNullableFilter<"Image"> | bigint | number | null
     shaderId?: BigIntNullableFilter<"Image"> | bigint | number | null
     packId?: BigIntNullableFilter<"Image"> | bigint | number | null
+  }
+
+  export type FavoriteUpsertWithWhereUniqueWithoutPackInput = {
+    where: FavoriteWhereUniqueInput
+    update: XOR<FavoriteUpdateWithoutPackInput, FavoriteUncheckedUpdateWithoutPackInput>
+    create: XOR<FavoriteCreateWithoutPackInput, FavoriteUncheckedCreateWithoutPackInput>
+  }
+
+  export type FavoriteUpdateWithWhereUniqueWithoutPackInput = {
+    where: FavoriteWhereUniqueInput
+    data: XOR<FavoriteUpdateWithoutPackInput, FavoriteUncheckedUpdateWithoutPackInput>
+  }
+
+  export type FavoriteUpdateManyWithWhereWithoutPackInput = {
+    where: FavoriteScalarWhereInput
+    data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyWithoutPackInput>
   }
 
   export type ImageUpsertWithoutPacksPrincipalInput = {
@@ -17757,6 +19852,7 @@ export namespace Prisma {
     author?: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
+    favorites?: FavoriteCreateNestedManyWithoutPackInput
     principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
@@ -17772,6 +19868,7 @@ export namespace Prisma {
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
     images?: ImageUncheckedCreateNestedManyWithoutPackInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutPackInput
   }
 
   export type PackCreateOrConnectWithoutShadersInput = {
@@ -17790,6 +19887,7 @@ export namespace Prisma {
     packs?: PackCreateNestedManyWithoutAuthorInput
     mods?: ModCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
     image?: ImageCreateNestedOneWithoutUsersInput
   }
 
@@ -17805,6 +19903,7 @@ export namespace Prisma {
     packs?: PackUncheckedCreateNestedManyWithoutAuthorInput
     mods?: ModUncheckedCreateNestedManyWithoutAuthorInput
     comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutShadersInput = {
@@ -17910,6 +20009,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FavoriteCreateWithoutShaderInput = {
+    id?: bigint | number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutFavoritesInput
+    mod?: ModCreateNestedOneWithoutFavoritesInput
+    pack?: PackCreateNestedOneWithoutFavoritesInput
+  }
+
+  export type FavoriteUncheckedCreateWithoutShaderInput = {
+    id?: bigint | number
+    userId: bigint | number
+    modId?: bigint | number | null
+    packId?: bigint | number | null
+    createdAt?: Date | string
+  }
+
+  export type FavoriteCreateOrConnectWithoutShaderInput = {
+    where: FavoriteWhereUniqueInput
+    create: XOR<FavoriteCreateWithoutShaderInput, FavoriteUncheckedCreateWithoutShaderInput>
+  }
+
+  export type FavoriteCreateManyShaderInputEnvelope = {
+    data: FavoriteCreateManyShaderInput | FavoriteCreateManyShaderInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ImageCreateWithoutShadersPrincipalInput = {
     id?: bigint | number
     src: string
@@ -17975,6 +20100,7 @@ export namespace Prisma {
     packs?: PackUpdateManyWithoutAuthorNestedInput
     mods?: ModUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
     image?: ImageUpdateOneWithoutUsersNestedInput
   }
 
@@ -17990,6 +20116,7 @@ export namespace Prisma {
     packs?: PackUncheckedUpdateManyWithoutAuthorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAuthorNestedInput
     comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CommentUpsertWithWhereUniqueWithoutShaderInput = {
@@ -18074,6 +20201,22 @@ export namespace Prisma {
     modId?: BigIntFilter<"ShaderDependecy"> | bigint | number
   }
 
+  export type FavoriteUpsertWithWhereUniqueWithoutShaderInput = {
+    where: FavoriteWhereUniqueInput
+    update: XOR<FavoriteUpdateWithoutShaderInput, FavoriteUncheckedUpdateWithoutShaderInput>
+    create: XOR<FavoriteCreateWithoutShaderInput, FavoriteUncheckedCreateWithoutShaderInput>
+  }
+
+  export type FavoriteUpdateWithWhereUniqueWithoutShaderInput = {
+    where: FavoriteWhereUniqueInput
+    data: XOR<FavoriteUpdateWithoutShaderInput, FavoriteUncheckedUpdateWithoutShaderInput>
+  }
+
+  export type FavoriteUpdateManyWithWhereWithoutShaderInput = {
+    where: FavoriteScalarWhereInput
+    data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyWithoutShaderInput>
+  }
+
   export type ImageUpsertWithoutShadersPrincipalInput = {
     update: XOR<ImageUpdateWithoutShadersPrincipalInput, ImageUncheckedUpdateWithoutShadersPrincipalInput>
     create: XOR<ImageCreateWithoutShadersPrincipalInput, ImageUncheckedCreateWithoutShadersPrincipalInput>
@@ -18118,6 +20261,7 @@ export namespace Prisma {
     author?: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
+    favorites?: FavoriteCreateNestedManyWithoutPackInput
     principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
@@ -18133,6 +20277,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
     images?: ImageUncheckedCreateNestedManyWithoutPackInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutPackInput
   }
 
   export type PackCreateOrConnectWithoutModsInput = {
@@ -18151,6 +20296,7 @@ export namespace Prisma {
     packs?: PackCreateNestedManyWithoutAuthorInput
     shaders?: ShaderCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
     image?: ImageCreateNestedOneWithoutUsersInput
   }
 
@@ -18166,6 +20312,7 @@ export namespace Prisma {
     packs?: PackUncheckedCreateNestedManyWithoutAuthorInput
     shaders?: ShaderUncheckedCreateNestedManyWithoutAuthorInput
     comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutModsInput = {
@@ -18329,6 +20476,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FavoriteCreateWithoutModInput = {
+    id?: bigint | number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutFavoritesInput
+    pack?: PackCreateNestedOneWithoutFavoritesInput
+    shader?: ShaderCreateNestedOneWithoutFavoritesInput
+  }
+
+  export type FavoriteUncheckedCreateWithoutModInput = {
+    id?: bigint | number
+    userId: bigint | number
+    packId?: bigint | number | null
+    shaderId?: bigint | number | null
+    createdAt?: Date | string
+  }
+
+  export type FavoriteCreateOrConnectWithoutModInput = {
+    where: FavoriteWhereUniqueInput
+    create: XOR<FavoriteCreateWithoutModInput, FavoriteUncheckedCreateWithoutModInput>
+  }
+
+  export type FavoriteCreateManyModInputEnvelope = {
+    data: FavoriteCreateManyModInput | FavoriteCreateManyModInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ImageCreateWithoutModsPrincipalInput = {
     id?: bigint | number
     src: string
@@ -18394,6 +20567,7 @@ export namespace Prisma {
     packs?: PackUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
     image?: ImageUpdateOneWithoutUsersNestedInput
   }
 
@@ -18409,6 +20583,7 @@ export namespace Prisma {
     packs?: PackUncheckedUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUncheckedUpdateManyWithoutAuthorNestedInput
     comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CommentUpsertWithWhereUniqueWithoutModInput = {
@@ -18531,6 +20706,22 @@ export namespace Prisma {
     data: XOR<ShaderDependecyUpdateManyMutationInput, ShaderDependecyUncheckedUpdateManyWithoutModInput>
   }
 
+  export type FavoriteUpsertWithWhereUniqueWithoutModInput = {
+    where: FavoriteWhereUniqueInput
+    update: XOR<FavoriteUpdateWithoutModInput, FavoriteUncheckedUpdateWithoutModInput>
+    create: XOR<FavoriteCreateWithoutModInput, FavoriteUncheckedCreateWithoutModInput>
+  }
+
+  export type FavoriteUpdateWithWhereUniqueWithoutModInput = {
+    where: FavoriteWhereUniqueInput
+    data: XOR<FavoriteUpdateWithoutModInput, FavoriteUncheckedUpdateWithoutModInput>
+  }
+
+  export type FavoriteUpdateManyWithWhereWithoutModInput = {
+    where: FavoriteScalarWhereInput
+    data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyWithoutModInput>
+  }
+
   export type ImageUpsertWithoutModsPrincipalInput = {
     update: XOR<ImageUpdateWithoutModsPrincipalInput, ImageUncheckedUpdateWithoutModsPrincipalInput>
     create: XOR<ImageCreateWithoutModsPrincipalInput, ImageUncheckedCreateWithoutModsPrincipalInput>
@@ -18575,6 +20766,7 @@ export namespace Prisma {
     packs?: PackCreateNestedManyWithoutAuthorInput
     shaders?: ShaderCreateNestedManyWithoutAuthorInput
     mods?: ModCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
     image?: ImageCreateNestedOneWithoutUsersInput
   }
 
@@ -18590,6 +20782,7 @@ export namespace Prisma {
     packs?: PackUncheckedCreateNestedManyWithoutAuthorInput
     shaders?: ShaderUncheckedCreateNestedManyWithoutAuthorInput
     mods?: ModUncheckedCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommentsInput = {
@@ -18608,6 +20801,7 @@ export namespace Prisma {
     mods?: ModCreateNestedManyWithoutPacksInput
     author?: UserCreateNestedOneWithoutPacksInput
     images?: ImageCreateNestedManyWithoutPackInput
+    favorites?: FavoriteCreateNestedManyWithoutPackInput
     principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
@@ -18623,6 +20817,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     images?: ImageUncheckedCreateNestedManyWithoutPackInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutPackInput
   }
 
   export type PackCreateOrConnectWithoutCommentsInput = {
@@ -18642,6 +20837,7 @@ export namespace Prisma {
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteCreateNestedManyWithoutShaderInput
     principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
@@ -18658,6 +20854,7 @@ export namespace Prisma {
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
     conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutShaderInput
   }
 
   export type ShaderCreateOrConnectWithoutCommentsInput = {
@@ -18682,6 +20879,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    favorites?: FavoriteCreateNestedManyWithoutModInput
     principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
@@ -18703,6 +20901,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutModInput
   }
 
   export type ModCreateOrConnectWithoutCommentsInput = {
@@ -18732,6 +20931,7 @@ export namespace Prisma {
     packs?: PackUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUpdateManyWithoutAuthorNestedInput
     mods?: ModUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
     image?: ImageUpdateOneWithoutUsersNestedInput
   }
 
@@ -18747,6 +20947,7 @@ export namespace Prisma {
     packs?: PackUncheckedUpdateManyWithoutAuthorNestedInput
     shaders?: ShaderUncheckedUpdateManyWithoutAuthorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PackUpsertWithoutCommentsInput = {
@@ -18771,6 +20972,7 @@ export namespace Prisma {
     mods?: ModUpdateManyWithoutPacksNestedInput
     author?: UserUpdateOneWithoutPacksNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUpdateManyWithoutPackNestedInput
     principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
@@ -18786,6 +20988,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     images?: ImageUncheckedUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutPackNestedInput
   }
 
   export type ShaderUpsertWithoutCommentsInput = {
@@ -18811,6 +21014,7 @@ export namespace Prisma {
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUpdateManyWithoutShaderNestedInput
     principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
@@ -18827,6 +21031,7 @@ export namespace Prisma {
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutShaderNestedInput
   }
 
   export type ModUpsertWithoutCommentsInput = {
@@ -18857,6 +21062,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUpdateManyWithoutModNestedInput
     principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
@@ -18878,6 +21084,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutModNestedInput
   }
 
   export type ModCreateWithoutImagesInput = {
@@ -18897,6 +21104,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    favorites?: FavoriteCreateNestedManyWithoutModInput
     principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
@@ -18918,6 +21126,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutModInput
   }
 
   export type ModCreateOrConnectWithoutImagesInput = {
@@ -18937,6 +21146,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteCreateNestedManyWithoutShaderInput
     principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
@@ -18953,6 +21163,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
     conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutShaderInput
   }
 
   export type ShaderCreateOrConnectWithoutImagesInput = {
@@ -18971,6 +21182,7 @@ export namespace Prisma {
     mods?: ModCreateNestedManyWithoutPacksInput
     author?: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
+    favorites?: FavoriteCreateNestedManyWithoutPackInput
     principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
   }
 
@@ -18986,6 +21198,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutPackInput
   }
 
   export type PackCreateOrConnectWithoutImagesInput = {
@@ -19005,6 +21218,7 @@ export namespace Prisma {
     shaders?: ShaderCreateNestedManyWithoutAuthorInput
     mods?: ModCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutImageInput = {
@@ -19019,6 +21233,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedCreateNestedManyWithoutAuthorInput
     mods?: ModUncheckedCreateNestedManyWithoutAuthorInput
     comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutImageInput = {
@@ -19043,6 +21258,7 @@ export namespace Prisma {
     author?: UserCreateNestedOneWithoutPacksInput
     comments?: CommentCreateNestedManyWithoutPackInput
     images?: ImageCreateNestedManyWithoutPackInput
+    favorites?: FavoriteCreateNestedManyWithoutPackInput
   }
 
   export type PackUncheckedCreateWithoutPrincipalImageInput = {
@@ -19057,6 +21273,7 @@ export namespace Prisma {
     mods?: ModUncheckedCreateNestedManyWithoutPacksInput
     comments?: CommentUncheckedCreateNestedManyWithoutPackInput
     images?: ImageUncheckedCreateNestedManyWithoutPackInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutPackInput
   }
 
   export type PackCreateOrConnectWithoutPrincipalImageInput = {
@@ -19082,6 +21299,7 @@ export namespace Prisma {
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteCreateNestedManyWithoutShaderInput
   }
 
   export type ShaderUncheckedCreateWithoutPrincipalImageInput = {
@@ -19097,6 +21315,7 @@ export namespace Prisma {
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
     conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutShaderInput
   }
 
   export type ShaderCreateOrConnectWithoutPrincipalImageInput = {
@@ -19127,6 +21346,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    favorites?: FavoriteCreateNestedManyWithoutModInput
   }
 
   export type ModUncheckedCreateWithoutPrincipalImageInput = {
@@ -19147,6 +21367,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutModInput
   }
 
   export type ModCreateOrConnectWithoutPrincipalImageInput = {
@@ -19187,6 +21408,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUpdateManyWithoutModNestedInput
     principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
@@ -19208,6 +21430,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutModNestedInput
   }
 
   export type ShaderUpsertWithoutImagesInput = {
@@ -19233,6 +21456,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUpdateManyWithoutShaderNestedInput
     principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
@@ -19249,6 +21473,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutShaderNestedInput
   }
 
   export type PackUpsertWithoutImagesInput = {
@@ -19273,6 +21498,7 @@ export namespace Prisma {
     mods?: ModUpdateManyWithoutPacksNestedInput
     author?: UserUpdateOneWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUpdateManyWithoutPackNestedInput
     principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
@@ -19288,6 +21514,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutPackNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutImageInput = {
@@ -19380,6 +21607,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutShaderInput
     images?: ImageCreateNestedManyWithoutShaderInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteCreateNestedManyWithoutShaderInput
     principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
@@ -19396,6 +21624,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutShaderInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutShaderInput
   }
 
   export type ShaderCreateOrConnectWithoutConflictsInput = {
@@ -19420,6 +21649,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    favorites?: FavoriteCreateNestedManyWithoutModInput
     principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
@@ -19441,6 +21671,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutModInput
   }
 
   export type ModCreateOrConnectWithoutConflictsFromInput = {
@@ -19465,6 +21696,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    favorites?: FavoriteCreateNestedManyWithoutModInput
     principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
@@ -19486,6 +21718,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutModInput
   }
 
   export type ModCreateOrConnectWithoutConflictsToInput = {
@@ -19516,6 +21749,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutShaderNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUpdateManyWithoutShaderNestedInput
     principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
@@ -19532,6 +21766,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutShaderNestedInput
   }
 
   export type ModUpsertWithoutConflictsFromInput = {
@@ -19562,6 +21797,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUpdateManyWithoutModNestedInput
     principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
@@ -19583,6 +21819,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutModNestedInput
   }
 
   export type ModUpsertWithoutConflictsToInput = {
@@ -19613,6 +21850,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUpdateManyWithoutModNestedInput
     principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
@@ -19634,6 +21872,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutModNestedInput
   }
 
   export type ModCreateWithoutModDependenciesInput = {
@@ -19653,6 +21892,7 @@ export namespace Prisma {
     conflictsTo?: ConflictCreateNestedManyWithoutConflictModInput
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    favorites?: FavoriteCreateNestedManyWithoutModInput
     principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
@@ -19674,6 +21914,7 @@ export namespace Prisma {
     conflictsTo?: ConflictUncheckedCreateNestedManyWithoutConflictModInput
     requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutModInput
   }
 
   export type ModCreateOrConnectWithoutModDependenciesInput = {
@@ -19698,6 +21939,7 @@ export namespace Prisma {
     conflictsTo?: ConflictCreateNestedManyWithoutConflictModInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    favorites?: FavoriteCreateNestedManyWithoutModInput
     principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
@@ -19719,6 +21961,7 @@ export namespace Prisma {
     conflictsTo?: ConflictUncheckedCreateNestedManyWithoutConflictModInput
     modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
     shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutModInput
   }
 
   export type ModCreateOrConnectWithoutRequiredByInput = {
@@ -19754,6 +21997,7 @@ export namespace Prisma {
     conflictsTo?: ConflictUpdateManyWithoutConflictModNestedInput
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUpdateManyWithoutModNestedInput
     principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
@@ -19775,6 +22019,7 @@ export namespace Prisma {
     conflictsTo?: ConflictUncheckedUpdateManyWithoutConflictModNestedInput
     requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutModNestedInput
   }
 
   export type ModUpsertWithoutRequiredByInput = {
@@ -19805,6 +22050,7 @@ export namespace Prisma {
     conflictsTo?: ConflictUpdateManyWithoutConflictModNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUpdateManyWithoutModNestedInput
     principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
@@ -19826,6 +22072,7 @@ export namespace Prisma {
     conflictsTo?: ConflictUncheckedUpdateManyWithoutConflictModNestedInput
     modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutModNestedInput
   }
 
   export type ShaderCreateWithoutShaderDependeciesInput = {
@@ -19840,6 +22087,7 @@ export namespace Prisma {
     comments?: CommentCreateNestedManyWithoutShaderInput
     images?: ImageCreateNestedManyWithoutShaderInput
     conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
+    favorites?: FavoriteCreateNestedManyWithoutShaderInput
     principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
   }
 
@@ -19856,6 +22104,7 @@ export namespace Prisma {
     comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
     images?: ImageUncheckedCreateNestedManyWithoutShaderInput
     conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutShaderInput
   }
 
   export type ShaderCreateOrConnectWithoutShaderDependeciesInput = {
@@ -19880,6 +22129,7 @@ export namespace Prisma {
     conflictsTo?: ConflictCreateNestedManyWithoutConflictModInput
     requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyCreateNestedManyWithoutModInput
+    favorites?: FavoriteCreateNestedManyWithoutModInput
     principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
   }
 
@@ -19901,6 +22151,7 @@ export namespace Prisma {
     conflictsTo?: ConflictUncheckedCreateNestedManyWithoutConflictModInput
     requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
     modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutModInput
   }
 
   export type ModCreateOrConnectWithoutShaderDependeciesInput = {
@@ -19931,6 +22182,7 @@ export namespace Prisma {
     comments?: CommentUpdateManyWithoutShaderNestedInput
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
+    favorites?: FavoriteUpdateManyWithoutShaderNestedInput
     principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
@@ -19947,6 +22199,7 @@ export namespace Prisma {
     comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutShaderNestedInput
   }
 
   export type ModUpsertWithoutShaderDependeciesInput = {
@@ -19977,6 +22230,7 @@ export namespace Prisma {
     conflictsTo?: ConflictUpdateManyWithoutConflictModNestedInput
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUpdateManyWithoutModNestedInput
     principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
@@ -19998,6 +22252,339 @@ export namespace Prisma {
     conflictsTo?: ConflictUncheckedUpdateManyWithoutConflictModNestedInput
     requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutModNestedInput
+  }
+
+  export type UserCreateWithoutFavoritesInput = {
+    id?: bigint | number
+    email: string
+    nickname: string
+    password: string
+    recovery_key?: string | null
+    is_admin?: boolean
+    is_superadmin?: boolean
+    packs?: PackCreateNestedManyWithoutAuthorInput
+    shaders?: ShaderCreateNestedManyWithoutAuthorInput
+    mods?: ModCreateNestedManyWithoutAuthorInput
+    comments?: CommentCreateNestedManyWithoutAuthorInput
+    image?: ImageCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserUncheckedCreateWithoutFavoritesInput = {
+    id?: bigint | number
+    email: string
+    nickname: string
+    password: string
+    recovery_key?: string | null
+    is_admin?: boolean
+    is_superadmin?: boolean
+    imageId?: bigint | number | null
+    packs?: PackUncheckedCreateNestedManyWithoutAuthorInput
+    shaders?: ShaderUncheckedCreateNestedManyWithoutAuthorInput
+    mods?: ModUncheckedCreateNestedManyWithoutAuthorInput
+    comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutFavoritesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFavoritesInput, UserUncheckedCreateWithoutFavoritesInput>
+  }
+
+  export type ModCreateWithoutFavoritesInput = {
+    id?: bigint | number
+    name: string
+    description?: string
+    min_version: number
+    max_version: number
+    src: string
+    weight: number
+    versionType: $Enums.VersionType
+    packs?: PackCreateNestedManyWithoutModsInput
+    author?: UserCreateNestedOneWithoutModsInput
+    comments?: CommentCreateNestedManyWithoutModInput
+    images?: ImageCreateNestedManyWithoutModInput
+    conflictsFrom?: ConflictCreateNestedManyWithoutModInput
+    conflictsTo?: ConflictCreateNestedManyWithoutConflictModInput
+    requiredBy?: ModDependencyCreateNestedManyWithoutDependencyInput
+    modDependencies?: ModDependencyCreateNestedManyWithoutModInput
+    shaderDependecies?: ShaderDependecyCreateNestedManyWithoutModInput
+    principalImage?: ImageCreateNestedOneWithoutModsPrincipalInput
+  }
+
+  export type ModUncheckedCreateWithoutFavoritesInput = {
+    id?: bigint | number
+    name: string
+    description?: string
+    min_version: number
+    max_version: number
+    src: string
+    weight: number
+    authorId?: bigint | number | null
+    versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
+    packs?: PackUncheckedCreateNestedManyWithoutModsInput
+    comments?: CommentUncheckedCreateNestedManyWithoutModInput
+    images?: ImageUncheckedCreateNestedManyWithoutModInput
+    conflictsFrom?: ConflictUncheckedCreateNestedManyWithoutModInput
+    conflictsTo?: ConflictUncheckedCreateNestedManyWithoutConflictModInput
+    requiredBy?: ModDependencyUncheckedCreateNestedManyWithoutDependencyInput
+    modDependencies?: ModDependencyUncheckedCreateNestedManyWithoutModInput
+    shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutModInput
+  }
+
+  export type ModCreateOrConnectWithoutFavoritesInput = {
+    where: ModWhereUniqueInput
+    create: XOR<ModCreateWithoutFavoritesInput, ModUncheckedCreateWithoutFavoritesInput>
+  }
+
+  export type PackCreateWithoutFavoritesInput = {
+    id?: bigint | number
+    max_version: number
+    min_version: number
+    versionType: $Enums.VersionType
+    name: string
+    description?: string | null
+    shaders?: ShaderCreateNestedManyWithoutPacksInput
+    mods?: ModCreateNestedManyWithoutPacksInput
+    author?: UserCreateNestedOneWithoutPacksInput
+    comments?: CommentCreateNestedManyWithoutPackInput
+    images?: ImageCreateNestedManyWithoutPackInput
+    principalImage?: ImageCreateNestedOneWithoutPacksPrincipalInput
+  }
+
+  export type PackUncheckedCreateWithoutFavoritesInput = {
+    id?: bigint | number
+    max_version: number
+    min_version: number
+    versionType: $Enums.VersionType
+    name: string
+    description?: string | null
+    authorId?: bigint | number | null
+    principalImageId?: bigint | number | null
+    shaders?: ShaderUncheckedCreateNestedManyWithoutPacksInput
+    mods?: ModUncheckedCreateNestedManyWithoutPacksInput
+    comments?: CommentUncheckedCreateNestedManyWithoutPackInput
+    images?: ImageUncheckedCreateNestedManyWithoutPackInput
+  }
+
+  export type PackCreateOrConnectWithoutFavoritesInput = {
+    where: PackWhereUniqueInput
+    create: XOR<PackCreateWithoutFavoritesInput, PackUncheckedCreateWithoutFavoritesInput>
+  }
+
+  export type ShaderCreateWithoutFavoritesInput = {
+    id?: bigint | number
+    name: string
+    description?: string
+    weight: number
+    src: string
+    versionType: $Enums.VersionType
+    packs?: PackCreateNestedManyWithoutShadersInput
+    author?: UserCreateNestedOneWithoutShadersInput
+    comments?: CommentCreateNestedManyWithoutShaderInput
+    images?: ImageCreateNestedManyWithoutShaderInput
+    conflicts?: ConflictCreateNestedManyWithoutConflictShaderInput
+    shaderDependecies?: ShaderDependecyCreateNestedManyWithoutShaderInput
+    principalImage?: ImageCreateNestedOneWithoutShadersPrincipalInput
+  }
+
+  export type ShaderUncheckedCreateWithoutFavoritesInput = {
+    id?: bigint | number
+    name: string
+    description?: string
+    weight: number
+    src: string
+    authorId?: bigint | number | null
+    versionType: $Enums.VersionType
+    principalImageId?: bigint | number | null
+    packs?: PackUncheckedCreateNestedManyWithoutShadersInput
+    comments?: CommentUncheckedCreateNestedManyWithoutShaderInput
+    images?: ImageUncheckedCreateNestedManyWithoutShaderInput
+    conflicts?: ConflictUncheckedCreateNestedManyWithoutConflictShaderInput
+    shaderDependecies?: ShaderDependecyUncheckedCreateNestedManyWithoutShaderInput
+  }
+
+  export type ShaderCreateOrConnectWithoutFavoritesInput = {
+    where: ShaderWhereUniqueInput
+    create: XOR<ShaderCreateWithoutFavoritesInput, ShaderUncheckedCreateWithoutFavoritesInput>
+  }
+
+  export type UserUpsertWithoutFavoritesInput = {
+    update: XOR<UserUpdateWithoutFavoritesInput, UserUncheckedUpdateWithoutFavoritesInput>
+    create: XOR<UserCreateWithoutFavoritesInput, UserUncheckedCreateWithoutFavoritesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFavoritesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFavoritesInput, UserUncheckedUpdateWithoutFavoritesInput>
+  }
+
+  export type UserUpdateWithoutFavoritesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    email?: StringFieldUpdateOperationsInput | string
+    nickname?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
+    packs?: PackUpdateManyWithoutAuthorNestedInput
+    shaders?: ShaderUpdateManyWithoutAuthorNestedInput
+    mods?: ModUpdateManyWithoutAuthorNestedInput
+    comments?: CommentUpdateManyWithoutAuthorNestedInput
+    image?: ImageUpdateOneWithoutUsersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFavoritesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    email?: StringFieldUpdateOperationsInput | string
+    nickname?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    recovery_key?: NullableStringFieldUpdateOperationsInput | string | null
+    is_admin?: BoolFieldUpdateOperationsInput | boolean
+    is_superadmin?: BoolFieldUpdateOperationsInput | boolean
+    imageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packs?: PackUncheckedUpdateManyWithoutAuthorNestedInput
+    shaders?: ShaderUncheckedUpdateManyWithoutAuthorNestedInput
+    mods?: ModUncheckedUpdateManyWithoutAuthorNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type ModUpsertWithoutFavoritesInput = {
+    update: XOR<ModUpdateWithoutFavoritesInput, ModUncheckedUpdateWithoutFavoritesInput>
+    create: XOR<ModCreateWithoutFavoritesInput, ModUncheckedCreateWithoutFavoritesInput>
+    where?: ModWhereInput
+  }
+
+  export type ModUpdateToOneWithWhereWithoutFavoritesInput = {
+    where?: ModWhereInput
+    data: XOR<ModUpdateWithoutFavoritesInput, ModUncheckedUpdateWithoutFavoritesInput>
+  }
+
+  export type ModUpdateWithoutFavoritesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    min_version?: IntFieldUpdateOperationsInput | number
+    max_version?: IntFieldUpdateOperationsInput | number
+    src?: StringFieldUpdateOperationsInput | string
+    weight?: IntFieldUpdateOperationsInput | number
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    packs?: PackUpdateManyWithoutModsNestedInput
+    author?: UserUpdateOneWithoutModsNestedInput
+    comments?: CommentUpdateManyWithoutModNestedInput
+    images?: ImageUpdateManyWithoutModNestedInput
+    conflictsFrom?: ConflictUpdateManyWithoutModNestedInput
+    conflictsTo?: ConflictUpdateManyWithoutConflictModNestedInput
+    requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
+    modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
+    shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
+  }
+
+  export type ModUncheckedUpdateWithoutFavoritesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    min_version?: IntFieldUpdateOperationsInput | number
+    max_version?: IntFieldUpdateOperationsInput | number
+    src?: StringFieldUpdateOperationsInput | string
+    weight?: IntFieldUpdateOperationsInput | number
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packs?: PackUncheckedUpdateManyWithoutModsNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutModNestedInput
+    images?: ImageUncheckedUpdateManyWithoutModNestedInput
+    conflictsFrom?: ConflictUncheckedUpdateManyWithoutModNestedInput
+    conflictsTo?: ConflictUncheckedUpdateManyWithoutConflictModNestedInput
+    requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
+    modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
+    shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+  }
+
+  export type PackUpsertWithoutFavoritesInput = {
+    update: XOR<PackUpdateWithoutFavoritesInput, PackUncheckedUpdateWithoutFavoritesInput>
+    create: XOR<PackCreateWithoutFavoritesInput, PackUncheckedCreateWithoutFavoritesInput>
+    where?: PackWhereInput
+  }
+
+  export type PackUpdateToOneWithWhereWithoutFavoritesInput = {
+    where?: PackWhereInput
+    data: XOR<PackUpdateWithoutFavoritesInput, PackUncheckedUpdateWithoutFavoritesInput>
+  }
+
+  export type PackUpdateWithoutFavoritesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    max_version?: IntFieldUpdateOperationsInput | number
+    min_version?: IntFieldUpdateOperationsInput | number
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    shaders?: ShaderUpdateManyWithoutPacksNestedInput
+    mods?: ModUpdateManyWithoutPacksNestedInput
+    author?: UserUpdateOneWithoutPacksNestedInput
+    comments?: CommentUpdateManyWithoutPackNestedInput
+    images?: ImageUpdateManyWithoutPackNestedInput
+    principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
+  }
+
+  export type PackUncheckedUpdateWithoutFavoritesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    max_version?: IntFieldUpdateOperationsInput | number
+    min_version?: IntFieldUpdateOperationsInput | number
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
+    mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
+    images?: ImageUncheckedUpdateManyWithoutPackNestedInput
+  }
+
+  export type ShaderUpsertWithoutFavoritesInput = {
+    update: XOR<ShaderUpdateWithoutFavoritesInput, ShaderUncheckedUpdateWithoutFavoritesInput>
+    create: XOR<ShaderCreateWithoutFavoritesInput, ShaderUncheckedCreateWithoutFavoritesInput>
+    where?: ShaderWhereInput
+  }
+
+  export type ShaderUpdateToOneWithWhereWithoutFavoritesInput = {
+    where?: ShaderWhereInput
+    data: XOR<ShaderUpdateWithoutFavoritesInput, ShaderUncheckedUpdateWithoutFavoritesInput>
+  }
+
+  export type ShaderUpdateWithoutFavoritesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    weight?: IntFieldUpdateOperationsInput | number
+    src?: StringFieldUpdateOperationsInput | string
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    packs?: PackUpdateManyWithoutShadersNestedInput
+    author?: UserUpdateOneWithoutShadersNestedInput
+    comments?: CommentUpdateManyWithoutShaderNestedInput
+    images?: ImageUpdateManyWithoutShaderNestedInput
+    conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
+    shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
+  }
+
+  export type ShaderUncheckedUpdateWithoutFavoritesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    weight?: IntFieldUpdateOperationsInput | number
+    src?: StringFieldUpdateOperationsInput | string
+    authorId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    versionType?: EnumVersionTypeFieldUpdateOperationsInput | $Enums.VersionType
+    principalImageId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packs?: PackUncheckedUpdateManyWithoutShadersNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutShaderNestedInput
+    images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
+    conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
+    shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutShaderNestedInput
   }
 
   export type PackCreateManyAuthorInput = {
@@ -20040,6 +22627,14 @@ export namespace Prisma {
     modId?: bigint | number | null
   }
 
+  export type FavoriteCreateManyUserInput = {
+    id?: bigint | number
+    modId?: bigint | number | null
+    packId?: bigint | number | null
+    shaderId?: bigint | number | null
+    createdAt?: Date | string
+  }
+
   export type PackUpdateWithoutAuthorInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     max_version?: IntFieldUpdateOperationsInput | number
@@ -20051,6 +22646,7 @@ export namespace Prisma {
     mods?: ModUpdateManyWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUpdateManyWithoutPackNestedInput
     principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
@@ -20066,6 +22662,7 @@ export namespace Prisma {
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
     images?: ImageUncheckedUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutPackNestedInput
   }
 
   export type PackUncheckedUpdateManyWithoutAuthorInput = {
@@ -20090,6 +22687,7 @@ export namespace Prisma {
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUpdateManyWithoutShaderNestedInput
     principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
@@ -20106,6 +22704,7 @@ export namespace Prisma {
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutShaderNestedInput
   }
 
   export type ShaderUncheckedUpdateManyWithoutAuthorInput = {
@@ -20135,6 +22734,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUpdateManyWithoutModNestedInput
     principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
@@ -20156,6 +22756,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutModNestedInput
   }
 
   export type ModUncheckedUpdateManyWithoutAuthorInput = {
@@ -20194,6 +22795,30 @@ export namespace Prisma {
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
+  export type FavoriteUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mod?: ModUpdateOneWithoutFavoritesNestedInput
+    pack?: PackUpdateOneWithoutFavoritesNestedInput
+    shader?: ShaderUpdateOneWithoutFavoritesNestedInput
+  }
+
+  export type FavoriteUncheckedUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUncheckedUpdateManyWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CommentCreateManyPackInput = {
     id?: bigint | number
     text: string
@@ -20209,6 +22834,14 @@ export namespace Prisma {
     shaderId?: bigint | number | null
   }
 
+  export type FavoriteCreateManyPackInput = {
+    id?: bigint | number
+    userId: bigint | number
+    modId?: bigint | number | null
+    shaderId?: bigint | number | null
+    createdAt?: Date | string
+  }
+
   export type ShaderUpdateWithoutPacksInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: StringFieldUpdateOperationsInput | string
@@ -20221,6 +22854,7 @@ export namespace Prisma {
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUpdateManyWithoutShaderNestedInput
     principalImage?: ImageUpdateOneWithoutShadersPrincipalNestedInput
   }
 
@@ -20237,6 +22871,7 @@ export namespace Prisma {
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutShaderNestedInput
   }
 
   export type ShaderUncheckedUpdateManyWithoutPacksInput = {
@@ -20267,6 +22902,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUpdateManyWithoutModNestedInput
     principalImage?: ImageUpdateOneWithoutModsPrincipalNestedInput
   }
 
@@ -20288,6 +22924,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutModNestedInput
   }
 
   export type ModUncheckedUpdateManyWithoutPacksInput = {
@@ -20356,6 +22993,30 @@ export namespace Prisma {
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
 
+  export type FavoriteUpdateWithoutPackInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFavoritesNestedInput
+    mod?: ModUpdateOneWithoutFavoritesNestedInput
+    shader?: ShaderUpdateOneWithoutFavoritesNestedInput
+  }
+
+  export type FavoriteUncheckedUpdateWithoutPackInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUncheckedUpdateManyWithoutPackInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CommentCreateManyShaderInput = {
     id?: bigint | number
     text: string
@@ -20381,6 +23042,14 @@ export namespace Prisma {
     modId: bigint | number
   }
 
+  export type FavoriteCreateManyShaderInput = {
+    id?: bigint | number
+    userId: bigint | number
+    modId?: bigint | number | null
+    packId?: bigint | number | null
+    createdAt?: Date | string
+  }
+
   export type PackUpdateWithoutShadersInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     max_version?: IntFieldUpdateOperationsInput | number
@@ -20392,6 +23061,7 @@ export namespace Prisma {
     author?: UserUpdateOneWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUpdateManyWithoutPackNestedInput
     principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
@@ -20407,6 +23077,7 @@ export namespace Prisma {
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
     images?: ImageUncheckedUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutPackNestedInput
   }
 
   export type PackUncheckedUpdateManyWithoutShadersInput = {
@@ -20503,6 +23174,30 @@ export namespace Prisma {
     modId?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
+  export type FavoriteUpdateWithoutShaderInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFavoritesNestedInput
+    mod?: ModUpdateOneWithoutFavoritesNestedInput
+    pack?: PackUpdateOneWithoutFavoritesNestedInput
+  }
+
+  export type FavoriteUncheckedUpdateWithoutShaderInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUncheckedUpdateManyWithoutShaderInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CommentCreateManyModInput = {
     id?: bigint | number
     text: string
@@ -20542,6 +23237,14 @@ export namespace Prisma {
     shaderId: bigint | number
   }
 
+  export type FavoriteCreateManyModInput = {
+    id?: bigint | number
+    userId: bigint | number
+    packId?: bigint | number | null
+    shaderId?: bigint | number | null
+    createdAt?: Date | string
+  }
+
   export type PackUpdateWithoutModsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     max_version?: IntFieldUpdateOperationsInput | number
@@ -20553,6 +23256,7 @@ export namespace Prisma {
     author?: UserUpdateOneWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUpdateManyWithoutPackNestedInput
     principalImage?: ImageUpdateOneWithoutPacksPrincipalNestedInput
   }
 
@@ -20568,6 +23272,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
     images?: ImageUncheckedUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutPackNestedInput
   }
 
   export type PackUncheckedUpdateManyWithoutModsInput = {
@@ -20706,6 +23411,30 @@ export namespace Prisma {
     shaderId?: BigIntFieldUpdateOperationsInput | bigint | number
   }
 
+  export type FavoriteUpdateWithoutModInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutFavoritesNestedInput
+    pack?: PackUpdateOneWithoutFavoritesNestedInput
+    shader?: ShaderUpdateOneWithoutFavoritesNestedInput
+  }
+
+  export type FavoriteUncheckedUpdateWithoutModInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavoriteUncheckedUpdateManyWithoutModInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    userId?: BigIntFieldUpdateOperationsInput | bigint | number
+    packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateManyImageInput = {
     id?: bigint | number
     email: string
@@ -20760,6 +23489,7 @@ export namespace Prisma {
     shaders?: ShaderUpdateManyWithoutAuthorNestedInput
     mods?: ModUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutImageInput = {
@@ -20774,6 +23504,7 @@ export namespace Prisma {
     shaders?: ShaderUncheckedUpdateManyWithoutAuthorNestedInput
     mods?: ModUncheckedUpdateManyWithoutAuthorNestedInput
     comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutImageInput = {
@@ -20798,6 +23529,7 @@ export namespace Prisma {
     author?: UserUpdateOneWithoutPacksNestedInput
     comments?: CommentUpdateManyWithoutPackNestedInput
     images?: ImageUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUpdateManyWithoutPackNestedInput
   }
 
   export type PackUncheckedUpdateWithoutPrincipalImageInput = {
@@ -20812,6 +23544,7 @@ export namespace Prisma {
     mods?: ModUncheckedUpdateManyWithoutPacksNestedInput
     comments?: CommentUncheckedUpdateManyWithoutPackNestedInput
     images?: ImageUncheckedUpdateManyWithoutPackNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutPackNestedInput
   }
 
   export type PackUncheckedUpdateManyWithoutPrincipalImageInput = {
@@ -20837,6 +23570,7 @@ export namespace Prisma {
     images?: ImageUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUpdateManyWithoutShaderNestedInput
   }
 
   export type ShaderUncheckedUpdateWithoutPrincipalImageInput = {
@@ -20852,6 +23586,7 @@ export namespace Prisma {
     images?: ImageUncheckedUpdateManyWithoutShaderNestedInput
     conflicts?: ConflictUncheckedUpdateManyWithoutConflictShaderNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutShaderNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutShaderNestedInput
   }
 
   export type ShaderUncheckedUpdateManyWithoutPrincipalImageInput = {
@@ -20882,6 +23617,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUpdateManyWithoutModNestedInput
   }
 
   export type ModUncheckedUpdateWithoutPrincipalImageInput = {
@@ -20902,6 +23638,7 @@ export namespace Prisma {
     requiredBy?: ModDependencyUncheckedUpdateManyWithoutDependencyNestedInput
     modDependencies?: ModDependencyUncheckedUpdateManyWithoutModNestedInput
     shaderDependecies?: ShaderDependecyUncheckedUpdateManyWithoutModNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutModNestedInput
   }
 
   export type ModUncheckedUpdateManyWithoutPrincipalImageInput = {

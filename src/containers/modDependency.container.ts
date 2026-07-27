@@ -6,8 +6,9 @@ import { ListModDependenciesUseCase } from "../application/usecases/mod-dependen
 import { GetModDependencyUseCase } from "../application/usecases/mod-dependency/GetModDependencyUseCase";
 import { ModDependencyController } from "../presentation/controllers/modDependency.controller";
 import { modDependencyRoutes } from "../presentation/routes/modDependency.routes";
+import { GlobalContext } from "../container.types";
 
-export function setupModDependencyDependencies(app: FastifyInstance, globalContext: any) {
+export function setupModDependencyDependencies(app: FastifyInstance, globalContext: GlobalContext) {
   const createModDependencyUseCase = new CreateModDependencyUseCase(globalContext);
   const deleteModDependencyUseCase = new DeleteModDependencyUseCase(globalContext);
   const listModDependenciesByModUseCase = new ListModDependenciesByModUseCase(globalContext);

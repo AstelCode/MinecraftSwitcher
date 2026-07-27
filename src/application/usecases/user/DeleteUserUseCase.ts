@@ -1,4 +1,4 @@
-import { FileRepository } from "@/domain/repositories/FileRepository";
+﻿import { FileRepository } from "@/domain/repositories/FileRepository";
 import { ImageRepository } from "@/domain/repositories/ImageRepository";
 import { ModRepository } from "@/domain/repositories/ModRepository";
 import { ShaderRepository } from "@/domain/repositories/ShaderRepository";
@@ -7,8 +7,8 @@ import { TokenService } from "@/domain/services/TokenService";
 
 export interface DeleteUserUseCaseDependencies {
   userRepository: Pick<UserRepository, "delete" | "findById">;
-  imageRespository: Pick<ImageRepository, "delete">;
-  fileRespository: Pick<FileRepository, "deleteUserData">;
+  imageRepository: Pick<ImageRepository, "delete">;
+  fileRepository: Pick<FileRepository, "deleteUserData">;
   shaderRepository: Pick<ShaderRepository, "listByAuthor">;
   modRepository: Pick<ModRepository, "listByAuthor">;
   tokenService: Pick<TokenService, "verify">;
@@ -22,9 +22,10 @@ export class DeleteUserUseCase {
     const user = await this.deps.userRepository.findById(payload.id);
     if (!user) throw new Error("User not found.");
     if (user.image) {
-      await this.deps.imageRespository.delete(user.image.id);
-      await this.deps.fileRespository.deleteUserData(user.id);
+      await this.deps.imageRepository.delete(user.image.id);
+      await this.deps.fileRepository.deleteUserData(user.id);
     }
     await this.deps.userRepository.delete(payload.id);
   }
 }
+

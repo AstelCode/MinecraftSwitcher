@@ -1,4 +1,5 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+﻿import { FastifyReply, FastifyRequest } from "fastify";
+import { extractToken } from "../helpers/auth.helper";
 import { CreateShaderUseCase } from "../../application/usecases/shader/CreateShaderUseCase";
 import { UpdateShaderUseCase } from "../../application/usecases/shader/UpdateShaderUseCase";
 import { DeleteShaderUseCase } from "../../application/usecases/shader/DeleteShaderUseCase";
@@ -38,11 +39,11 @@ export class ShaderController {
   ) {}
 
   async create(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const data = await req.file();
     if (!data) return reply.status(400).send({ message: "No file provided" });
 
-    // Extraer campos de texto enviados vía multipart
+    // Extraer campos de texto enviados vÃ­a multipart
     const name = (data.fields.name as any)?.value;
     const description = (data.fields.description as any)?.value;
     const versionType = (data.fields.versionType as any)?.value as VersionType;
@@ -64,14 +65,14 @@ export class ShaderController {
   async update(req: FastifyRequest, reply: FastifyReply) {
     const { shaderId } = ShaderIdParamsSchema.parse(req.params);
     const data = UpdateShaderSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.updateShaderUseCase.execute(token, BigInt(shaderId), data);
     return reply.status(200).send({ message: "Shader updated successfully" });
   }
 
   async delete(req: FastifyRequest, reply: FastifyReply) {
     const { shaderId } = ShaderIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deleteShaderUseCase.execute(token, BigInt(shaderId));
     return reply.status(200).send({ message: "Shader deleted successfully" });
   }
@@ -88,7 +89,7 @@ export class ShaderController {
   }
 
   async listByAuthor(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const shaders = await this.listShadersByAuthorUseCase.execute(token);
     return reply.status(200).send(shaders);
   }
@@ -109,7 +110,7 @@ export class ShaderController {
 
   async addImage(req: FastifyRequest, reply: FastifyReply) {
     const { shaderId } = ShaderIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const data = await req.file();
     if (!data) return reply.status(400).send({ message: "No file provided" });
 
@@ -124,7 +125,7 @@ export class ShaderController {
 
   async deleteImage(req: FastifyRequest, reply: FastifyReply) {
     const { shaderId, imageId } = ShaderAndImageIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deleteShaderImageUseCase.execute(
       token,
       BigInt(shaderId),
@@ -135,7 +136,7 @@ export class ShaderController {
 
   async updatePrincipalImage(req: FastifyRequest, reply: FastifyReply) {
     const { shaderId } = ShaderIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const data = await req.file();
     if (!data) return reply.status(400).send({ message: "No file provided" });
 
@@ -154,7 +155,7 @@ export class ShaderController {
 
   async updateFile(req: FastifyRequest, reply: FastifyReply) {
     const { shaderId } = ShaderIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const data = await req.file();
     if (!data) return reply.status(400).send({ message: "No file provided" });
 
@@ -172,8 +173,9 @@ export class ShaderController {
   async assign(req: FastifyRequest, reply: FastifyReply) {
     const { shaderId } = ShaderIdParamsSchema.parse(req.params);
     const { adminId } = req.body as { adminId: string };
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.assignShaderToAdminUseCase.execute(token, BigInt(shaderId), BigInt(adminId));
     return reply.status(200).send({ message: "Shader assigned successfully" });
   }
 }
+

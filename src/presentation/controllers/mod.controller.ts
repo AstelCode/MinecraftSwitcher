@@ -1,4 +1,4 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+﻿import { FastifyReply, FastifyRequest } from "fastify";
 import { CreateModUseCase } from "../../application/usecases/mod/CreateModUseCase";
 import { UpdateModUseCase } from "../../application/usecases/mod/UpdateModUseCase";
 import { DeleteModUseCase } from "../../application/usecases/mod/DeleteModUseCase";
@@ -20,6 +20,7 @@ import {
   ModAndImageIdParamsSchema,
 } from "../schemas/mod.schema";
 import { VersionType } from "../../domain/model/VersionType";
+import { extractToken } from "../helpers/auth.helper";
 
 export class ModController {
   constructor(
@@ -40,11 +41,11 @@ export class ModController {
   ) {}
 
   async create(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const data = await req.file();
     if (!data) return reply.status(400).send({ message: "No file provided" });
 
-    // Extraer campos de texto enviados vía multipart
+    // Extraer campos de texto enviados vÃ­a multipart
     const name = (data.fields.name as any)?.value;
     const description = (data.fields.description as any)?.value;
     const minVersion = Number((data.fields.minVersion as any)?.value);
@@ -70,14 +71,14 @@ export class ModController {
   async update(req: FastifyRequest, reply: FastifyReply) {
     const { modId } = ModIdParamsSchema.parse(req.params);
     const data = UpdateModSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.updateModUseCase.execute(token, BigInt(modId), data);
     return reply.status(200).send({ message: "Mod updated successfully" });
   }
 
   async delete(req: FastifyRequest, reply: FastifyReply) {
     const { modId } = ModIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deleteModUseCase.execute(token, BigInt(modId));
     return reply.status(200).send({ message: "Mod deleted successfully" });
   }
@@ -100,7 +101,7 @@ export class ModController {
   }
 
   async listByAdmin(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const mods = await this.listModsByAdminUseCase.execute(token);
     return reply.status(200).send(mods);
   }
@@ -119,7 +120,7 @@ export class ModController {
 
   async addImage(req: FastifyRequest, reply: FastifyReply) {
     const { modId } = ModIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const data = await req.file();
     if (!data) return reply.status(400).send({ message: "No file provided" });
 
@@ -134,7 +135,7 @@ export class ModController {
 
   async deleteImage(req: FastifyRequest, reply: FastifyReply) {
     const { modId, imageId } = ModAndImageIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deleteModImageUseCase.execute(
       token,
       BigInt(modId),
@@ -145,7 +146,7 @@ export class ModController {
 
   async updatePrincipalImage(req: FastifyRequest, reply: FastifyReply) {
     const { modId } = ModIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const data = await req.file();
     if (!data) return reply.status(400).send({ message: "No file provided" });
 
@@ -164,7 +165,7 @@ export class ModController {
 
   async updateFile(req: FastifyRequest, reply: FastifyReply) {
     const { modId } = ModIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const data = await req.file();
     if (!data) return reply.status(400).send({ message: "No file provided" });
 
@@ -180,8 +181,9 @@ export class ModController {
   async assign(req: FastifyRequest, reply: FastifyReply) {
     const { modId } = ModIdParamsSchema.parse(req.params);
     const { adminId } = req.body as { adminId: string };
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.assignModToAdminUseCase.execute(token, BigInt(modId), BigInt(adminId));
     return reply.status(200).send({ message: "Mod assigned successfully" });
   }
 }
+

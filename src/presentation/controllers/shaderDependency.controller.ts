@@ -1,4 +1,5 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+﻿import { FastifyReply, FastifyRequest } from "fastify";
+import { extractToken } from "../helpers/auth.helper";
 import { CreateShaderDependencyUseCase } from "../../application/usecases/shader-dependency/CreateShaderDependencyUseCase";
 import { DeleteShaderDependencyUseCase } from "../../application/usecases/shader-dependency/DeleteShaderDependencyUseCase";
 import { ListShaderDependenciesUseCase } from "../../application/usecases/shader-dependency/ListShaderDependenciesUseCase";
@@ -17,14 +18,14 @@ export class ShaderDependencyController {
 
   async create(req: FastifyRequest, reply: FastifyReply) {
     const data = CreateShaderDependencySchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.createShaderDependencyUseCase.execute(token, BigInt(data.shaderId), BigInt(data.modId));
     return reply.status(201).send({ message: "Shader dependency created successfully" });
   }
 
   async delete(req: FastifyRequest, reply: FastifyReply) {
     const { shaderId, modId } = ShaderDependencyParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deleteShaderDependencyUseCase.execute(token, BigInt(shaderId), BigInt(modId));
     return reply.status(200).send({ message: "Shader dependency deleted successfully" });
   }
@@ -46,3 +47,4 @@ export class ShaderDependencyController {
     return reply.status(200).send(data);
   }
 }
+

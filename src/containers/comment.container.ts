@@ -11,8 +11,9 @@ import { ListCommentByShaderCommentUseCase } from "../application/usecases/comme
 import { UpdateCommentUseCase } from "../application/usecases/comment/UpdateCommentUseCase";
 import { CommentController } from "../presentation/controllers/comment.controller";
 import { commentRoutes } from "../presentation/routes/comment.routes";
+import { GlobalContext } from "../container.types";
 
-export function setupCommentDependencies(app: FastifyInstance, globalContext: any) {
+export function setupCommentDependencies(app: FastifyInstance, globalContext: GlobalContext) {
   const createModCommentUseCase = new CreateModCommentUseCase(globalContext);
   const createPackCommentUseCase = new CreatePackCommentUseCase(globalContext);
   const createShaderCommentUseCase = new CreateShaderCommentUseCase(globalContext);

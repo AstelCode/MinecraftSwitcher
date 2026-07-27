@@ -6,8 +6,9 @@ import { ListShaderDependenciesUseCase } from "../application/usecases/shader-de
 import { GetShaderDependencyUseCase } from "../application/usecases/shader-dependency/GetShaderDependencyUseCase";
 import { ShaderDependencyController } from "../presentation/controllers/shaderDependency.controller";
 import { shaderDependencyRoutes } from "../presentation/routes/shaderDependency.routes";
+import { GlobalContext } from "../container.types";
 
-export function setupShaderDependencyDependencies(app: FastifyInstance, globalContext: any) {
+export function setupShaderDependencyDependencies(app: FastifyInstance, globalContext: GlobalContext) {
   const createShaderDependencyUseCase = new CreateShaderDependencyUseCase(globalContext);
   const deleteShaderDependencyUseCase = new DeleteShaderDependencyUseCase(globalContext);
   const listShaderDependenciesByShaderUseCase = new ListShaderDependenciesByShaderUseCase(globalContext);

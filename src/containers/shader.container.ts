@@ -14,8 +14,9 @@ import { GetShaderUseCase } from "../application/usecases/shader/GetShaderUseCas
 import { AssignShaderToAdminUseCase } from "../application/usecases/shader/AssignShaderToAdminUseCase";
 import { ShaderController } from "../presentation/controllers/shader.controller";
 import { shaderRoutes } from "../presentation/routes/shader.routes";
+import { GlobalContext } from "../container.types";
 
-export function setupShaderDependencies(app: FastifyInstance, globalContext: any) {
+export function setupShaderDependencies(app: FastifyInstance, globalContext: GlobalContext) {
   const createShaderUseCase = new CreateShaderUseCase(globalContext);
   const updateShaderUseCase = new UpdateShaderUseCase(globalContext);
   const deleteShaderUseCase = new DeleteShaderUseCase(globalContext);

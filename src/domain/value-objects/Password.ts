@@ -7,7 +7,7 @@ export class Password {
   }
 
   validate() {
-    if (passwordRegex.test(this.password)) {
+    if (!passwordRegex.test(this.password)) {
       throw new Error("Password format is incorrect");
     }
   }

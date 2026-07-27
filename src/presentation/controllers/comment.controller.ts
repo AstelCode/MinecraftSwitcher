@@ -1,4 +1,5 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+﻿import { FastifyReply, FastifyRequest } from "fastify";
+import { extractToken } from "../helpers/auth.helper";
 import { CreateModCommentUseCase } from "../../application/usecases/comment/CreateModCommentUseCase";
 import { CreatePackCommentUseCase } from "../../application/usecases/comment/CreatePackCommentUseCase";
 import { CreateShaderCommentUseCase } from "../../application/usecases/comment/CreateShaderCommentUseCase";
@@ -36,28 +37,28 @@ export class CommentController {
 
   async createModComment(req: FastifyRequest, reply: FastifyReply) {
     const data = CreateModCommentSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.createModCommentUseCase.execute(token, data.text, BigInt(data.modId));
     return reply.status(201).send({ message: "Mod comment created successfully" });
   }
 
   async createPackComment(req: FastifyRequest, reply: FastifyReply) {
     const data = CreatePackCommentSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.createPackCommentUseCase.execute(token, data.text, BigInt(data.packId));
     return reply.status(201).send({ message: "Pack comment created successfully" });
   }
 
   async createShaderComment(req: FastifyRequest, reply: FastifyReply) {
     const data = CreateShaderCommentSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.createShaderCommentUseCase.execute(token, data.text, BigInt(data.shaderId));
     return reply.status(201).send({ message: "Shader comment created successfully" });
   }
 
   async delete(req: FastifyRequest, reply: FastifyReply) {
     const { commentId } = CommentIdParamsSchema.parse(req.params);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.deleteCommentUseCase.execute(token, BigInt(commentId));
     return reply.status(200).send({ message: "Comment deleted successfully" });
   }
@@ -69,7 +70,7 @@ export class CommentController {
   }
 
   async listByAuthor(req: FastifyRequest, reply: FastifyReply) {
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     const comments = await this.listCommentByAuthorCommentUseCase.execute(token);
     return reply.status(200).send(comments);
   }
@@ -95,8 +96,9 @@ export class CommentController {
   async update(req: FastifyRequest, reply: FastifyReply) {
     const { commentId } = CommentIdParamsSchema.parse(req.params);
     const data = UpdateCommentSchema.parse(req.body);
-    const token = req.headers.authorization?.split(" ")[1] || "";
+    const token = extractToken(req);
     await this.updateCommentUseCase.execute(token, data.text, BigInt(commentId));
     return reply.status(200).send({ message: "Comment updated successfully" });
   }
 }
+

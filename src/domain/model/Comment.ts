@@ -64,7 +64,7 @@ export class Comment {
   }
 
   toPersistance() {
-    if (!this.author) throw new Error("comment auhor not assigned");
+    if (!this.author) throw new Error("comment author not assigned");
 
     return {
       text: this.text,
