@@ -4,6 +4,9 @@ export interface ModRepository {
   update(mod: Mod): Promise<void>;
   findById(id: bigint): Promise<Mod | undefined>;
   delete(id: bigint): Promise<void>;
+  updateSrc(modId: bigint, url: string): Promise<void>;
+  addImage(modId: bigint, imageId: bigint): Promise<void>;
+  setPrincipalImage(modId: bigint, imageId: bigint): Promise<void>;
 
   listByAdmin(admin_id: bigint): Promise<Mod[]>;
   listByPack(pack_id: bigint): Promise<Mod[]>;

@@ -11,18 +11,20 @@ export interface CreateShaderArgs {
   versionType: VersionType;
 }
 
+export interface CreateShaderUseCaseDependencies {
+  userRepository: Pick<UserRepository, "findById">;
+  shaderRepository: Pick<ShaderRepository, "save" | "updateSrc" | "delete">;
+  tokenService: Pick<TokenService, "verify">;
+  fileRepository: Pick<FileRepository, "saveShaderFile" | "deleteShaderFile">;
+}
+
 export class CreateShaderUseCase {
-  constructor(
-    public readonly userRepository: UserRepository,
-    public readonly shaderRepository: ShaderRepository,
-    public readonly tokenService: TokenService,
-    public readonly fileRepository: FileRepository,
-  ) {}
+  constructor(private readonly deps: CreateShaderUseCaseDependencies) {}
 
   async execute(token: string, data: CreateShaderArgs): Promise<void> {
-    const payload = await this.tokenService.verify(token);
+    const payload = await this.deps.tokenService.verify(token);
 
-    const user = await this.userRepository.findById(payload.id);
+    const user = await this.deps.userRepository.findById(payload.id);
 
     if (!user) {
       throw new Error("User not found.");
@@ -41,20 +43,20 @@ export class CreateShaderUseCase {
       shader.src = "";
       shader.author = user;
 
-      await this.shaderRepository.save(shader);
+      await this.deps.shaderRepository.save(shader);
 
       const fileName = `shader_${shader.id}`;
 
-      filePath = await this.fileRepository.saveShaderFile(fileName, data.file);
+      filePath = await this.deps.fileRepository.saveShaderFile(fileName, data.file);
 
-      await this.shaderRepository.updateSrc(shader.id, filePath);
+      await this.deps.shaderRepository.updateSrc(shader.id, filePath);
     } catch (error) {
       if (filePath) {
-        await this.fileRepository.deleteShaderFile(filePath);
+        await this.deps.fileRepository.deleteShaderFile(filePath);
       }
 
       if (shader?.id !== undefined) {
-        await this.shaderRepository.delete(shader.id);
+        await this.deps.shaderRepository.delete(shader.id);
       }
 
       throw error;

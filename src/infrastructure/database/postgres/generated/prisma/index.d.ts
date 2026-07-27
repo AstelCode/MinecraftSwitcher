@@ -8515,7 +8515,6 @@ export namespace Prisma {
   export type ImageMinAggregateOutputType = {
     id: bigint | null
     src: string | null
-    basePath: string | null
     modId: bigint | null
     shaderId: bigint | null
     packId: bigint | null
@@ -8524,7 +8523,6 @@ export namespace Prisma {
   export type ImageMaxAggregateOutputType = {
     id: bigint | null
     src: string | null
-    basePath: string | null
     modId: bigint | null
     shaderId: bigint | null
     packId: bigint | null
@@ -8533,7 +8531,6 @@ export namespace Prisma {
   export type ImageCountAggregateOutputType = {
     id: number
     src: number
-    basePath: number
     modId: number
     shaderId: number
     packId: number
@@ -8558,7 +8555,6 @@ export namespace Prisma {
   export type ImageMinAggregateInputType = {
     id?: true
     src?: true
-    basePath?: true
     modId?: true
     shaderId?: true
     packId?: true
@@ -8567,7 +8563,6 @@ export namespace Prisma {
   export type ImageMaxAggregateInputType = {
     id?: true
     src?: true
-    basePath?: true
     modId?: true
     shaderId?: true
     packId?: true
@@ -8576,7 +8571,6 @@ export namespace Prisma {
   export type ImageCountAggregateInputType = {
     id?: true
     src?: true
-    basePath?: true
     modId?: true
     shaderId?: true
     packId?: true
@@ -8672,7 +8666,6 @@ export namespace Prisma {
   export type ImageGroupByOutputType = {
     id: bigint
     src: string
-    basePath: string
     modId: bigint | null
     shaderId: bigint | null
     packId: bigint | null
@@ -8700,7 +8693,6 @@ export namespace Prisma {
   export type ImageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     src?: boolean
-    basePath?: boolean
     modId?: boolean
     shaderId?: boolean
     packId?: boolean
@@ -8717,7 +8709,6 @@ export namespace Prisma {
   export type ImageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     src?: boolean
-    basePath?: boolean
     modId?: boolean
     shaderId?: boolean
     packId?: boolean
@@ -8729,7 +8720,6 @@ export namespace Prisma {
   export type ImageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     src?: boolean
-    basePath?: boolean
     modId?: boolean
     shaderId?: boolean
     packId?: boolean
@@ -8741,13 +8731,12 @@ export namespace Prisma {
   export type ImageSelectScalar = {
     id?: boolean
     src?: boolean
-    basePath?: boolean
     modId?: boolean
     shaderId?: boolean
     packId?: boolean
   }
 
-  export type ImageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "src" | "basePath" | "modId" | "shaderId" | "packId", ExtArgs["result"]["image"]>
+  export type ImageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "src" | "modId" | "shaderId" | "packId", ExtArgs["result"]["image"]>
   export type ImageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mod?: boolean | Image$modArgs<ExtArgs>
     shader?: boolean | Image$shaderArgs<ExtArgs>
@@ -8783,7 +8772,6 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       src: string
-      basePath: string
       modId: bigint | null
       shaderId: bigint | null
       packId: bigint | null
@@ -9219,7 +9207,6 @@ export namespace Prisma {
   interface ImageFieldRefs {
     readonly id: FieldRef<"Image", 'BigInt'>
     readonly src: FieldRef<"Image", 'String'>
-    readonly basePath: FieldRef<"Image", 'String'>
     readonly modId: FieldRef<"Image", 'BigInt'>
     readonly shaderId: FieldRef<"Image", 'BigInt'>
     readonly packId: FieldRef<"Image", 'BigInt'>
@@ -13171,7 +13158,6 @@ export namespace Prisma {
   export const ImageScalarFieldEnum: {
     id: 'id',
     src: 'src',
-    basePath: 'basePath',
     modId: 'modId',
     shaderId: 'shaderId',
     packId: 'packId'
@@ -13274,8 +13260,7 @@ export namespace Prisma {
 
 
   export const ImageOrderByRelevanceFieldEnum: {
-    src: 'src',
-    basePath: 'basePath'
+    src: 'src'
   };
 
   export type ImageOrderByRelevanceFieldEnum = (typeof ImageOrderByRelevanceFieldEnum)[keyof typeof ImageOrderByRelevanceFieldEnum]
@@ -13813,7 +13798,6 @@ export namespace Prisma {
     NOT?: ImageWhereInput | ImageWhereInput[]
     id?: BigIntFilter<"Image"> | bigint | number
     src?: StringFilter<"Image"> | string
-    basePath?: StringFilter<"Image"> | string
     modId?: BigIntNullableFilter<"Image"> | bigint | number | null
     shaderId?: BigIntNullableFilter<"Image"> | bigint | number | null
     packId?: BigIntNullableFilter<"Image"> | bigint | number | null
@@ -13829,7 +13813,6 @@ export namespace Prisma {
   export type ImageOrderByWithRelationInput = {
     id?: SortOrder
     src?: SortOrder
-    basePath?: SortOrder
     modId?: SortOrderInput | SortOrder
     shaderId?: SortOrderInput | SortOrder
     packId?: SortOrderInput | SortOrder
@@ -13849,7 +13832,6 @@ export namespace Prisma {
     OR?: ImageWhereInput[]
     NOT?: ImageWhereInput | ImageWhereInput[]
     src?: StringFilter<"Image"> | string
-    basePath?: StringFilter<"Image"> | string
     modId?: BigIntNullableFilter<"Image"> | bigint | number | null
     shaderId?: BigIntNullableFilter<"Image"> | bigint | number | null
     packId?: BigIntNullableFilter<"Image"> | bigint | number | null
@@ -13865,7 +13847,6 @@ export namespace Prisma {
   export type ImageOrderByWithAggregationInput = {
     id?: SortOrder
     src?: SortOrder
-    basePath?: SortOrder
     modId?: SortOrderInput | SortOrder
     shaderId?: SortOrderInput | SortOrder
     packId?: SortOrderInput | SortOrder
@@ -13882,7 +13863,6 @@ export namespace Prisma {
     NOT?: ImageScalarWhereWithAggregatesInput | ImageScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"Image"> | bigint | number
     src?: StringWithAggregatesFilter<"Image"> | string
-    basePath?: StringWithAggregatesFilter<"Image"> | string
     modId?: BigIntNullableWithAggregatesFilter<"Image"> | bigint | number | null
     shaderId?: BigIntNullableWithAggregatesFilter<"Image"> | bigint | number | null
     packId?: BigIntNullableWithAggregatesFilter<"Image"> | bigint | number | null
@@ -14492,7 +14472,6 @@ export namespace Prisma {
   export type ImageCreateInput = {
     id?: bigint | number
     src: string
-    basePath: string
     mod?: ModCreateNestedOneWithoutImagesInput
     shader?: ShaderCreateNestedOneWithoutImagesInput
     pack?: PackCreateNestedOneWithoutImagesInput
@@ -14505,7 +14484,6 @@ export namespace Prisma {
   export type ImageUncheckedCreateInput = {
     id?: bigint | number
     src: string
-    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
     packId?: bigint | number | null
@@ -14518,7 +14496,6 @@ export namespace Prisma {
   export type ImageUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     mod?: ModUpdateOneWithoutImagesNestedInput
     shader?: ShaderUpdateOneWithoutImagesNestedInput
     pack?: PackUpdateOneWithoutImagesNestedInput
@@ -14531,7 +14508,6 @@ export namespace Prisma {
   export type ImageUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -14544,7 +14520,6 @@ export namespace Prisma {
   export type ImageCreateManyInput = {
     id?: bigint | number
     src: string
-    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
     packId?: bigint | number | null
@@ -14553,13 +14528,11 @@ export namespace Prisma {
   export type ImageUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
   }
 
   export type ImageUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -15255,7 +15228,6 @@ export namespace Prisma {
   export type ImageCountOrderByAggregateInput = {
     id?: SortOrder
     src?: SortOrder
-    basePath?: SortOrder
     modId?: SortOrder
     shaderId?: SortOrder
     packId?: SortOrder
@@ -15271,7 +15243,6 @@ export namespace Prisma {
   export type ImageMaxOrderByAggregateInput = {
     id?: SortOrder
     src?: SortOrder
-    basePath?: SortOrder
     modId?: SortOrder
     shaderId?: SortOrder
     packId?: SortOrder
@@ -15280,7 +15251,6 @@ export namespace Prisma {
   export type ImageMinOrderByAggregateInput = {
     id?: SortOrder
     src?: SortOrder
-    basePath?: SortOrder
     modId?: SortOrder
     shaderId?: SortOrder
     packId?: SortOrder
@@ -17157,7 +17127,6 @@ export namespace Prisma {
   export type ImageCreateWithoutUsersInput = {
     id?: bigint | number
     src: string
-    basePath: string
     mod?: ModCreateNestedOneWithoutImagesInput
     shader?: ShaderCreateNestedOneWithoutImagesInput
     pack?: PackCreateNestedOneWithoutImagesInput
@@ -17169,7 +17138,6 @@ export namespace Prisma {
   export type ImageUncheckedCreateWithoutUsersInput = {
     id?: bigint | number
     src: string
-    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
     packId?: bigint | number | null
@@ -17317,7 +17285,6 @@ export namespace Prisma {
   export type ImageUpdateWithoutUsersInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     mod?: ModUpdateOneWithoutImagesNestedInput
     shader?: ShaderUpdateOneWithoutImagesNestedInput
     pack?: PackUpdateOneWithoutImagesNestedInput
@@ -17329,7 +17296,6 @@ export namespace Prisma {
   export type ImageUncheckedUpdateWithoutUsersInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -17478,7 +17444,6 @@ export namespace Prisma {
   export type ImageCreateWithoutPackInput = {
     id?: bigint | number
     src: string
-    basePath: string
     mod?: ModCreateNestedOneWithoutImagesInput
     shader?: ShaderCreateNestedOneWithoutImagesInput
     users?: UserCreateNestedManyWithoutImageInput
@@ -17490,7 +17455,6 @@ export namespace Prisma {
   export type ImageUncheckedCreateWithoutPackInput = {
     id?: bigint | number
     src: string
-    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
     users?: UserUncheckedCreateNestedManyWithoutImageInput
@@ -17512,7 +17476,6 @@ export namespace Prisma {
   export type ImageCreateWithoutPacksPrincipalInput = {
     id?: bigint | number
     src: string
-    basePath: string
     mod?: ModCreateNestedOneWithoutImagesInput
     shader?: ShaderCreateNestedOneWithoutImagesInput
     pack?: PackCreateNestedOneWithoutImagesInput
@@ -17524,7 +17487,6 @@ export namespace Prisma {
   export type ImageUncheckedCreateWithoutPacksPrincipalInput = {
     id?: bigint | number
     src: string
-    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
     packId?: bigint | number | null
@@ -17645,7 +17607,6 @@ export namespace Prisma {
     NOT?: ImageScalarWhereInput | ImageScalarWhereInput[]
     id?: BigIntFilter<"Image"> | bigint | number
     src?: StringFilter<"Image"> | string
-    basePath?: StringFilter<"Image"> | string
     modId?: BigIntNullableFilter<"Image"> | bigint | number | null
     shaderId?: BigIntNullableFilter<"Image"> | bigint | number | null
     packId?: BigIntNullableFilter<"Image"> | bigint | number | null
@@ -17665,7 +17626,6 @@ export namespace Prisma {
   export type ImageUpdateWithoutPacksPrincipalInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     mod?: ModUpdateOneWithoutImagesNestedInput
     shader?: ShaderUpdateOneWithoutImagesNestedInput
     pack?: PackUpdateOneWithoutImagesNestedInput
@@ -17677,7 +17637,6 @@ export namespace Prisma {
   export type ImageUncheckedUpdateWithoutPacksPrincipalInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -17779,7 +17738,6 @@ export namespace Prisma {
   export type ImageCreateWithoutShaderInput = {
     id?: bigint | number
     src: string
-    basePath: string
     mod?: ModCreateNestedOneWithoutImagesInput
     pack?: PackCreateNestedOneWithoutImagesInput
     users?: UserCreateNestedManyWithoutImageInput
@@ -17791,7 +17749,6 @@ export namespace Prisma {
   export type ImageUncheckedCreateWithoutShaderInput = {
     id?: bigint | number
     src: string
-    basePath: string
     modId?: bigint | number | null
     packId?: bigint | number | null
     users?: UserUncheckedCreateNestedManyWithoutImageInput
@@ -17853,7 +17810,6 @@ export namespace Prisma {
   export type ImageCreateWithoutShadersPrincipalInput = {
     id?: bigint | number
     src: string
-    basePath: string
     mod?: ModCreateNestedOneWithoutImagesInput
     shader?: ShaderCreateNestedOneWithoutImagesInput
     pack?: PackCreateNestedOneWithoutImagesInput
@@ -17865,7 +17821,6 @@ export namespace Prisma {
   export type ImageUncheckedCreateWithoutShadersPrincipalInput = {
     id?: bigint | number
     src: string
-    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
     packId?: bigint | number | null
@@ -18028,7 +17983,6 @@ export namespace Prisma {
   export type ImageUpdateWithoutShadersPrincipalInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     mod?: ModUpdateOneWithoutImagesNestedInput
     shader?: ShaderUpdateOneWithoutImagesNestedInput
     pack?: PackUpdateOneWithoutImagesNestedInput
@@ -18040,7 +17994,6 @@ export namespace Prisma {
   export type ImageUncheckedUpdateWithoutShadersPrincipalInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -18142,7 +18095,6 @@ export namespace Prisma {
   export type ImageCreateWithoutModInput = {
     id?: bigint | number
     src: string
-    basePath: string
     shader?: ShaderCreateNestedOneWithoutImagesInput
     pack?: PackCreateNestedOneWithoutImagesInput
     users?: UserCreateNestedManyWithoutImageInput
@@ -18154,7 +18106,6 @@ export namespace Prisma {
   export type ImageUncheckedCreateWithoutModInput = {
     id?: bigint | number
     src: string
-    basePath: string
     shaderId?: bigint | number | null
     packId?: bigint | number | null
     users?: UserUncheckedCreateNestedManyWithoutImageInput
@@ -18274,7 +18225,6 @@ export namespace Prisma {
   export type ImageCreateWithoutModsPrincipalInput = {
     id?: bigint | number
     src: string
-    basePath: string
     mod?: ModCreateNestedOneWithoutImagesInput
     shader?: ShaderCreateNestedOneWithoutImagesInput
     pack?: PackCreateNestedOneWithoutImagesInput
@@ -18286,7 +18236,6 @@ export namespace Prisma {
   export type ImageUncheckedCreateWithoutModsPrincipalInput = {
     id?: bigint | number
     src: string
-    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
     packId?: bigint | number | null
@@ -18487,7 +18436,6 @@ export namespace Prisma {
   export type ImageUpdateWithoutModsPrincipalInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     mod?: ModUpdateOneWithoutImagesNestedInput
     shader?: ShaderUpdateOneWithoutImagesNestedInput
     pack?: PackUpdateOneWithoutImagesNestedInput
@@ -18499,7 +18447,6 @@ export namespace Prisma {
   export type ImageUncheckedUpdateWithoutModsPrincipalInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
@@ -20142,7 +20089,6 @@ export namespace Prisma {
   export type ImageCreateManyPackInput = {
     id?: bigint | number
     src: string
-    basePath: string
     modId?: bigint | number | null
     shaderId?: bigint | number | null
   }
@@ -20268,7 +20214,6 @@ export namespace Prisma {
   export type ImageUpdateWithoutPackInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     mod?: ModUpdateOneWithoutImagesNestedInput
     shader?: ShaderUpdateOneWithoutImagesNestedInput
     users?: UserUpdateManyWithoutImageNestedInput
@@ -20280,7 +20225,6 @@ export namespace Prisma {
   export type ImageUncheckedUpdateWithoutPackInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     users?: UserUncheckedUpdateManyWithoutImageNestedInput
@@ -20292,7 +20236,6 @@ export namespace Prisma {
   export type ImageUncheckedUpdateManyWithoutPackInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -20308,7 +20251,6 @@ export namespace Prisma {
   export type ImageCreateManyShaderInput = {
     id?: bigint | number
     src: string
-    basePath: string
     modId?: bigint | number | null
     packId?: bigint | number | null
   }
@@ -20389,7 +20331,6 @@ export namespace Prisma {
   export type ImageUpdateWithoutShaderInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     mod?: ModUpdateOneWithoutImagesNestedInput
     pack?: PackUpdateOneWithoutImagesNestedInput
     users?: UserUpdateManyWithoutImageNestedInput
@@ -20401,7 +20342,6 @@ export namespace Prisma {
   export type ImageUncheckedUpdateWithoutShaderInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     users?: UserUncheckedUpdateManyWithoutImageNestedInput
@@ -20413,7 +20353,6 @@ export namespace Prisma {
   export type ImageUncheckedUpdateManyWithoutShaderInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     modId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }
@@ -20459,7 +20398,6 @@ export namespace Prisma {
   export type ImageCreateManyModInput = {
     id?: bigint | number
     src: string
-    basePath: string
     shaderId?: bigint | number | null
     packId?: bigint | number | null
   }
@@ -20554,7 +20492,6 @@ export namespace Prisma {
   export type ImageUpdateWithoutModInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     shader?: ShaderUpdateOneWithoutImagesNestedInput
     pack?: PackUpdateOneWithoutImagesNestedInput
     users?: UserUpdateManyWithoutImageNestedInput
@@ -20566,7 +20503,6 @@ export namespace Prisma {
   export type ImageUncheckedUpdateWithoutModInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     users?: UserUncheckedUpdateManyWithoutImageNestedInput
@@ -20578,7 +20514,6 @@ export namespace Prisma {
   export type ImageUncheckedUpdateManyWithoutModInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     src?: StringFieldUpdateOperationsInput | string
-    basePath?: StringFieldUpdateOperationsInput | string
     shaderId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     packId?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
   }

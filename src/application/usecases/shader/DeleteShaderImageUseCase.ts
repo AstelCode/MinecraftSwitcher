@@ -4,29 +4,31 @@ import { ShaderRepository } from "@/domain/repositories/ShaderRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
 import { TokenService } from "@/domain/services/TokenService";
 
+export interface DeleteShaderImageUseCaseDependencies {
+  userRepository: Pick<UserRepository, "findById">;
+  shaderRepository: Pick<ShaderRepository, "findById">;
+  tokenService: Pick<TokenService, "verify">;
+  imageRepository: Pick<ImageRepository, "findById" | "delete">;
+  fileRepository: Pick<FileRepository, "deleteShaderImage">;
+}
+
 export class DeleteShaderImageUseCase {
-  constructor(
-    public readonly userRepository: UserRepository,
-    public readonly shaderRepository: ShaderRepository,
-    public readonly tokenService: TokenService,
-    public readonly imageRepository: ImageRepository,
-    public readonly fileRepository: FileRepository,
-  ) {}
+  constructor(private readonly deps: DeleteShaderImageUseCaseDependencies) {}
 
   async execute(
     token: string,
     shaderId: bigint,
     imageId: bigint,
   ): Promise<void> {
-    const payload = await this.tokenService.verify(token);
+    const payload = await this.deps.tokenService.verify(token);
 
-    const user = await this.userRepository.findById(payload.id);
+    const user = await this.deps.userRepository.findById(payload.id);
 
     if (!user) {
       throw new Error("User not found.");
     }
 
-    const shader = await this.shaderRepository.findById(shaderId);
+    const shader = await this.deps.shaderRepository.findById(shaderId);
 
     if (!shader) {
       throw new Error("Shader not found.");
@@ -36,7 +38,7 @@ export class DeleteShaderImageUseCase {
       throw new Error("Unauthorized.");
     }
 
-    const image = await this.imageRepository.findById(imageId);
+    const image = await this.deps.imageRepository.findById(imageId);
 
     if (!image) {
       throw new Error("Image not found.");
@@ -46,8 +48,8 @@ export class DeleteShaderImageUseCase {
       throw new Error("Image does not belong to shader.");
     }
 
-    await this.fileRepository.deleteShaderImage(image.src);
+    await this.deps.fileRepository.deleteShaderImage(image.src);
 
-    await this.imageRepository.delete(image.id);
+    await this.deps.imageRepository.delete(image.id);
   }
 }

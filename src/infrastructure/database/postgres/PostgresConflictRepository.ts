@@ -23,7 +23,7 @@ export class PostgresConflictRepository implements ConflictRepository {
     conflict.id = newConflict.id;
   }
   async delete(id: bigint): Promise<void> {
-    await prisma.comment.delete({
+    await prisma.conflict.delete({
       where: {
         id,
       },
@@ -57,6 +57,19 @@ export class PostgresConflictRepository implements ConflictRepository {
     const data = await prisma.conflict.findMany({
       where: {
         modId: mod_id,
+      },
+      include: {
+        mod: true,
+        conflictMod: true,
+        conflictShader: true,
+      },
+    });
+    return data.map((item) => new Conflict().fromData(item));
+  }
+  async listAllByShader(shader_id: bigint): Promise<Conflict[]> {
+    const data = await prisma.conflict.findMany({
+      where: {
+        conflictshaderId: shader_id,
       },
       include: {
         mod: true,

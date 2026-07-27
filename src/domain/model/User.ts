@@ -65,7 +65,6 @@ export class User {
       this.image = new Image().fromData({
         id: data.image.id,
         src: data.image.src,
-        basePath: data.image.basePath,
       });
     }
     if (data.comments) {

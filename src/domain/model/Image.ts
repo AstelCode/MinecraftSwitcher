@@ -6,7 +6,6 @@ import { isValidText } from "../validators/validators";
 export interface ImageData {
   id: bigint;
   src: string;
-  basePath: string;
   shader?: ShaderData | null;
   mod?: ModData | null;
   pack?: PackData | null;
@@ -15,7 +14,6 @@ export interface ImageData {
 export class Image {
   id!: bigint;
   src!: string;
-  basePath!: string;
   shader?: Shader;
   mod?: Mod;
   pack?: Pack;
@@ -44,7 +42,6 @@ export class Image {
   fromData(data: ImageData) {
     this.id = data.id;
     this.src = data.src;
-    this.basePath = data.basePath;
     if (data.shader) {
       this.shader = new Shader().fromData(data.shader);
     }
@@ -61,7 +58,6 @@ export class Image {
     if (!isValidText(this.src)) throw new Error("url is empty");
     return {
       src: this.src,
-      basePath: this.basePath,
       packId: this.pack?.id,
       modId: this.mod?.id,
       shaderId: this.shader?.id,

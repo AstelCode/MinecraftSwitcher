@@ -2,14 +2,15 @@ import { CommentRepository } from "@/domain/repositories/CommentRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
 import { TokenService } from "@/domain/services/TokenService";
 import { CommentDTO } from "../dto/CommentDTO";
+
+export interface ListCommentByPackCommentUseCaseDependencies {
+  commentRepository: Pick<CommentRepository, "listByPack">;
+}
+
 export class ListCommentByPackCommentUseCase {
-  constructor(
-    public readonly userRepository: UserRepository,
-    public readonly commentRepository: CommentRepository,
-    public readonly tokenService: TokenService,
-  ) {}
+  constructor(private readonly deps: ListCommentByPackCommentUseCaseDependencies) {}
   async execute(packId: bigint): Promise<CommentDTO[]> {
-    const comments = await this.commentRepository.listByPack(packId);
+    const comments = await this.deps.commentRepository.listByPack(packId);
     return comments.map((item) => ({
       id: item.id.toString(),
       text: item.text,

@@ -3,21 +3,24 @@ import { UserRepository } from "@/domain/repositories/UserRepository";
 import { HashService } from "@/domain/services/HashService";
 import { TokenService } from "@/domain/services/TokenService";
 
+export interface CreateAdminUseCaseDependencies {
+  userRepository: Pick<UserRepository, "findById" | "save">;
+  tokenService: Pick<TokenService, "verify">;
+  hashService: Pick<HashService, "hashPassword">;
+}
+
 export class CreateAdminUseCase {
-  constructor(
-    public readonly userRepository: UserRepository,
-    public readonly tokenService: TokenService,
-    public readonly hashService: HashService,
-  ) {}
+  constructor(private readonly deps: CreateAdminUseCaseDependencies) {}
+
   async execute(token: string, email: string, password: string): Promise<void> {
-    const payload = await this.tokenService.verify(token);
-    const user = await this.userRepository.findById(payload.id);
+    const payload = await this.deps.tokenService.verify(token);
+    const user = await this.deps.userRepository.findById(payload.id);
     if (!user || !user.isAdmin) throw new Error("Admin not found.");
     const newAdmin = new User();
     newAdmin.create(email, password);
-    const hashedPassword = await this.hashService.hashPassword(password);
+    const hashedPassword = await this.deps.hashService.hashPassword(password);
     newAdmin.setHashedPassword(hashedPassword);
     newAdmin.isAdmin = true;
-    await this.userRepository.save(newAdmin);
+    await this.deps.userRepository.save(newAdmin);
   }
 }

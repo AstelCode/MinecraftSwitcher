@@ -10,27 +10,29 @@ export interface UpdateShaderArgs {
   versionType: VersionType;
 }
 
+export interface UpdateShaderUseCaseDependencies {
+  userRepository: Pick<UserRepository, "findById">;
+  shaderRepository: Pick<ShaderRepository, "findById" | "update">;
+  tokenService: Pick<TokenService, "verify">;
+}
+
 export class UpdateShaderUseCase {
-  constructor(
-    private readonly userRepository: UserRepository,
-    private readonly shaderRepository: ShaderRepository,
-    private readonly tokenService: TokenService,
-  ) {}
+  constructor(private readonly deps: UpdateShaderUseCaseDependencies) {}
 
   async execute(
     token: string,
     shaderId: bigint,
     data: UpdateShaderArgs,
   ): Promise<void> {
-    const payload = await this.tokenService.verify(token);
+    const payload = await this.deps.tokenService.verify(token);
 
-    const user = await this.userRepository.findById(payload.id);
+    const user = await this.deps.userRepository.findById(payload.id);
 
     if (!user) {
       throw new Error("User not found.");
     }
 
-    const shader = await this.shaderRepository.findById(shaderId);
+    const shader = await this.deps.shaderRepository.findById(shaderId);
 
     if (!shader) {
       throw new Error("Shader not found.");
@@ -44,6 +46,6 @@ export class UpdateShaderUseCase {
     shader.description = data.description ?? "";
     shader.versionType = data.versionType;
 
-    await this.shaderRepository.update(shader);
+    await this.deps.shaderRepository.update(shader);
   }
 }

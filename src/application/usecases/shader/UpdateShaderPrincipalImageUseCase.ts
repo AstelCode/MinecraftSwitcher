@@ -5,25 +5,27 @@ import { ShaderRepository } from "@/domain/repositories/ShaderRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
 import { TokenService } from "@/domain/services/TokenService";
 
+export interface UpdateShaderPrincipalImageUseCaseDependencies {
+  userRepository: Pick<UserRepository, "findById">;
+  shaderRepository: Pick<ShaderRepository, "findById" | "setPrincipalImage">;
+  tokenService: Pick<TokenService, "verify">;
+  imageRepository: Pick<ImageRepository, "save" | "delete">;
+  fileRepository: Pick<FileRepository, "saveShaderPrincipalFile" | "deleteShaderPrincipalFile">;
+}
+
 export class UpdateShaderPrincipalImageUseCase {
-  constructor(
-    private readonly userRepository: UserRepository,
-    private readonly shaderRepository: ShaderRepository,
-    private readonly tokenService: TokenService,
-    private readonly imageRepository: ImageRepository,
-    private readonly fileRepository: FileRepository,
-  ) {}
+  constructor(private readonly deps: UpdateShaderPrincipalImageUseCaseDependencies) {}
 
   async execute(token: string, shaderId: bigint, file: File): Promise<void> {
-    const payload = await this.tokenService.verify(token);
+    const payload = await this.deps.tokenService.verify(token);
 
-    const user = await this.userRepository.findById(payload.id);
+    const user = await this.deps.userRepository.findById(payload.id);
 
     if (!user) {
       throw new Error("User not found.");
     }
 
-    const shader = await this.shaderRepository.findById(shaderId);
+    const shader = await this.deps.shaderRepository.findById(shaderId);
 
     if (!shader) {
       throw new Error("Shader not found.");
@@ -35,7 +37,7 @@ export class UpdateShaderPrincipalImageUseCase {
 
     const oldImage = shader.principalImage;
 
-    const src = await this.fileRepository.saveShaderPrincipalFile(
+    const src = await this.deps.fileRepository.saveShaderPrincipalFile(
       shader.id.toString(),
       file,
     );
@@ -44,17 +46,17 @@ export class UpdateShaderPrincipalImageUseCase {
       const image = new Image();
       image.src = src;
 
-      await this.imageRepository.save(image);
+      await this.deps.imageRepository.save(image);
 
-      await this.shaderRepository.setPrincipalImage(shader.id, image.id);
+      await this.deps.shaderRepository.setPrincipalImage(shader.id, image.id);
 
       if (oldImage) {
-        await this.imageRepository.delete(oldImage.id);
+        await this.deps.imageRepository.delete(oldImage.id);
 
-        await this.fileRepository.deleteShaderPrincipalFile(oldImage.src);
+        await this.deps.fileRepository.deleteShaderPrincipalFile(oldImage.src);
       }
     } catch (error) {
-      await this.fileRepository.deleteShaderPrincipalFile(src);
+      await this.deps.fileRepository.deleteShaderPrincipalFile(src);
       throw error;
     }
   }

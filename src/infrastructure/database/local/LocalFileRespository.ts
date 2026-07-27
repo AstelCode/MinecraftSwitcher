@@ -8,10 +8,11 @@ const absoluteBasePath = path.resolve(process.cwd(), relativeBasePath);
 export class LocalFileRepository implements FileRepository {
   async saveProfileImage(name: string, file: File): Promise<string> {
     const folder = "profiles";
-    await this.save(folder, name, file);
-    return `${this.getBaseUrl()}/${folder}/${name}`;
+    const ext = path.extname(file.name);
+    const fileName = `${name}${ext}`;
+    await this.save(folder, fileName, file);
+    return `${this.getBaseUrl()}/${folder}/${fileName}`;
   }
-
   async deleteProfileImage(filePath: string): Promise<void> {
     const fileName = path.basename(filePath);
     await this.delete("profiles", fileName);
@@ -19,8 +20,10 @@ export class LocalFileRepository implements FileRepository {
 
   async saveShaderImage(name: string, file: File): Promise<string> {
     const folder = "shaders/images";
-    await this.save(folder, name, file);
-    return `${this.getBaseUrl()}/${folder}/${name}`;
+    const ext = path.extname(file.name);
+    const fileName = `${name}${ext}`;
+    await this.save(folder, fileName, file);
+    return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
   async deleteShaderImage(filePath: string): Promise<void> {
@@ -30,8 +33,10 @@ export class LocalFileRepository implements FileRepository {
 
   async saveShaderFile(name: string, file: File): Promise<string> {
     const folder = "shaders/files";
-    await this.save(folder, name, file);
-    return `${this.getBaseUrl()}/${folder}/${name}`;
+    const ext = path.extname(file.name);
+    const fileName = `${name}${ext}`;
+    await this.save(folder, fileName, file);
+    return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
   async deleteShaderFile(filePath: string): Promise<void> {
@@ -41,13 +46,80 @@ export class LocalFileRepository implements FileRepository {
 
   async saveShaderPrincipalFile(name: string, file: File): Promise<string> {
     const folder = "shaders/principal";
-    await this.save(folder, name, file);
-    return `${this.getBaseUrl()}/${folder}/${name}`;
+    const ext = path.extname(file.name);
+    const fileName = `${name}${ext}`;
+    await this.save(folder, fileName, file);
+    return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
   async deleteShaderPrincipalFile(filePath: string): Promise<void> {
     const fileName = path.basename(filePath);
     await this.delete("shaders/principal", fileName);
+  }
+
+  async saveModImage(name: string, file: File): Promise<string> {
+    const folder = "mods/images";
+    const ext = path.extname(file.name);
+    const fileName = `${name}${ext}`;
+    await this.save(folder, fileName, file);
+    return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
+  }
+
+  async deleteModImage(filePath: string): Promise<void> {
+    const fileName = path.basename(filePath);
+    await this.delete("mods/images", fileName);
+  }
+
+  async saveModFile(name: string, file: File): Promise<string> {
+    const folder = "mods/files";
+    const ext = path.extname(file.name);
+    const fileName = `${name}${ext}`;
+    await this.save(folder, fileName, file);
+    return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
+  }
+
+  async deleteModFile(filePath: string): Promise<void> {
+    const fileName = path.basename(filePath);
+    await this.delete("mods/files", fileName);
+  }
+
+  async saveModPrincipalFile(name: string, file: File): Promise<string> {
+    const folder = "mods/principal";
+    const ext = path.extname(file.name);
+    const fileName = `${name}${ext}`;
+    await this.save(folder, fileName, file);
+    return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
+  }
+
+  async deleteModPrincipalFile(filePath: string): Promise<void> {
+    const fileName = path.basename(filePath);
+    await this.delete("mods/principal", fileName);
+  }
+
+  async savePackImage(name: string, file: File): Promise<string> {
+    const folder = "packs/images";
+    const ext = path.extname(file.name);
+    const fileName = `${name}${ext}`;
+    await this.save(folder, fileName, file);
+    return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
+  }
+
+  async deletePackImage(filePath: string): Promise<void> {
+    const fileName = path.basename(filePath);
+    await this.delete("packs/images", fileName);
+  }
+
+  async savePackPrincipalFile(name: string, file: File): Promise<string> {
+    const folder = "packs/principal";
+    const ext = path.extname(file.name);
+    const fileName = `${name}${ext}`;
+    await this.save(folder, fileName, file);
+    return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
+  }
+
+  async deletePackPrincipalFile(filePath: string): Promise<void> {
+    const fileName = path.basename(filePath);
+    await this.delete("packs/principal", fileName);
   }
 
   getBaseUrl(): string {

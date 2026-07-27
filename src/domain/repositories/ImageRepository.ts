@@ -3,6 +3,7 @@ import { Image } from "@/domain/model/Image";
 export interface ImageRepository {
   save(image: Image): Promise<void>;
   update(image: Image): Promise<void>;
+  updateSrc(imageId: bigint, src: string): Promise<void>;
   delete(id: bigint): Promise<void>;
   findById(id: bigint): Promise<Image | undefined>;
   listByShader(shader_id: bigint): Promise<Image[]>;

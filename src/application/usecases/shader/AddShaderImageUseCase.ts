@@ -6,26 +6,28 @@ import { UserRepository } from "@/domain/repositories/UserRepository";
 import { UuidService } from "@/domain/services/RandomService";
 import { TokenService } from "@/domain/services/TokenService";
 
+export interface AddShaderImageUseCaseDependencies {
+  userRepository: Pick<UserRepository, "findById">;
+  shaderRepository: Pick<ShaderRepository, "findById" | "addImage">;
+  tokenService: Pick<TokenService, "verify">;
+  imageRepository: Pick<ImageRepository, "save" | "delete">;
+  fileRepository: Pick<FileRepository, "saveShaderImage" | "deleteShaderFile">;
+  uuidService: Pick<UuidService, "generate">;
+}
+
 export class AddShaderImageUseCase {
-  constructor(
-    private readonly userRepository: UserRepository,
-    private readonly shaderRepository: ShaderRepository,
-    private readonly tokenService: TokenService,
-    private readonly imageRepository: ImageRepository,
-    private readonly fileRepository: FileRepository,
-    private readonly uuidService: UuidService,
-  ) {}
+  constructor(private readonly deps: AddShaderImageUseCaseDependencies) {}
 
   async execute(token: string, shaderId: bigint, file: File): Promise<void> {
-    const payload = await this.tokenService.verify(token);
+    const payload = await this.deps.tokenService.verify(token);
 
-    const user = await this.userRepository.findById(payload.id);
+    const user = await this.deps.userRepository.findById(payload.id);
 
     if (!user) {
       throw new Error("User not found.");
     }
 
-    const shader = await this.shaderRepository.findById(shaderId);
+    const shader = await this.deps.shaderRepository.findById(shaderId);
 
     if (!shader) {
       throw new Error("Shader not found.");
@@ -35,7 +37,7 @@ export class AddShaderImageUseCase {
       throw new Error("Unauthorized.");
     }
 
-    const uuid = this.uuidService.generate();
+    const uuid = this.deps.uuidService.generate();
 
     const fileName = `image_${shader.id}_${uuid}`;
 
@@ -43,21 +45,21 @@ export class AddShaderImageUseCase {
     let image: Image | undefined;
 
     try {
-      filePath = await this.fileRepository.saveShaderImage(fileName, file);
+      filePath = await this.deps.fileRepository.saveShaderImage(fileName, file);
 
       image = new Image();
       image.src = filePath;
 
-      await this.imageRepository.save(image);
+      await this.deps.imageRepository.save(image);
 
-      await this.shaderRepository.addImage(shader.id, image.id);
+      await this.deps.shaderRepository.addImage(shader.id, image.id);
     } catch (error) {
       if (image) {
-        await this.imageRepository.delete(image.id);
+        await this.deps.imageRepository.delete(image.id);
       }
 
       if (filePath) {
-        await this.fileRepository.deleteShaderFile(filePath);
+        await this.deps.fileRepository.deleteShaderFile(filePath);
       }
 
       throw error;

@@ -20,18 +20,22 @@ enum VersionType {
 }
 
 model User {
-  id           BigInt    @id @default(autoincrement())
-  email        String    @unique
+  id           BigInt  @id @default(autoincrement())
+  email        String  @unique
   nickname     String
   password     String
   recovery_key String?
-  is_admin     Boolean   @default(false)
-  packs        Pack[]
-  shaders      Shader[]
-  mods         Mod[]
-  comments     Comment[]
-  image        Image?    @relation(fields: [imageId], references: [id])
-  imageId      BigInt?
+  is_admin     Boolean @default(false)
+
+  packs    Pack[]
+  shaders  Shader[]
+  mods     Mod[]
+  comments Comment[]
+
+  // Nota: Al borrar el User, esta fila se elimina. La imagen en la base de datos quedará huérfana. 
+  // Para que la imagen se borre, tendrías que pasar userId al modelo Image.
+  image   Image?  @relation(fields: [imageId], references: [id])
+  imageId BigInt?
 }
 
 model Pack {
@@ -45,12 +49,13 @@ model Pack {
   shaders Shader[]
   mods    Mod[]
 
-  author   User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId BigInt
 
   comments Comment[]
   images   Image[]   @relation("packImage")
 
+  // Nota: Igual que con User, si se borra el Pack, la imagen "Principal" no se borra automáticamente de la tabla Image.
   principalImage   Image?  @relation("PrincipalImage", fields: [principalImageId], references: [id])
   principalImageId BigInt?
 }
@@ -63,7 +68,7 @@ model Shader {
   weight      Int
   src         String
 
-  author   User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId BigInt
 
   comments          Comment[]
@@ -86,7 +91,7 @@ model Mod {
   weight      Int
   packs       Pack[]
 
-  author   User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId BigInt
 
   comments Comment[]
@@ -99,37 +104,41 @@ model Mod {
   modDependencies   ModDependency[]   @relation("ModDependencies")
   versionType       VersionType
   shaderDependecies ShaderDependecy[]
-  principalImage    Image?            @relation("PrincipalImage", fields: [principalImageId], references: [id])
-  principalImageId  BigInt?
+
+  principalImage   Image?  @relation("PrincipalImage", fields: [principalImageId], references: [id])
+  principalImageId BigInt?
 }
 
 model Comment {
   id   BigInt @id @default(autoincrement())
   text String
 
-  author   User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId BigInt
 
-  pack     Pack?   @relation(fields: [packId], references: [id])
+  // Cascada: Si se borra el pack, shader o mod, el comentario desaparece.
+  pack     Pack?   @relation(fields: [packId], references: [id], onDelete: Cascade)
   packId   BigInt?
-  shader   Shader? @relation(fields: [shaderId], references: [id])
+  shader   Shader? @relation(fields: [shaderId], references: [id], onDelete: Cascade)
   shaderId BigInt?
-  mod      Mod?    @relation(fields: [modId], references: [id])
+  mod      Mod?    @relation(fields: [modId], references: [id], onDelete: Cascade)
   modId    BigInt?
 
   @@map("Comments")
 }
 
 model Image {
-  id               BigInt   @id @default(autoincrement())
-  src              String
-  basePath         String
-  mod              Mod?     @relation("modImage", fields: [modId], references: [id])
-  modId            BigInt?
-  shader           Shader?  @relation("shaderImage", fields: [shaderId], references: [id])
-  shaderId         BigInt?
-  pack             Pack?    @relation("packImage", fields: [packId], references: [id])
-  packId           BigInt?
+  id  BigInt @id @default(autoincrement())
+  src String
+
+  // Cascada: Si se borra la entidad a la que pertenece la galería de imágenes, las imágenes se borran.
+  mod      Mod?    @relation("modImage", fields: [modId], references: [id], onDelete: Cascade)
+  modId    BigInt?
+  shader   Shader? @relation("shaderImage", fields: [shaderId], references: [id], onDelete: Cascade)
+  shaderId BigInt?
+  pack     Pack?   @relation("packImage", fields: [packId], references: [id], onDelete: Cascade)
+  packId   BigInt?
+
   users            User[]
   packsPrincipal   Pack[]   @relation("PrincipalImage")
   shadersPrincipal Shader[] @relation("PrincipalImage")
@@ -139,14 +148,15 @@ model Image {
 model Conflict {
   id BigInt @id @default(autoincrement())
 
+  // Cascada para conflictos de dependencias
   conflictshaderId BigInt?
-  conflictShader   Shader? @relation(fields: [conflictshaderId], references: [id])
+  conflictShader   Shader? @relation(fields: [conflictshaderId], references: [id], onDelete: Cascade)
 
   modId BigInt
-  mod   Mod    @relation("ModConflicts", fields: [modId], references: [id])
+  mod   Mod    @relation("ModConflicts", fields: [modId], references: [id], onDelete: Cascade)
 
   conflictModId BigInt?
-  conflictMod   Mod?    @relation("ModConflictTarget", fields: [conflictModId], references: [id])
+  conflictMod   Mod?    @relation("ModConflictTarget", fields: [conflictModId], references: [id], onDelete: Cascade)
 
   @@map("Conflicts")
 }
@@ -155,8 +165,9 @@ model ModDependency {
   modId        BigInt
   dependencyId BigInt
 
-  mod        Mod @relation("ModDependencies", fields: [modId], references: [id])
-  dependency Mod @relation("RequiredBy", fields: [dependencyId], references: [id])
+  // Cascada: Si borras el mod original o su dependencia, la relación se elimina.
+  mod        Mod @relation("ModDependencies", fields: [modId], references: [id], onDelete: Cascade)
+  dependency Mod @relation("RequiredBy", fields: [dependencyId], references: [id], onDelete: Cascade)
 
   @@id([modId, dependencyId])
 }
@@ -165,8 +176,9 @@ model ShaderDependecy {
   shaderId BigInt
   modId    BigInt
 
-  shader Shader @relation(fields: [shaderId], references: [id])
-  mod    Mod    @relation(fields: [modId], references: [id])
+  // Cascada: Al borrar el shader o el mod, se elimina esta tabla intermedia.
+  shader Shader @relation(fields: [shaderId], references: [id], onDelete: Cascade)
+  mod    Mod    @relation(fields: [modId], references: [id], onDelete: Cascade)
 
   @@id([shaderId, modId])
 }

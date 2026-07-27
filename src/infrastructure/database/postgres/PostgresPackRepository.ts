@@ -89,6 +89,48 @@ export class PostgresPackRepository implements PackRepository {
     await prisma.pack.delete({ where: { id } });
   }
 
+  async addImage(packId: bigint, imageId: bigint): Promise<void> {
+    await prisma.pack.update({
+      where: { id: packId },
+      data: { images: { connect: { id: imageId } } },
+    });
+  }
+
+  async setPrincipalImage(packId: bigint, imageId: bigint): Promise<void> {
+    await prisma.pack.update({
+      where: { id: packId },
+      data: { principalImage: { connect: { id: imageId } } },
+    });
+  }
+
+  async addMod(packId: bigint, modId: bigint): Promise<void> {
+    await prisma.pack.update({
+      where: { id: packId },
+      data: { mods: { connect: { id: modId } } },
+    });
+  }
+
+  async addShader(packId: bigint, shaderId: bigint): Promise<void> {
+    await prisma.pack.update({
+      where: { id: packId },
+      data: { shaders: { connect: { id: shaderId } } },
+    });
+  }
+
+  async removeMod(packId: bigint, modId: bigint): Promise<void> {
+    await prisma.pack.update({
+      where: { id: packId },
+      data: { mods: { disconnect: { id: modId } } },
+    });
+  }
+
+  async removeShader(packId: bigint, shaderId: bigint): Promise<void> {
+    await prisma.pack.update({
+      where: { id: packId },
+      data: { shaders: { disconnect: { id: shaderId } } },
+    });
+  }
+
   async listAll(): Promise<Pack[]> {
     const data = await prisma.pack.findMany({
       include: { author: true },

@@ -177,7 +177,6 @@ exports.Prisma.CommentScalarFieldEnum = {
 exports.Prisma.ImageScalarFieldEnum = {
   id: 'id',
   src: 'src',
-  basePath: 'basePath',
   modId: 'modId',
   shaderId: 'shaderId',
   packId: 'packId'
@@ -244,8 +243,7 @@ exports.Prisma.CommentOrderByRelevanceFieldEnum = {
 };
 
 exports.Prisma.ImageOrderByRelevanceFieldEnum = {
-  src: 'src',
-  basePath: 'basePath'
+  src: 'src'
 };
 exports.VersionType = exports.$Enums.VersionType = {
   FORGE: 'FORGE',

@@ -2,17 +2,20 @@ import { CommentRepository } from "@/domain/repositories/CommentRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
 import { TokenService } from "@/domain/services/TokenService";
 import { CommentDTO } from "../dto/CommentDTO";
+
+export interface ListCommentByAuthorCommentUseCaseDependencies {
+  userRepository: Pick<UserRepository, "findById">;
+  commentRepository: Pick<CommentRepository, "listByUser">;
+  tokenService: Pick<TokenService, "verify">;
+}
+
 export class ListCommentByAuthorCommentUseCase {
-  constructor(
-    public readonly userRepository: UserRepository,
-    public readonly commentRepository: CommentRepository,
-    public readonly tokenService: TokenService,
-  ) {}
+  constructor(private readonly deps: ListCommentByAuthorCommentUseCaseDependencies) {}
   async execute(token: string): Promise<CommentDTO[]> {
-    const payload = await this.tokenService.verify(token);
-    const user = await this.userRepository.findById(payload.id);
+    const payload = await this.deps.tokenService.verify(token);
+    const user = await this.deps.userRepository.findById(payload.id);
     if (!user) throw new Error("User not found.");
-    const comments = await this.commentRepository.listByUser(user.id);
+    const comments = await this.deps.commentRepository.listByUser(user.id);
     return comments.map((item) => ({
       id: item.id.toString(),
       text: item.text,

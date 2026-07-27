@@ -1,16 +1,15 @@
 import { ShaderRepository } from "@/domain/repositories/ShaderRepository";
-import { UserRepository } from "@/domain/repositories/UserRepository";
-import { TokenService } from "@/domain/services/TokenService";
 import { ShaderDTO } from "../dto/ShaderDTO";
 
+export interface ListShadersByPackUseCaseDependencies {
+  shaderRepository: Pick<ShaderRepository, "listByPack">;
+}
+
 export class ListShadersByPackUseCase {
-  constructor(
-    public readonly userRepository: UserRepository,
-    public readonly shaderRepository: ShaderRepository,
-  ) {}
+  constructor(private readonly deps: ListShadersByPackUseCaseDependencies) {}
 
   async execute(packId: bigint): Promise<ShaderDTO[]> {
-    const data = await this.shaderRepository.listByPack(packId);
+    const data = await this.deps.shaderRepository.listByPack(packId);
     return data.map((item) => ({
       id: item.id.toString(),
       name: item.name,

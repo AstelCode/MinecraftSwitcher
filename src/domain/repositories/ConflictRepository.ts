@@ -7,4 +7,5 @@ export interface ConflictRepository {
   findById(id: bigint): Promise<Conflict | undefined>;
   listAll(): Promise<Conflict[]>;
   listAllByMod(mod_id: bigint): Promise<Conflict[]>;
+  listAllByShader(shader_id: bigint): Promise<Conflict[]>;
 }

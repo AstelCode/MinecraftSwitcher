@@ -1,20 +1,11 @@
 import Fastify from "fastify";
 import dotenv from "dotenv";
 import jwt from "@fastify/jwt";
-import { PostgresUserRepository } from "./infrastructure/database/postgres/PostgresUserRepository";
-import { ArgonHashService } from "./infrastructure/services/hash/ArgonHashService";
-import { FastifyJwtService } from "./infrastructure/services/auth/FastifyJwtService";
-import { CreateUserUseCase } from "./application/usecases/user/CreateUserUseCase";
-import { LoginUseCase } from "./application/usecases/auth/LoginUseCase";
+import multipart from "@fastify/multipart";
+import { setupDependencies } from "./container";
 dotenv.config();
 
-const app = Fastify({
-  logger: true,
-});
-
-app.register(jwt, {
-  secret: process.env.JWT_SECRET!,
-});
+const port = Number(process.env.PORT) || 3000;
 async function main() {
   const app = Fastify({ logger: true });
 
@@ -22,27 +13,24 @@ async function main() {
     secret: process.env.JWT_SECRET!,
   });
 
+  await app.register(multipart, {
+    limits: {
+      fileSize: 100 * 1024 * 1024,
+    },
+  });
+
+  // Dependency Injection & Routes
+  await setupDependencies(app);
+
   await app.ready();
 
-  const repository = new PostgresUserRepository();
-  const hashService = new ArgonHashService();
-  const tokenService = new FastifyJwtService(app);
-
-  const loginUseCase = new LoginUseCase(repository, tokenService, hashService);
-
-  //const token = await createUser.create("frankparedesalpi@gmail.com", "123456");
-
-  //   const token =
-  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJlbWFpbCI6ImZyYW5rcGFyZWRlc2FscGlAZ21haWwuY29tIiwiaWF0IjoxNzg1MDM4ODMwfQ.nV1FtoS-Lj1F1aZjpakdQ8_OZHGa63R0lvYBmt8fzmI";
-
-  //   console.log(await tokenService.verify(token));
-  //await  loginUseCase.login("")
-
-  const token = await loginUseCase.execute(
-    "frankparedesalpi@gmail.com",
-    "1234",
-  );
-  console.log(token);
+  try {
+    await app.listen({ port, host: "0.0.0.0" });
+    console.log(`Server listening on http://localhost:${port}`);
+  } catch (err) {
+    app.log.error(err);
+    process.exit(1);
+  }
 }
 
 main().catch(console.error);

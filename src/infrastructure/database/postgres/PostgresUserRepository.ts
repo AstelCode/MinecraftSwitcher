@@ -40,7 +40,7 @@ export class PostgresUserRepository implements UserRepository {
     await prisma.user.update({
       where: { id: userId },
       data: {
-        image: imageId ? { connect: { id: imageId } } : undefined,
+        image: { connect: { id: imageId } },
       },
     });
   }

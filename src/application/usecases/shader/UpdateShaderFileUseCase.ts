@@ -3,24 +3,26 @@ import { ShaderRepository } from "@/domain/repositories/ShaderRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
 import { TokenService } from "@/domain/services/TokenService";
 
+export interface UpdateShaderFileUseCaseDependencies {
+  userRepository: Pick<UserRepository, "findById">;
+  shaderRepository: Pick<ShaderRepository, "findById" | "updateSrc">;
+  tokenService: Pick<TokenService, "verify">;
+  fileRepository: Pick<FileRepository, "saveShaderFile" | "deleteShaderFile">;
+}
+
 export class UpdateShaderFileUseCase {
-  constructor(
-    private readonly userRepository: UserRepository,
-    private readonly shaderRepository: ShaderRepository,
-    private readonly tokenService: TokenService,
-    private readonly fileRepository: FileRepository,
-  ) {}
+  constructor(private readonly deps: UpdateShaderFileUseCaseDependencies) {}
 
   async execute(token: string, shaderId: bigint, file: File): Promise<void> {
-    const payload = await this.tokenService.verify(token);
+    const payload = await this.deps.tokenService.verify(token);
 
-    const user = await this.userRepository.findById(payload.id);
+    const user = await this.deps.userRepository.findById(payload.id);
 
     if (!user) {
       throw new Error("User not found.");
     }
 
-    const shader = await this.shaderRepository.findById(shaderId);
+    const shader = await this.deps.shaderRepository.findById(shaderId);
 
     if (!shader) {
       throw new Error("Shader not found.");
@@ -35,14 +37,14 @@ export class UpdateShaderFileUseCase {
 
     try {
       const fileName = `shader_${shader.id}`;
-      newSrc = await this.fileRepository.saveShaderFile(fileName, file);
-      await this.shaderRepository.updateSrc(shader.id, newSrc);
+      newSrc = await this.deps.fileRepository.saveShaderFile(fileName, file);
+      await this.deps.shaderRepository.updateSrc(shader.id, newSrc);
       if (oldSrc) {
-        await this.fileRepository.deleteShaderFile(oldSrc);
+        await this.deps.fileRepository.deleteShaderFile(oldSrc);
       }
     } catch (error) {
       if (newSrc) {
-        await this.fileRepository.deleteShaderFile(newSrc);
+        await this.deps.fileRepository.deleteShaderFile(newSrc);
       }
       throw error;
     }

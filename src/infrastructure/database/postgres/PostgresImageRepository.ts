@@ -4,24 +4,29 @@ import { prisma } from "./prisma";
 
 export class PostgresImageRepository implements ImageRepository {
   async save(image: Image): Promise<void> {
-    const { src, packId, modId, shaderId, basePath } = image.toPersistence();
+    const { src, packId, modId, shaderId } = image.toPersistence();
     const newImage = await prisma.image.create({
       data: {
         src,
-        basePath,
         pack: packId ? { connect: { id: packId } } : undefined,
         mod: modId ? { connect: { id: modId } } : undefined,
         shader: shaderId ? { connect: { id: shaderId } } : undefined,
       },
     });
-    newImage.id = image.id;
+    image.id = newImage.id;
   }
   async update(image: Image): Promise<void> {
-    const { src: url } = image.toPersistence();
+    const { src } = image.toPersistence();
     const id = image.getPersistanceId();
     await prisma.image.update({
       where: { id },
-      data: { url: url },
+      data: { src },
+    });
+  }
+  async updateSrc(imageId: bigint, src: string): Promise<void> {
+    await prisma.image.update({
+      where: { id: imageId },
+      data: { src: src },
     });
   }
   async delete(id: bigint): Promise<void> {

@@ -3,43 +3,48 @@ import { ImageRepository } from "@/domain/repositories/ImageRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
 import { TokenService } from "@/domain/services/TokenService";
 import { Image } from "@/domain/model/Image";
+import { UuidService } from "@/domain/services/RandomService";
+
+export interface ChangeImageUseCaseDependencies {
+  userRepository: Pick<UserRepository, "findById" | "updateImage">;
+  tokenService: Pick<TokenService, "verify">;
+  imageRepository: Pick<ImageRepository, "updateSrc" | "save">;
+  fileRepository: Pick<FileRepository, "saveProfileImage" | "deleteProfileImage">;
+  uuidService: Pick<UuidService, "generate">;
+}
 
 export class ChangeImageUseCase {
-  constructor(
-    public readonly userRepository: UserRepository,
-    public readonly tokenService: TokenService,
-    public readonly imageRepository: ImageRepository,
-    public readonly fileRepository: FileRepository,
-  ) {}
+  constructor(private readonly deps: ChangeImageUseCaseDependencies) {}
+  
   async execute(token: string, file: File): Promise<void> {
-    const payload = await this.tokenService.verify(token);
-    const user = await this.userRepository.findById(payload.id);
+    const payload = await this.deps.tokenService.verify(token);
+    const user = await this.deps.userRepository.findById(payload.id);
     if (!user) throw new Error("User not found.");
 
     const oldImage = user.image;
 
-    // const extension = path.extname(file.name);
-    // const name = `${user.id}${extension}`;
-    // const filePath = "ProfilesIcons";
     let filePath;
+    let image;
     try {
-      filePath = await this.fileRepository.saveProfileImage(
-        user.id.toString(),
+      filePath = await this.deps.fileRepository.saveProfileImage(
+        `${user.id}_${this.deps.uuidService.generate()}`,
         file,
       );
       try {
-        const image = new Image();
-        image.src = filePath;
-        image.basePath = this.fileRepository.getBaseUrl();
-        await this.imageRepository.save(image);
-        await this.userRepository.updateImage(user.id, image.id);
+        if (oldImage) {
+          await this.deps.imageRepository.updateSrc(oldImage.id, filePath);
+        } else {
+          image = new Image();
+          image.src = filePath;
+          await this.deps.imageRepository.save(image);
+          await this.deps.userRepository.updateImage(user.id, image.id);
+        }
       } catch (error) {
-        await this.fileRepository.deleteProfileImage(user.id.toString());
+        await this.deps.fileRepository.deleteProfileImage(user.id.toString());
         throw error;
       }
       if (oldImage) {
-        await this.fileRepository.deleteProfileImage(filePath);
-        await this.imageRepository.delete(oldImage.id);
+        await this.deps.fileRepository.deleteProfileImage(oldImage.src);
       }
     } catch (error) {
       throw error;

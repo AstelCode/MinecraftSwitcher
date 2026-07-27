@@ -3,6 +3,24 @@ import { ModRepository } from "@/domain/repositories/ModRepository";
 import { prisma } from "./prisma";
 
 export class PostgresModRepository implements ModRepository {
+  async updateSrc(modId: bigint, url: string): Promise<void> {
+    await prisma.mod.update({
+      where: { id: modId },
+      data: { src: url },
+    });
+  }
+  async addImage(modId: bigint, imageId: bigint): Promise<void> {
+    await prisma.mod.update({
+      where: { id: modId },
+      data: { images: { connect: { id: imageId } } },
+    });
+  }
+  async setPrincipalImage(modId: bigint, imageId: bigint): Promise<void> {
+    await prisma.mod.update({
+      where: { id: modId },
+      data: { principalImage: { connect: { id: imageId } } },
+    });
+  }
   async save(mod: Mod): Promise<void> {
     const {
       name,
