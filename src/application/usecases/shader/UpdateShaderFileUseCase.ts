@@ -1,12 +1,14 @@
 import { FileRepository } from "@/domain/repositories/FileRepository";
 import { ShaderRepository } from "@/domain/repositories/ShaderRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
+import { UuidService } from "@/domain/services/RandomService";
 import { TokenService } from "@/domain/services/TokenService";
 
 export interface UpdateShaderFileUseCaseDependencies {
   userRepository: Pick<UserRepository, "findById">;
   shaderRepository: Pick<ShaderRepository, "findById" | "updateSrc">;
   tokenService: Pick<TokenService, "verify">;
+  uuidService: Pick<UuidService, "generate">;
   fileRepository: Pick<FileRepository, "saveShaderFile" | "deleteShaderFile">;
 }
 
@@ -34,10 +36,14 @@ export class UpdateShaderFileUseCase {
 
     const oldSrc = shader.src;
     let newSrc: string | undefined;
-
+    const uuid = this.deps.uuidService.generate();
     try {
-      const fileName = `shader_${shader.id}`;
-      newSrc = await this.deps.fileRepository.saveShaderFile(shader.id, fileName, file);
+      const fileName = `shader_${shader.id}_${uuid}`;
+      newSrc = await this.deps.fileRepository.saveShaderFile(
+        shader.id,
+        fileName,
+        file,
+      );
       await this.deps.shaderRepository.updateSrc(shader.id, newSrc);
       if (oldSrc) {
         await this.deps.fileRepository.deleteShaderFile(shader.id, oldSrc);

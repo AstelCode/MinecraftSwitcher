@@ -53,13 +53,13 @@ export class ShaderController {
       type: data.mimetype,
     });
 
-    await this.createShaderUseCase.execute(token, {
+    const shader = await this.createShaderUseCase.execute(token, {
       name,
       description,
       versionType,
       file,
     });
-    return reply.status(201).send({ message: "Shader created successfully" });
+    return reply.status(201).send(shader);
   }
 
   async update(req: FastifyRequest, reply: FastifyReply) {
@@ -124,7 +124,9 @@ export class ShaderController {
   }
 
   async deleteImage(req: FastifyRequest, reply: FastifyReply) {
-    const { shaderId, imageId } = ShaderAndImageIdParamsSchema.parse(req.params);
+    const { shaderId, imageId } = ShaderAndImageIdParamsSchema.parse(
+      req.params,
+    );
     const token = extractToken(req);
     await this.deleteShaderImageUseCase.execute(
       token,
@@ -174,8 +176,11 @@ export class ShaderController {
     const { shaderId } = ShaderIdParamsSchema.parse(req.params);
     const { adminId } = req.body as { adminId: string };
     const token = extractToken(req);
-    await this.assignShaderToAdminUseCase.execute(token, BigInt(shaderId), BigInt(adminId));
+    await this.assignShaderToAdminUseCase.execute(
+      token,
+      BigInt(shaderId),
+      BigInt(adminId),
+    );
     return reply.status(200).send({ message: "Shader assigned successfully" });
   }
 }
-

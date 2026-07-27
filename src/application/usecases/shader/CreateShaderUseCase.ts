@@ -4,6 +4,8 @@ import { FileRepository } from "@/domain/repositories/FileRepository";
 import { ShaderRepository } from "@/domain/repositories/ShaderRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
 import { TokenService } from "@/domain/services/TokenService";
+import { ShaderDTO } from "../dto/ShaderDTO";
+import { UuidService } from "@/domain/services/RandomService";
 export interface CreateShaderArgs {
   name: string;
   description?: string | null;
@@ -15,13 +17,17 @@ export interface CreateShaderUseCaseDependencies {
   userRepository: Pick<UserRepository, "findById">;
   shaderRepository: Pick<ShaderRepository, "save" | "updateSrc" | "delete">;
   tokenService: Pick<TokenService, "verify">;
-  fileRepository: Pick<FileRepository, "saveShaderFile" | "deleteShaderFile" | "deleteShaderData">;
+  uuidService: Pick<UuidService, "generate">;
+  fileRepository: Pick<
+    FileRepository,
+    "saveShaderFile" | "deleteShaderFile" | "deleteShaderData"
+  >;
 }
 
 export class CreateShaderUseCase {
   constructor(private readonly deps: CreateShaderUseCaseDependencies) {}
 
-  async execute(token: string, data: CreateShaderArgs): Promise<void> {
+  async execute(token: string, data: CreateShaderArgs): Promise<ShaderDTO> {
     const payload = await this.deps.tokenService.verify(token);
 
     const user = await this.deps.userRepository.findById(payload.id);
@@ -45,10 +51,14 @@ export class CreateShaderUseCase {
 
       await this.deps.shaderRepository.save(shader);
 
-      const fileName = `shader_${shader.id}`;
+      const fileName = `shader_${shader.id}_${this.deps.uuidService.generate()}`;
 
-      filePath = await this.deps.fileRepository.saveShaderFile(shader.id, fileName, data.file);
-      
+      filePath = await this.deps.fileRepository.saveShaderFile(
+        shader.id,
+        fileName,
+        data.file,
+      );
+
       shader.src = filePath;
       await this.deps.shaderRepository.updateSrc(shader.id, filePath);
     } catch (error) {
@@ -61,5 +71,10 @@ export class CreateShaderUseCase {
 
       throw error;
     }
+    return {
+      id: shader.id.toString(),
+      name: shader.name,
+      imageUrl: shader.principalImage?.src,
+    };
   }
 }

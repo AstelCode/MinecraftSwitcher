@@ -3,6 +3,7 @@ import { FileRepository } from "@/domain/repositories/FileRepository";
 import { ImageRepository } from "@/domain/repositories/ImageRepository";
 import { ShaderRepository } from "@/domain/repositories/ShaderRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
+import { UuidService } from "@/domain/services/RandomService";
 import { TokenService } from "@/domain/services/TokenService";
 
 export interface UpdateShaderPrincipalImageUseCaseDependencies {
@@ -10,11 +11,17 @@ export interface UpdateShaderPrincipalImageUseCaseDependencies {
   shaderRepository: Pick<ShaderRepository, "findById" | "setPrincipalImage">;
   tokenService: Pick<TokenService, "verify">;
   imageRepository: Pick<ImageRepository, "save" | "delete">;
-  fileRepository: Pick<FileRepository, "saveShaderPrincipalFile" | "deleteShaderPrincipalFile">;
+  uuidService: Pick<UuidService, "generate">;
+  fileRepository: Pick<
+    FileRepository,
+    "saveShaderPrincipalFile" | "deleteShaderPrincipalFile"
+  >;
 }
 
 export class UpdateShaderPrincipalImageUseCase {
-  constructor(private readonly deps: UpdateShaderPrincipalImageUseCaseDependencies) {}
+  constructor(
+    private readonly deps: UpdateShaderPrincipalImageUseCaseDependencies,
+  ) {}
 
   async execute(token: string, shaderId: bigint, file: File): Promise<void> {
     const payload = await this.deps.tokenService.verify(token);
@@ -39,7 +46,7 @@ export class UpdateShaderPrincipalImageUseCase {
 
     const src = await this.deps.fileRepository.saveShaderPrincipalFile(
       shader.id,
-      shader.id.toString(),
+      `${shader.id}_${this.deps.uuidService.generate()}`,
       file,
     );
 
@@ -54,7 +61,10 @@ export class UpdateShaderPrincipalImageUseCase {
       if (oldImage) {
         await this.deps.imageRepository.delete(oldImage.id);
 
-        await this.deps.fileRepository.deleteShaderPrincipalFile(shader.id, oldImage.src);
+        await this.deps.fileRepository.deleteShaderPrincipalFile(
+          shader.id,
+          oldImage.src,
+        );
       }
     } catch (error) {
       await this.deps.fileRepository.deleteShaderPrincipalFile(shader.id, src);
