@@ -41,7 +41,7 @@ export class Mod {
 
   toPersistence() {
     if (!isValidText(this.name)) throw new Error("mod name is empty");
-    if (!isValidText(this.src)) throw new Error("mod url is empty");
+    //if (!isValidText(this.src)) throw new Error("mod url is empty");
     if (!this.weight) throw new Error("mod weight is empty or zero");
     if (!this.minVersion) throw new Error("mod minVersion is empty");
     if (!this.maxVersion) throw new Error("mod maxVersion is empty");

@@ -20,11 +20,11 @@ async function main() {
       fileSize: 100 * 1024 * 1024,
     },
   });
-
-  await app.register(cors, {
-    origin: process.env.CORS_ORIGIN ?? true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  });
+  // TODO: habilitar esto despues
+  // await app.register(cors, {
+  //   origin: process.env.CORS_ORIGIN ?? true,
+  //   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  // });
 
   // Global error handler — mapea errores de dominio a codigos HTTP correctos
   app.setErrorHandler((error, _req, reply) => {

@@ -24,6 +24,7 @@ import { setupModDependencyDependencies } from "./containers/modDependency.conta
 import { setupShaderDependencyDependencies } from "./containers/shaderDependency.container";
 import { setupCommentDependencies } from "./containers/comment.container";
 import { setupFavoriteDependencies } from "./containers/favorite.container";
+import { SupabaseFileRepository } from "./infrastructure/database/supabase/SupabaseFileRespository";
 
 export async function setupDependencies(app: FastifyInstance) {
   // --- Infrastructure ---
@@ -37,7 +38,7 @@ export async function setupDependencies(app: FastifyInstance) {
   const imageRepository = new PostgresImageRepository();
   const commentRepository = new PostgresCommentRepository();
   const uuidService = new NodeUuidService();
-  const fileRepository = new LocalFileRepository();
+  const fileRepository = new SupabaseFileRepository();
   const favoriteRepository = new PostgresFavoriteRepository();
 
   const hashService = new ArgonHashService();

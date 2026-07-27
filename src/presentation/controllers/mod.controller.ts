@@ -72,8 +72,8 @@ export class ModController {
     const { modId } = ModIdParamsSchema.parse(req.params);
     const data = UpdateModSchema.parse(req.body);
     const token = extractToken(req);
-    await this.updateModUseCase.execute(token, BigInt(modId), data);
-    return reply.status(200).send({ message: "Mod updated successfully" });
+    const mod = await this.updateModUseCase.execute(token, BigInt(modId), data);
+    return reply.status(200).send(mod);
   }
 
   async delete(req: FastifyRequest, reply: FastifyReply) {
@@ -129,8 +129,12 @@ export class ModController {
       type: data.mimetype,
     });
 
-    await this.addModImageUseCase.execute(token, BigInt(modId), file);
-    return reply.status(201).send({ message: "Image added to mod" });
+    const image = await this.addModImageUseCase.execute(
+      token,
+      BigInt(modId),
+      file,
+    );
+    return reply.status(201).send(image);
   }
 
   async deleteImage(req: FastifyRequest, reply: FastifyReply) {
@@ -182,8 +186,11 @@ export class ModController {
     const { modId } = ModIdParamsSchema.parse(req.params);
     const { adminId } = req.body as { adminId: string };
     const token = extractToken(req);
-    await this.assignModToAdminUseCase.execute(token, BigInt(modId), BigInt(adminId));
+    await this.assignModToAdminUseCase.execute(
+      token,
+      BigInt(modId),
+      BigInt(adminId),
+    );
     return reply.status(200).send({ message: "Mod assigned successfully" });
   }
 }
-

@@ -5,6 +5,7 @@ import { ModRepository } from "@/domain/repositories/ModRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
 import { UuidService } from "@/domain/services/RandomService";
 import { TokenService } from "@/domain/services/TokenService";
+import { ImageDTO } from "../dto/ImageDTO";
 
 export interface AddModImageUseCaseDependencies {
   userRepository: Pick<UserRepository, "findById">;
@@ -18,7 +19,7 @@ export interface AddModImageUseCaseDependencies {
 export class AddModImageUseCase {
   constructor(private readonly deps: AddModImageUseCaseDependencies) {}
 
-  async execute(token: string, modId: bigint, file: File): Promise<void> {
+  async execute(token: string, modId: bigint, file: File): Promise<ImageDTO> {
     const payload = await this.deps.tokenService.verify(token);
 
     const user = await this.deps.userRepository.findById(payload.id);
@@ -44,7 +45,11 @@ export class AddModImageUseCase {
     let image: Image | undefined;
 
     try {
-      filePath = await this.deps.fileRepository.saveModImage(mod.id, fileName, file);
+      filePath = await this.deps.fileRepository.saveModImage(
+        mod.id,
+        fileName,
+        file,
+      );
 
       image = new Image();
       image.src = filePath;
@@ -62,5 +67,10 @@ export class AddModImageUseCase {
 
       throw error;
     }
+
+    return {
+      id: image.id.toString(),
+      src: image.src,
+    };
   }
 }

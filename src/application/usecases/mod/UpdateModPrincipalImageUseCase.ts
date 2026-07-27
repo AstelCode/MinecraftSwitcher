@@ -11,12 +11,17 @@ export interface UpdateModPrincipalImageUseCaseDependencies {
   modRepository: Pick<ModRepository, "findById" | "setPrincipalImage">;
   tokenService: Pick<TokenService, "verify">;
   imageRepository: Pick<ImageRepository, "updateSrc" | "save">;
-  fileRepository: Pick<FileRepository, "saveModPrincipalFile" | "deleteModPrincipalFile">;
+  fileRepository: Pick<
+    FileRepository,
+    "saveModPrincipalFile" | "deleteModPrincipalFile"
+  >;
   uuidService: Pick<UuidService, "generate">;
 }
 
 export class UpdateModPrincipalImageUseCase {
-  constructor(private readonly deps: UpdateModPrincipalImageUseCaseDependencies) {}
+  constructor(
+    private readonly deps: UpdateModPrincipalImageUseCaseDependencies,
+  ) {}
 
   async execute(token: string, modId: bigint, file: File): Promise<void> {
     const payload = await this.deps.tokenService.verify(token);
@@ -55,7 +60,10 @@ export class UpdateModPrincipalImageUseCase {
         await this.deps.modRepository.setPrincipalImage(mod.id, image.id);
       }
       if (oldImage) {
-        await this.deps.fileRepository.deleteModPrincipalFile(mod.id, oldImage.src);
+        await this.deps.fileRepository.deleteModPrincipalFile(
+          mod.id,
+          oldImage.src,
+        );
       }
     } catch (error) {
       await this.deps.fileRepository.deleteModPrincipalFile(mod.id, src);

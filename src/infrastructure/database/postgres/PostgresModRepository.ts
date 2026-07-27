@@ -94,6 +94,7 @@ export class PostgresModRepository implements ModRepository {
       include: {
         images: true,
         author: true,
+        principalImage: true,
         modDependencies: {
           include: {
             dependency: true,

@@ -127,8 +127,7 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   recovery_key: 'recovery_key',
   is_admin: 'is_admin',
-  is_superadmin: 'is_superadmin',
-  imageId: 'imageId'
+  is_superadmin: 'is_superadmin'
 };
 
 exports.Prisma.PackScalarFieldEnum = {
@@ -138,8 +137,7 @@ exports.Prisma.PackScalarFieldEnum = {
   versionType: 'versionType',
   name: 'name',
   description: 'description',
-  authorId: 'authorId',
-  principalImageId: 'principalImageId'
+  authorId: 'authorId'
 };
 
 exports.Prisma.ShaderScalarFieldEnum = {
@@ -149,8 +147,7 @@ exports.Prisma.ShaderScalarFieldEnum = {
   weight: 'weight',
   src: 'src',
   authorId: 'authorId',
-  versionType: 'versionType',
-  principalImageId: 'principalImageId'
+  versionType: 'versionType'
 };
 
 exports.Prisma.ModScalarFieldEnum = {
@@ -162,8 +159,7 @@ exports.Prisma.ModScalarFieldEnum = {
   src: 'src',
   weight: 'weight',
   authorId: 'authorId',
-  versionType: 'versionType',
-  principalImageId: 'principalImageId'
+  versionType: 'versionType'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -180,7 +176,11 @@ exports.Prisma.ImageScalarFieldEnum = {
   src: 'src',
   modId: 'modId',
   shaderId: 'shaderId',
-  packId: 'packId'
+  packId: 'packId',
+  userId: 'userId',
+  packPrincipalId: 'packPrincipalId',
+  shaderPrincipalId: 'shaderPrincipalId',
+  modPrincipalId: 'modPrincipalId'
 };
 
 exports.Prisma.ConflictScalarFieldEnum = {

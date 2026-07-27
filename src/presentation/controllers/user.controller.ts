@@ -38,8 +38,12 @@ export class UserController {
   async createAdmin(req: FastifyRequest, reply: FastifyReply) {
     const data = CreateUserSchema.parse(req.body);
     const token = extractToken(req);
-    await this.createAdminUseCase.execute(token, data.email, data.password);
-    return reply.status(201).send({ token });
+    const admin_token = await this.createAdminUseCase.execute(
+      token,
+      data.email,
+      data.password,
+    );
+    return reply.status(201).send({ token: admin_token });
   }
 
   async createSuperAdmin(req: FastifyRequest, reply: FastifyReply) {
@@ -72,14 +76,18 @@ export class UserController {
     const token = extractToken(req);
     const { id } = req.params as { id: string };
     await this.deleteUserByAdminUseCase.execute(token, BigInt(id));
-    return reply.status(200).send({ message: "User deleted successfully by admin" });
+    return reply
+      .status(200)
+      .send({ message: "User deleted successfully by admin" });
   }
 
   async deleteBySuperAdmin(req: FastifyRequest, reply: FastifyReply) {
     const token = extractToken(req);
     const { id } = req.params as { id: string };
     await this.deleteUserBySuperAdminUseCase.execute(token, BigInt(id));
-    return reply.status(200).send({ message: "User deleted successfully by superadmin" });
+    return reply
+      .status(200)
+      .send({ message: "User deleted successfully by superadmin" });
   }
 
   async list(req: FastifyRequest, reply: FastifyReply) {
@@ -110,4 +118,3 @@ export class UserController {
       .send({ message: "Profile image updated successfully" });
   }
 }
-

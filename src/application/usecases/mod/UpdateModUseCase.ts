@@ -2,6 +2,7 @@ import { VersionType } from "@/domain/model/VersionType";
 import { ModRepository } from "@/domain/repositories/ModRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
 import { TokenService } from "@/domain/services/TokenService";
+import { ModDTO } from "../dto/ModDTO";
 
 export interface UpdateModArgs {
   name: string;
@@ -24,7 +25,7 @@ export class UpdateModUseCase {
     token: string,
     modId: bigint,
     data: UpdateModArgs,
-  ): Promise<void> {
+  ): Promise<ModDTO> {
     const payload = await this.deps.tokenService.verify(token);
     const user = await this.deps.userRepository.findById(payload.id);
 
@@ -49,5 +50,11 @@ export class UpdateModUseCase {
     mod.versionType = data.versionType;
 
     await this.deps.modRepository.update(mod);
+
+    return {
+      id: mod.id.toString(),
+      name: mod.name,
+      imageUrl: mod.principalImage?.src,
+    };
   }
 }

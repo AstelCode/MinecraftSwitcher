@@ -1,12 +1,14 @@
 import { FileRepository } from "@/domain/repositories/FileRepository";
 import { ModRepository } from "@/domain/repositories/ModRepository";
 import { UserRepository } from "@/domain/repositories/UserRepository";
+import { UuidService } from "@/domain/services/RandomService";
 import { TokenService } from "@/domain/services/TokenService";
 
 export interface UpdateModFileUseCaseDependencies {
   userRepository: Pick<UserRepository, "findById">;
   modRepository: Pick<ModRepository, "findById" | "updateSrc">;
   tokenService: Pick<TokenService, "verify">;
+  uuidService: Pick<UuidService, "generate">;
   fileRepository: Pick<FileRepository, "saveModFile" | "deleteModFile">;
 }
 
@@ -36,8 +38,12 @@ export class UpdateModFileUseCase {
     let newSrc: string | undefined;
 
     try {
-      const fileName = `mod_${mod.id}`;
-      newSrc = await this.deps.fileRepository.saveModFile(mod.id, fileName, file);
+      const fileName = `mod_${mod.id}_${this.deps.uuidService.generate()}`;
+      newSrc = await this.deps.fileRepository.saveModFile(
+        mod.id,
+        fileName,
+        file,
+      );
       await this.deps.modRepository.updateSrc(mod.id, newSrc);
       if (oldSrc) {
         await this.deps.fileRepository.deleteModFile(mod.id, oldSrc);

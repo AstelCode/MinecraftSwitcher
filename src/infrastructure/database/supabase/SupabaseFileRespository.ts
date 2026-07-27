@@ -6,7 +6,7 @@ export class SupabaseFileRepository implements FileRepository {
   private bucketName = process.env.SUPABASE_BUCKET_NAME || "tu-bucket-name";
   private supabase = createClient(
     process.env.SUPABASE_URL!,
-    process.env.SUPABASE_KEY!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
   );
 
   getBaseUrl(): string {
@@ -14,9 +14,15 @@ export class SupabaseFileRepository implements FileRepository {
   }
 
   private async deleteFolder(folderPath: string): Promise<void> {
-    const { data, error } = await this.supabase.storage.from(this.bucketName).list(folderPath);
+    const { data, error } = await this.supabase.storage
+      .from(this.bucketName)
+      .list(folderPath);
+
     if (error) {
-      console.warn(`Error listing folder ${folderPath} in Supabase:`, error.message);
+      console.warn(
+        `Error listing folder ${folderPath} in Supabase:`,
+        error.message,
+      );
       return;
     }
     if (data && data.length > 0) {
@@ -28,10 +34,14 @@ export class SupabaseFileRepository implements FileRepository {
   }
 
   async deleteUserData(userId: bigint): Promise<void> {
-    await this.deleteFolder(`users/${userId}`);
+    await this.deleteFolder(`users/${userId}/profiles`);
   }
 
-  async saveProfileImage(userId: bigint, name: string, file: File): Promise<string> {
+  async saveProfileImage(
+    userId: bigint,
+    name: string,
+    file: File,
+  ): Promise<string> {
     const folder = `users/${userId}/profiles`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
@@ -51,7 +61,11 @@ export class SupabaseFileRepository implements FileRepository {
     await this.deleteFolder(`shaders/${shaderId}/principal`);
   }
 
-  async saveShaderImage(shaderId: bigint, name: string, file: File): Promise<string> {
+  async saveShaderImage(
+    shaderId: bigint,
+    name: string,
+    file: File,
+  ): Promise<string> {
     const folder = `shaders/${shaderId}/images`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
@@ -64,7 +78,11 @@ export class SupabaseFileRepository implements FileRepository {
     if (fileName) await this.delete(`shaders/${shaderId}/images`, fileName);
   }
 
-  async saveShaderFile(shaderId: bigint, name: string, file: File): Promise<string> {
+  async saveShaderFile(
+    shaderId: bigint,
+    name: string,
+    file: File,
+  ): Promise<string> {
     const folder = `shaders/${shaderId}/files`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
@@ -77,7 +95,11 @@ export class SupabaseFileRepository implements FileRepository {
     if (fileName) await this.delete(`shaders/${shaderId}/files`, fileName);
   }
 
-  async saveShaderPrincipalFile(shaderId: bigint, name: string, file: File): Promise<string> {
+  async saveShaderPrincipalFile(
+    shaderId: bigint,
+    name: string,
+    file: File,
+  ): Promise<string> {
     const folder = `shaders/${shaderId}/principal`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
@@ -85,7 +107,10 @@ export class SupabaseFileRepository implements FileRepository {
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
-  async deleteShaderPrincipalFile(shaderId: bigint, fileUrl: string): Promise<void> {
+  async deleteShaderPrincipalFile(
+    shaderId: bigint,
+    fileUrl: string,
+  ): Promise<void> {
     const fileName = this.extractFileName(fileUrl);
     if (fileName) await this.delete(`shaders/${shaderId}/principal`, fileName);
   }
@@ -122,7 +147,11 @@ export class SupabaseFileRepository implements FileRepository {
     if (fileName) await this.delete(`mods/${modId}/files`, fileName);
   }
 
-  async saveModPrincipalFile(modId: bigint, name: string, file: File): Promise<string> {
+  async saveModPrincipalFile(
+    modId: bigint,
+    name: string,
+    file: File,
+  ): Promise<string> {
     const folder = `mods/${modId}/principal`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
@@ -140,7 +169,11 @@ export class SupabaseFileRepository implements FileRepository {
     await this.deleteFolder(`packs/${packId}/principal`);
   }
 
-  async savePackImage(packId: bigint, name: string, file: File): Promise<string> {
+  async savePackImage(
+    packId: bigint,
+    name: string,
+    file: File,
+  ): Promise<string> {
     const folder = `packs/${packId}/images`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
@@ -153,7 +186,11 @@ export class SupabaseFileRepository implements FileRepository {
     if (fileName) await this.delete(`packs/${packId}/images`, fileName);
   }
 
-  async savePackPrincipalFile(packId: bigint, name: string, file: File): Promise<string> {
+  async savePackPrincipalFile(
+    packId: bigint,
+    name: string,
+    file: File,
+  ): Promise<string> {
     const folder = `packs/${packId}/principal`;
     const ext = path.extname(file.name);
     const fileName = `${name}${ext}`;
@@ -161,7 +198,10 @@ export class SupabaseFileRepository implements FileRepository {
     return `${this.getBaseUrl()}/${folder}/${name}${ext}`;
   }
 
-  async deletePackPrincipalFile(packId: bigint, fileUrl: string): Promise<void> {
+  async deletePackPrincipalFile(
+    packId: bigint,
+    fileUrl: string,
+  ): Promise<void> {
     const fileName = this.extractFileName(fileUrl);
     if (fileName) await this.delete(`packs/${packId}/principal`, fileName);
   }

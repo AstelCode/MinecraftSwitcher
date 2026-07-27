@@ -22,10 +22,9 @@ export class DeleteUserUseCase {
     const user = await this.deps.userRepository.findById(payload.id);
     if (!user) throw new Error("User not found.");
     if (user.image) {
-      await this.deps.imageRepository.delete(user.image.id);
+      // await this.deps.imageRepository.delete(user.image.id);
       await this.deps.fileRepository.deleteUserData(user.id);
     }
     await this.deps.userRepository.delete(payload.id);
   }
 }
-

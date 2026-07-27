@@ -20,24 +20,23 @@ enum VersionType {
 }
 
 model User {
-  id           BigInt  @id @default(autoincrement())
-  email        String  @unique
-  nickname     String
-  password     String
-  recovery_key String?
-  is_admin     Boolean @default(false)
+  id            BigInt  @id @default(autoincrement())
+  email         String  @unique
+  nickname      String
+  password      String
+  recovery_key  String?
+  is_admin      Boolean @default(false)
   is_superadmin Boolean @default(false)
 
-  packs    Pack[]
-  shaders  Shader[]
-  mods     Mod[]
-  comments Comment[]
+  packs     Pack[]
+  shaders   Shader[]
+  mods      Mod[]
+  comments  Comment[]
   favorites Favorite[]
 
-  // Nota: Al borrar el User, esta fila se elimina. La imagen en la base de datos quedará huérfana. 
-  // Para que la imagen se borre, tendrías que pasar userId al modelo Image.
-  image   Image?  @relation(fields: [imageId], references: [id])
-  imageId BigInt?
+  // Relación invertida: Ahora Image guarda el userId.
+  // Al borrar el User, el onDelete: Cascade en Image eliminará la foto.
+  image Image? @relation("UserImage")
 }
 
 model Pack {
@@ -51,16 +50,17 @@ model Pack {
   shaders Shader[]
   mods    Mod[]
 
-  author   User?  @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  author   User?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
   authorId BigInt?
 
-  comments Comment[]
-  images   Image[]   @relation("packImage")
+  comments  Comment[]
   favorites Favorite[]
 
-  // Nota: Igual que con User, si se borra el Pack, la imagen "Principal" no se borra automáticamente de la tabla Image.
-  principalImage   Image?  @relation("PrincipalImage", fields: [principalImageId], references: [id])
-  principalImageId BigInt?
+  // Galería de imágenes (1:N)
+  images Image[] @relation("packImage")
+
+  // Imagen principal (1:1). Ahora la referencia está en la tabla Image.
+  principalImage Image? @relation("PackPrincipalImage")
 }
 
 model Shader {
@@ -71,18 +71,20 @@ model Shader {
   weight      Int
   src         String
 
-  author   User?  @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  author   User?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
   authorId BigInt?
 
   comments          Comment[]
-  images            Image[]           @relation("shaderImage")
   conflicts         Conflict[]
   versionType       VersionType
   shaderDependecies ShaderDependecy[]
   favorites         Favorite[]
 
-  principalImage   Image?  @relation("PrincipalImage", fields: [principalImageId], references: [id])
-  principalImageId BigInt?
+  // Galería de imágenes (1:N)
+  images Image[] @relation("shaderImage")
+
+  // Imagen principal (1:1)
+  principalImage Image? @relation("ShaderPrincipalImage")
 }
 
 model Mod {
@@ -95,11 +97,10 @@ model Mod {
   weight      Int
   packs       Pack[]
 
-  author   User?  @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  author   User?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
   authorId BigInt?
 
   comments Comment[]
-  images   Image[]   @relation("modImage")
 
   conflictsFrom Conflict[] @relation("ModConflicts")
   conflictsTo   Conflict[] @relation("ModConflictTarget")
@@ -110,8 +111,11 @@ model Mod {
   shaderDependecies ShaderDependecy[]
   favorites         Favorite[]
 
-  principalImage   Image?  @relation("PrincipalImage", fields: [principalImageId], references: [id])
-  principalImageId BigInt?
+  // Galería de imágenes (1:N)
+  images Image[] @relation("modImage")
+
+  // Imagen principal (1:1)
+  principalImage Image? @relation("ModPrincipalImage")
 }
 
 model Comment {
@@ -121,7 +125,6 @@ model Comment {
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId BigInt
 
-  // Cascada: Si se borra el pack, shader o mod, el comentario desaparece.
   pack     Pack?   @relation(fields: [packId], references: [id], onDelete: Cascade)
   packId   BigInt?
   shader   Shader? @relation(fields: [shaderId], references: [id], onDelete: Cascade)
@@ -136,7 +139,9 @@ model Image {
   id  BigInt @id @default(autoincrement())
   src String
 
-  // Cascada: Si se borra la entidad a la que pertenece la galería de imágenes, las imágenes se borran.
+  // ----------------------------------------------------
+  // IMÁGENES DE GALERÍA (Relación 1:N)
+  // ----------------------------------------------------
   mod      Mod?    @relation("modImage", fields: [modId], references: [id], onDelete: Cascade)
   modId    BigInt?
   shader   Shader? @relation("shaderImage", fields: [shaderId], references: [id], onDelete: Cascade)
@@ -144,16 +149,28 @@ model Image {
   pack     Pack?   @relation("packImage", fields: [packId], references: [id], onDelete: Cascade)
   packId   BigInt?
 
-  users            User[]
-  packsPrincipal   Pack[]   @relation("PrincipalImage")
-  shadersPrincipal Shader[] @relation("PrincipalImage")
-  modsPrincipal    Mod[]    @relation("PrincipalImage")
+  // ----------------------------------------------------
+  // IMAGEN DE PERFIL DE USUARIO (Relación 1:1)
+  // ----------------------------------------------------
+  user   User?   @relation("UserImage", fields: [userId], references: [id], onDelete: Cascade)
+  userId BigInt? @unique
+
+  // ----------------------------------------------------
+  // IMÁGENES PRINCIPALES (Relación 1:1)
+  // ----------------------------------------------------
+  packPrincipal   Pack?   @relation("PackPrincipalImage", fields: [packPrincipalId], references: [id], onDelete: Cascade)
+  packPrincipalId BigInt? @unique
+
+  shaderPrincipal   Shader? @relation("ShaderPrincipalImage", fields: [shaderPrincipalId], references: [id], onDelete: Cascade)
+  shaderPrincipalId BigInt? @unique
+
+  modPrincipal   Mod?    @relation("ModPrincipalImage", fields: [modPrincipalId], references: [id], onDelete: Cascade)
+  modPrincipalId BigInt? @unique
 }
 
 model Conflict {
   id BigInt @id @default(autoincrement())
 
-  // Cascada para conflictos de dependencias
   conflictshaderId BigInt?
   conflictShader   Shader? @relation(fields: [conflictshaderId], references: [id], onDelete: Cascade)
 
@@ -170,7 +187,6 @@ model ModDependency {
   modId        BigInt
   dependencyId BigInt
 
-  // Cascada: Si borras el mod original o su dependencia, la relación se elimina.
   mod        Mod @relation("ModDependencies", fields: [modId], references: [id], onDelete: Cascade)
   dependency Mod @relation("RequiredBy", fields: [dependencyId], references: [id], onDelete: Cascade)
 
@@ -181,7 +197,6 @@ model ShaderDependecy {
   shaderId BigInt
   modId    BigInt
 
-  // Cascada: Al borrar el shader o el mod, se elimina esta tabla intermedia.
   shader Shader @relation(fields: [shaderId], references: [id], onDelete: Cascade)
   mod    Mod    @relation(fields: [modId], references: [id], onDelete: Cascade)
 
@@ -189,12 +204,11 @@ model ShaderDependecy {
 }
 
 model Favorite {
-  id     BigInt @id @default(autoincrement())
+  id BigInt @id @default(autoincrement())
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId BigInt
 
-  // Solo uno de los tres será no-null
   mod      Mod?    @relation(fields: [modId], references: [id], onDelete: Cascade)
   modId    BigInt?
   pack     Pack?   @relation(fields: [packId], references: [id], onDelete: Cascade)
@@ -204,7 +218,6 @@ model Favorite {
 
   createdAt DateTime @default(now())
 
-  // Un usuario no puede tener el mismo item favorito dos veces
   @@unique([userId, modId])
   @@unique([userId, packId])
   @@unique([userId, shaderId])
